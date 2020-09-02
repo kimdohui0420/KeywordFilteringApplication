@@ -1,0 +1,44 @@
+package Keyword.content.persistence;
+
+import Keyword.content.domain.ContentVO;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import javax.inject.Inject;
+import java.util.List;
+
+@Repository
+public class ContentDAOImpl implements ContentDAO{
+    private static final String NAMESPACE = "Keyword.mappers.content.ContentMapper";
+    private final SqlSession sqlSession;
+
+    @Inject
+    public ContentDAOImpl(SqlSession sqlSession) {
+        this.sqlSession = sqlSession;
+    }
+
+    @Override
+    public void create(ContentVO contentVO) throws Exception {
+        sqlSession.insert(NAMESPACE+".create", contentVO);
+    }
+
+    @Override
+    public ContentVO read(String contentId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".read", contentId);
+    }
+
+    @Override
+    public void update(ContentVO contentVO) throws Exception {
+        sqlSession.update(NAMESPACE+".update", contentVO);
+    }
+
+    @Override
+    public void delete(String contentId) throws Exception {
+        sqlSession.delete(NAMESPACE+".delete", contentId);
+    }
+
+    @Override
+    public List<ContentVO> listAll() throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listAll");
+    }
+}
