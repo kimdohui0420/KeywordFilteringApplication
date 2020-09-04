@@ -59,7 +59,7 @@ public class ContentController {
         return entity;
     }
 
-    // 컨텐츠 조 페이지 이동
+    // 컨텐츠 조회 페이지 이동
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("contentId") String contentId, Model model) throws Exception{
         model.addAttribute("content", contentService.read(contentId));
