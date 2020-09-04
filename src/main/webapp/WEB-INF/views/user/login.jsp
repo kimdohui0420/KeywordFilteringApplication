@@ -30,8 +30,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" id="userCookie" name="userCookie" type="checkbox" />
-                                            <label class="custom-control-label" for="userCookie">로그인 유지</label>
+                                            <input class="custom-control-input" id="useCookie" name="useCookie" type="checkbox" />
+                                            <label class="custom-control-label" for="useCookie">로그인 유지</label>
                                         </div>
                                     </div>
                                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
