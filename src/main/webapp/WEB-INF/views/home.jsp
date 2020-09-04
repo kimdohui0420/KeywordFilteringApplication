@@ -50,46 +50,33 @@
                                 <div class="col-md-4">
                                     <h5>TYPE</h5>
                                     <div id="list-example1" class="list-group" style="height: 200px; overflow-y: scroll">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">Item1</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-2">Item2</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-3">Item3</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
+                                        <c:forEach items="${keywordMaker.totalType}" var="contentType">
+                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentType}</a>
+                                        </c:forEach>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h5>TYPE</h5>
+                                    <h5>GENRE</h5>
                                     <div id="list-example2" class="list-group" style="height: 200px; overflow-y: scroll">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">Item1</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-2">Item2</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-3">Item3</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
+                                        <c:forEach items="${keywordMaker.totalGenre}" var="contentGenre">
+                                        <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
+                                        </c:forEach>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h5>TYPE</h5>
+                                    <h5>RATED</h5>
                                     <div id="list-example3" class="list-group" style="height: 200px; overflow-y: scroll">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">Item1</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-2">Item2</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-3">Item3</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-4">Item4</a>
+                                        <c:forEach items="${keywordMaker.totalRated}" var="contentRated">
+                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentRated}</a>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5>RUNNING TIME</h5>
+                                    <div id="list-example4" class="list-group" style="height: 200px; overflow-y: scroll">
+                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 미만</a>
+                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 이상 2h 미만</a>
+                                        <a class="list-group-item list-group-item-action" href="#list-item-1">2h 미만</a>
                                     </div>
                                 </div>
                             </div>

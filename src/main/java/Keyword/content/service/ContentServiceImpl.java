@@ -40,4 +40,20 @@ public class ContentServiceImpl implements ContentService{
     public List<ContentVO> listAll() throws Exception {
         return contentDAO.listAll();
     }
+
+    @Override
+    public List<String> listType() throws Exception {
+        return contentDAO.listType();
+    }
+
+    @Override
+    public List<String> listGenre() throws Exception {
+        return contentDAO.listGenre();
+    }
+
+    @Override
+    public List<String> listRated() throws Exception {
+        return contentDAO.listRated();
+    }
+
 }

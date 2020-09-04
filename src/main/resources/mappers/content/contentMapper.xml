@@ -101,6 +101,33 @@
         ]]>
     </select>
 
+    <select id="listType" resultType="string">
+        <![CDATA[
+            SELECT DISTINCT type
+            FROM disney_contents
+            WHERE type IS NOT NULL
+            ORDER BY type ASC;
+        ]]>
+    </select>
+
+    <select id="listGenre" resultType="string">
+        <![CDATA[
+            SELECT DISTINCT genre
+            FROM disney_genre
+            WHERE genre IS NOT NULL
+            ORDER BY genre ASC;
+        ]]>
+    </select>
+
+    <select id="listRated" resultType="string">
+        <![CDATA[
+            SELECT DISTINCT rated
+            FROM disney_contents
+            WHERE rated IS NOT NULL
+            ORDER BY rated ASC;
+        ]]>
+    </select>
+
     <resultMap id="ContentResultMap" type="ContentVO">
         <id property="contentId" column="imdb_id"/>
         <result property="title" column="title"/>
@@ -117,4 +144,5 @@
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
     </resultMap>
+
 </mapper>

@@ -10,4 +10,7 @@ public interface ContentDAO {
     void update(ContentVO contentVO) throws Exception;
     void delete(String contentId) throws Exception;
     List<ContentVO> listAll() throws Exception;
+    List<String> listType() throws Exception;
+    List<String> listGenre() throws Exception;
+    List<String> listRated() throws Exception;
 }

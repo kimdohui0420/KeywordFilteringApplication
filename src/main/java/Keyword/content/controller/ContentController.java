@@ -1,5 +1,6 @@
 package Keyword.content.controller;
 
+import Keyword.commons.filtering.KeywordMaker;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -27,6 +28,17 @@ public class ContentController {
     @Inject
     public ContentController(ContentService contentService) {
         this.contentService = contentService;
+    }
+
+    @RequestMapping("/")
+    public String home(Model model) throws Exception{
+        KeywordMaker keywordMaker = new KeywordMaker();
+        keywordMaker.setTotalType(contentService.listType());
+        keywordMaker.setTotalGenre(contentService.listGenre());
+        keywordMaker.setTotalRated(contentService.listRated());
+
+        model.addAttribute("keywordMaker", keywordMaker);
+        return "home";
     }
 
     // 컨텐츠 추가 페이지 이동

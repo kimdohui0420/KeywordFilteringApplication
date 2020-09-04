@@ -41,4 +41,21 @@ public class ContentDAOImpl implements ContentDAO{
     public List<ContentVO> listAll() throws Exception {
         return sqlSession.selectList(NAMESPACE+".listAll");
     }
+
+    @Override
+    public List<String> listType() throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listType");
+    }
+
+    @Override
+    public List<String> listGenre() throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listGenre");
+    }
+
+    @Override
+    public List<String> listRated() throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listRated");
+    }
+
+
 }
