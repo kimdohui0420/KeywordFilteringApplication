@@ -10,6 +10,9 @@
 
     <!--정적자원 매핑-->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+    <mvc:resources mapping="/scripts/**" location="/resources/scripts/"/>
+    <mvc:resources mapping="/src/**" location="/resources/src/"/>
 
     <!-- viewResolver 설정 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
