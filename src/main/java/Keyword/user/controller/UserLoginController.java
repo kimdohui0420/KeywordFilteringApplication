@@ -34,7 +34,7 @@ public class UserLoginController {
         return "user/login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
     public void loginPOST(LoginDTO loginDTO,
                           HttpSession httpSession,
                           Model model) throws Exception{
@@ -43,7 +43,6 @@ public class UserLoginController {
             return;
 
         model.addAttribute("user", userVO);
-
         // 로그인 유지를 선택한 경우
         if(loginDTO.isUseCookie()){
             int amount = 60*60*24*7; // 7일
