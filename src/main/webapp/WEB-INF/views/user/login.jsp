@@ -41,7 +41,7 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="signUp.jsp">Need an account? Sign up!</a></div>
+                                <div class="small"><a href="/user/signUp">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>

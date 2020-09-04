@@ -8,10 +8,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                     Home
                 </a>
-                <a class="nav-link" href="charts.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-bell"></i></div>
-                    알림
-                </a>
+                <c:if test="${not empty login}">
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                     카트
@@ -27,6 +24,7 @@
                         <a class="nav-link" href="/dist/layout-sidenav-light.html">Light Sidenav</a>
                     </nav>
                 </div>
+                </c:if>
             </div>
         </div>
         <div class="sb-sidenav-footer">
