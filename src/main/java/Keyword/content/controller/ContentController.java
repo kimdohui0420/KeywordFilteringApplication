@@ -54,7 +54,7 @@ public class ContentController {
         contentService.create(contentVO);
         redirectAttributes.addFlashAttribute("msg", "addSuccess");
 
-        return "redirect:/read";
+        return "redirect:/content/read";
     }
 
     // 켄텐츠 목록
@@ -75,7 +75,7 @@ public class ContentController {
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("contentId") String contentId, Model model) throws Exception{
         model.addAttribute("content", contentService.read(contentId));
-        return "read";
+        return "content/read";
     }
 
     // 수정 페이지 이동
@@ -83,7 +83,7 @@ public class ContentController {
     public String modifyGET(@RequestParam("contentId") String contentId, Model model) throws Exception{
         model.addAttribute("content", contentService.read(contentId));
 
-        return "modify";
+        return "content/modify";
     }
 
     // 수정 처리
@@ -94,7 +94,7 @@ public class ContentController {
         contentService.update(contentVO);
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/read";
+        return "redirect:/content/read";
     }
 
     // 삭제 처리

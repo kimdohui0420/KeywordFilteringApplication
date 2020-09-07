@@ -52,12 +52,14 @@
         SELECT
             imdb_id
             , title
+            , plot
             , type
             , rated
             , year
             , released_at
             , runtime
             , director
+            , actor
             , award_win
             , award_nominate
             , award_major
@@ -91,6 +93,7 @@
             , released_at
             , runtime
             , director
+            , actor
             , award_win
             , award_nominate
             , award_major
@@ -137,6 +140,7 @@
         <result property="releasedAt" column="released_at"/>
         <result property="runtime" column="runtime"/>
         <result property="director" column="director"/>
+        <result property="actor" column="actor"/>
         <result property="awardWin" column="award_win"/>
         <result property="awardNominate" column="award_nominate"/>
         <result property="awardMajor" column="award_major"/>
