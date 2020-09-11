@@ -74,6 +74,12 @@
                     </div>
                     <div class="ResultWrapper">
                         <div class="EmptyResult">
+                            <div class="Guide">
+                                <svg class="GuideIcon" viewBox="0 0 48 48" width="48" height="48">
+                                    <path d="M24 0L0 24h15v24h18V24h15z"></path>
+                                </svg>
+                            </div>
+                            좋아하는 키워드를 선택해보세요.
                         </div>
                         <div class="Result">
                             <div class="SelectedKeywordLists">
@@ -95,7 +101,7 @@
                                 </div>
                                 <div class="tab">
                                     <label class="switch">
-                                        <input type="radio" name="filter">
+                                        <input type="radio" name="filter" checked>
                                         <span class="slider">최신순</span>
                                     </label>
                                     <label class="switch">
@@ -112,7 +118,7 @@
                                     </label>
                                 </div>
                             </header>
-                            <div class="ResultLists">
+                            <div class="ResultLists" id="ResultLists">
                                 <div class="movie_card" id="bright">
                                     <div class="info_section">
                                         <div class="movie_header">
@@ -175,18 +181,27 @@
 
 <%@ include file="include/plugin_js.jsp"%>
 
-//키워드 선택 전 후 화면 변화에 대한 제어
+<!-- 키워드 선택 전 후 화면 변화에 대한 제어-->
 <script>
     $(document).ready(function() {
         //기본 설정
-        //$(".EmptyResult").show();
-        //$(".Result").hide();
+        $(".EmptyResult").show();
+        $(".Result").hide();
 
-        //$("span.more").click(function() {
-            //3000 : 3초, 'slow', 'normal', 'fast'
-           // $("#moreRegion").show('3000'); //천천히 보이기
-           // $(this).hide('fast');//more버튼 숨기기
-       // });
+        $(".list-group-item-action").click(function() {
+            $(".EmptyResult").hide();
+            $(".Result").show();
+       });
+    });
+</script>
+
+<!-- 정렬 탭 제어 -->
+<script>
+    $(document).ready(function() {
+        $('.tab label').click(function(){
+           //새로고침 코드
+            $ ('.ResultWrapper .ResultLists').load ( window.location + '.ResultWrapper .ResultLists').hide().fadeIn('slow');
+        });
     });
 </script>
 

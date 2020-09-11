@@ -10544,7 +10544,28 @@ html, body {
 
 }
 .ResultWrapper .EmptyResult{
+  margin-bottom: 120px;
+  padding-top: 20px;
+  color: #abb3ba;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
 
+.ResultWrapper .EmptyResult .Guide {
+  position: relative;
+  padding-top: 80px;
+  font-size: 20px;
+}
+
+.ResultWrapper .EmptyResult .Guide .GuideIcon {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  height: 40px;
+  -webkit-transform: translate3d(-50%,0,0);
+  transform: translate3d(-50%,0,0);
+  fill: #ccd5db;
 }
 
 .ResultWrapper .SelectedKeywordLists {

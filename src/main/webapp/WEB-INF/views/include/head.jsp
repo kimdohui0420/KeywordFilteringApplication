@@ -14,7 +14,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Keyword Filtering Application</title>
-    <link href="/dist/css/styles.css?after2" rel="stylesheet" />
+    <link href="/dist/css/styles.css?after5" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     <link href="/dist/css/movieCard.css?a" rel="stylesheet" />
