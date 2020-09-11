@@ -85,16 +85,15 @@
                         <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
                     </div>
                     <div class="comment-block">
-                        <!-- TODO: 로그인시에만 남길 수 있도록 바꿔야 함-->
-                        <form action="">
-                            <textarea id="newReviewText" cols="30" rows="3" placeholder="Add comment..."></textarea>
-                            <input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>
-                            <div class="bottom-comment">
-                                <ul class="comment-actions">
-                                    <li class="reply reviewAddBtn">Reply</li>
-                                </ul>
-                            </div>
-                        </form>
+                            <form action="">
+                                <textarea id="newReviewText" cols="30" rows="3" placeholder="Add comment..."></textarea>
+                                <input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>
+                                <div class="bottom-comment">
+                                    <ul class="comment-actions">
+                                        <li class="reply reviewAddBtn">Reply</li>
+                                    </ul>
+                                </div>
+                            </form>
                     </div>
                 </div>
 
@@ -117,37 +116,6 @@
                     </div-->
                 </div>
             </div>
-
-            <!--<div class="box-warning">
-                <div class="box-header with-border">
-                    <a class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글작성</a>
-                </div>
-                <div class="box-body">
-                    <c:if test="${not empty login}">
-                        <form>
-                            <div class="form-group">
-                                <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글 내용.." style="resize: none"></textarea>
-                            </div>
-                            <div class="col-sm-2" hidden>
-                                <input class="form-control" id="newReplyWriter" type="text" placeholder="댓글 작성자.." value="${login.userId}" readonly>
-                            </div>
-                            <button type="button" class="btn btn-primary btn-block replyAddBtn"><i class="fa fa-save"></i> 저장</button>
-                        </form>
-                    </c:if>
-                    <c:if test="${empty login}">
-                        <%-- 로그인하면 이 페이지로 돌아오지 않음->해결! --%>
-                        <button type="submit" class="btn btn-default btn-block repliesLoginBtn">
-                            <i class="fa fa-edit"></i> 로그인 한 사용자만 댓글 등록이 가능합니다.
-                        </button>
-                        <%--
-                        <a href="${path}/replies" class="btn btn-default btn-block" role="button">
-                            <i class="fa fa-edit"></i> 로그인 한 사용자만 댓글 등록이 가능합니다.
-                        </a>
-                        --%>
-                    </c:if>
-                </div>
-            </div>
-            -->
             <!-- [12-2] 댓글 목록/페이징 --><!--
             <div class="box box-success collapsed-box">
                 <div class="box-header with-border">
@@ -246,7 +214,9 @@
                         eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
                         eachReview += '<div class="comment-block"><p class="comment-text">'+value.reviewText+'</p>';
                         eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+'</div>';
-                        eachReview += '<ul class="comment-actions"><li class="complain">Complain</li><li class="reply">Reply</li></ul>';
+                        if("${login.userName}"===value.reviewWriter) {
+                            eachReview += '<ul class="comment-actions"><li class="complain">Complain</li><li class="reply">Reply</li></ul>';
+                        }
                         eachReview += '</div> </div> </div>';
                     });
 
@@ -259,6 +229,11 @@
 
         // 리뷰 등록 처리
         $(".reviewAddBtn").on("click", function () {
+            if (${empty login}){
+                alert("로그인시에만 리뷰 작성이 가능합니다.");
+                return;
+            }
+
             var reviewWriterObj = $("#newReviewWriter");
             var reviewTextObj = $("#newReviewText");
             var reviewWriter = reviewWriterObj.val();
@@ -288,6 +263,8 @@
                 }
             });
         });
+
+
     });
 </script>
 </body>
