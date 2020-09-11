@@ -98,11 +98,11 @@ p {
     margin: -2px;
     cursor: pointer;
 }
-.comment-actions li.complain {
+.comment-actions li.comment-modify {
     padding-right: 0.75rem;
     border-right: 1px solid #e1e5eb;
 }
-.comment-actions li.reply {
+.comment-actions li.comment-delete {
     padding-left: 0.75rem;
     padding-right: 0.125rem;
 }

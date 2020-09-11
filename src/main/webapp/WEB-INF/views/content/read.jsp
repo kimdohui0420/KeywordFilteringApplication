@@ -140,28 +140,6 @@
                     </div>
                 </div>
             </div>-->
-            <!-- [12-2] 댓글 수정 modal --><!--
-            <div class="modal fade" id="modModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="model-header">
-                            <button type="button" class="close" date-dimiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">댓글 수정</h4>
-                        </div>
-                        <div class="modal-body" data-rno>
-                            <input type="hidden" class="replyNo" />
-                            <%-- <input type="text" id="replytext" class="form-control" /> --%>
-                            <textarea class="form-control" id="replyText" rows="3" style="resize: none"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left exitModBtn" date-dimiss="modal">닫기</button>
-                            <button type="button" class="btn btn-primary modalModBtn">수정</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <!-- [12-2] 댓글 삭제 modal --><!--
             <div class="modal fade" id="delModal">
                 <div class="modal-dialog">
@@ -191,80 +169,113 @@
 
 <%@ include file="../include/plugin_js.jsp"%>
 <script>
-    $(document).ready(function () {
+    var contentId = "${content.contentId}";
 
-        var contentId = "${content.contentId}";
-        console.log('contentId is '+contentId);
+    function commentList(){
+        $.ajax({
+            type: "get",
+            url: "/reviews/all/"+contentId,
+            data: {
+                contentId: contentId
+            },
+            success: function(result){
+                var eachReview ='';
+                $.each(result, function(key, value){
+                    // TODO: 등록일?수정일?
+                    var formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
 
-        // 리뷰 목록 출력
-        commentList();
-        function commentList(){
-            $.ajax({
-                type: "get",
-                url: "/reviews/all/"+contentId,
-                data: {
-                    contentId: contentId
-                },
-                success: function(result){
-                    var eachReview ='';
-                    $.each(result, function(key, value){
-                        var formattedTime = new Date(value.regDate).toISOString().slice(0, 19).replace('T', ' ');
+                    // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
+                    eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
+                    eachReview += '<div class="comment-block commentContent'+value.reviewNo+'"><p class="comment-text">'+value.reviewText+'</p>';
+                    eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+'</div>';
+                    if("${login.userName}"===value.reviewWriter) {
+                        eachReview += '<ul class="comment-actions">';
+                        eachReview += '<li class="comment-modify"><a onclick="commentUpdate('+value.reviewNo+',\''+value.reviewText+'\');return false;"> 수정 </a></li>';
+                        eachReview += '<li class="comment-delete">삭제</li></ul>';
+                    }
+                    eachReview += '</div> </div> </div>';
+                });
 
-                        // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
-                        eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
-                        eachReview += '<div class="comment-block"><p class="comment-text">'+value.reviewText+'</p>';
-                        eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+'</div>';
-                        if("${login.userName}"===value.reviewWriter) {
-                            eachReview += '<ul class="comment-actions"><li class="complain">Complain</li><li class="reply">Reply</li></ul>';
-                        }
-                        eachReview += '</div> </div> </div>';
-                    });
+                $(".commentList").html(eachReview);
+            }
+        });
+    }
 
-                    $(".commentList").html(eachReview);
-                }
-            });
+    // 리뷰 등록 처리
+    $(".reviewAddBtn").on("click", function () {
+        if (${empty login}){
+            alert("로그인시에만 리뷰 작성이 가능합니다.");
+            return;
         }
 
+        var reviewWriterObj = $("#newReviewWriter");
+        var reviewTextObj = $("#newReviewText");
+        var reviewWriter = reviewWriterObj.val();
+        var reviewText = reviewTextObj.val();
 
+        $.ajax({
+            type: "post",
+            url: "/reviews/",
+            headers: {
+                "Content-type": "application/json",
+                "X-HTTP-Method-Override": "POST"
+            },
+            dataType: "text",
+            data: JSON.stringify({
+                contentId: contentId,
+                reviewText: reviewText,
+                reviewWriter: reviewWriter
+            }),
+            success: function(result){
+                console.log("result: " +result);
+                if(result=="regSuccess"){
+                    alert("리뷰가 등록되었습니다.");
+                    commentList();
 
-        // 리뷰 등록 처리
-        $(".reviewAddBtn").on("click", function () {
-            if (${empty login}){
-                alert("로그인시에만 리뷰 작성이 가능합니다.");
-                return;
-            }
-
-            var reviewWriterObj = $("#newReviewWriter");
-            var reviewTextObj = $("#newReviewText");
-            var reviewWriter = reviewWriterObj.val();
-            var reviewText = reviewTextObj.val();
-
-            $.ajax({
-                type: "post",
-                url: "/reviews/",
-                headers: {
-                    "Content-type": "application/json",
-                    "X-HTTP-Method-Override": "POST"
-                },
-                dataType: "text",
-                data: JSON.stringify({
-                    contentId: contentId,
-                    reviewText: reviewText,
-                    reviewWriter: reviewWriter
-                }),
-                success: function(result){
-                    console.log("result: " +result);
-                    if(result=="regSuccess"){
-                        alert("리뷰가 등록되었습니다.");
-                        commentList();
-
-                        reviewTextObj.val("");   // 댓글 내용 초기화
-                    }
+                    reviewTextObj.val("");   // 댓글 내용 초기화
                 }
-            });
+            }
         });
+    });
 
+    // 리뷰 수정 버튼 누름
+    function commentUpdate(no, text){
+        var modifyForm = '';
+        modifyForm += '<textarea type="text" name="content_'+no+'">'+text+'</textarea>';
+        modifyForm += '<div class="bottom-comment"><ul class="comment-actions">';
+        modifyForm += '<li class="comment-modify"><a onclick="commentUpdateProc('+no+');return false;">수정</a></li>';
+        modifyForm += '</ul></div>';
 
+        $('.commentContent'+no).html(modifyForm);
+    }
+
+    // 리뷰 수정 처리
+    function commentUpdateProc(no){
+        console.log('commentUpdateProc' +no);
+        var updateContent = $('[name=content_'+no+']').val();
+        console.log(updateContent);
+        $.ajax({
+            type: 'put',
+            url: '/reviews/'+ no,
+            headers: {
+                "Content-type": "application/json",
+                "X-HTTP-Method-Override": "POST"
+            },
+            dataType: "text",
+            data: JSON.stringify({
+                reviewText: updateContent
+            }),
+            success: function(result){
+                if(result=="modSuccess"){
+                    alert("리뷰가 수정되었습니다.");
+                    commentList();
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        // 리뷰 목록 출력
+        commentList();
     });
 </script>
 </body>
