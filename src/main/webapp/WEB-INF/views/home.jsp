@@ -179,8 +179,8 @@
 <script>
     $(document).ready(function() {
         //기본 설정
-        $(".EmptyResult").show();
-        $(".Result").hide();
+        //$(".EmptyResult").show();
+        //$(".Result").hide();
 
         //$("span.more").click(function() {
             //3000 : 3초, 'slow', 'normal', 'fast'
