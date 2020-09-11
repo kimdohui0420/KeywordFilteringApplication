@@ -59,7 +59,7 @@
                                     <h5>GENRE</h5>
                                     <div id="list-example2" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalGenre}" var="contentGenre">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
+                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
