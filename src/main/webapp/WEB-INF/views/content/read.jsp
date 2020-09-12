@@ -90,7 +90,7 @@
                                 <input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>
                                 <div class="bottom-comment">
                                     <ul class="comment-actions">
-                                        <li class="reply reviewAddBtn">Reply</li>
+                                        <li class="reviewAddBtn">Reply</li>
                                     </ul>
                                 </div>
                             </form>
@@ -191,7 +191,7 @@
                     if("${login.userName}"===value.reviewWriter) {
                         eachReview += '<ul class="comment-actions">';
                         eachReview += '<li class="comment-modify"><a onclick="commentUpdate('+value.reviewNo+',\''+value.reviewText+'\');return false;"> 수정 </a></li>';
-                        eachReview += '<li class="comment-delete">삭제</li></ul>';
+                        eachReview += '<li class="comment-delete"><a onclick="commentDelete('+value.reviewNo+');"> 삭제</a></li></ul>';
                     }
                     eachReview += '</div> </div> </div>';
                 });
@@ -273,6 +273,21 @@
             }
         });
     }
+
+    // 리뷰 삭제
+    function commentDelete(no){
+        $.ajax({
+            type: 'delete',
+            url: '/reviews/'+no,
+            success: function(result){
+                if(result=="delSuccess"){
+                    alert("댓글이 삭제되었습니다.");
+                    commentList();
+                }
+            }
+        });
+    }
+
     $(document).ready(function () {
         // 리뷰 목록 출력
         commentList();

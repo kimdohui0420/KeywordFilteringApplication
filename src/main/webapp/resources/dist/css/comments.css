@@ -95,7 +95,6 @@ p {
 }
 .comment-actions li {
     display: inline;
-    margin: -2px;
     cursor: pointer;
 }
 .comment-actions li.comment-modify {
