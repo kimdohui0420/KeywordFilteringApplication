@@ -25,6 +25,7 @@
             , imdb_rating
             , imdb_votes
             , rating
+            , review_cnt
         ) VALUES (
             #{contentId}
             , #{title}
@@ -45,6 +46,7 @@
             , #{imdbRating}
             , #{imdbVotes}
             , #{rating}
+            , #{reviewCnt}
         )
     </insert>
 
@@ -66,6 +68,7 @@
             , award_major_type
             , imdb_rating
             , rating
+            , review_cnt
         FROM    disney_contents
         WHERE   imdb_id = #{contentId}
     </select>
@@ -99,6 +102,7 @@
             , award_major
             , award_major_type
             , imdb_rating
+            , review_cnt
         FROM    disney_contents
         ORDER BY title DESC
         ]]>
@@ -131,6 +135,12 @@
         ]]>
     </select>
 
+    <update id="updateReviewCnt">
+        UPDATE disney_contents
+        SET review_cnt = review_cnt + #{amount}
+        WHERE imdb_id = #{contentId};
+    </update>
+
     <resultMap id="ContentResultMap" type="ContentVO">
         <id property="contentId" column="imdb_id"/>
         <result property="title" column="title"/>
@@ -147,6 +157,7 @@
         <result property="awardMajorType" column="award_major_type"/>
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
+        <result property="reviewCnt" column="review_cnt"/>
     </resultMap>
 
 </mapper>

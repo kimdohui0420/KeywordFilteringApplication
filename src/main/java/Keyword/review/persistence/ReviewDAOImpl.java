@@ -36,4 +36,9 @@ public class ReviewDAOImpl implements ReviewDAO{
     public void delete(Integer reviewNo) throws Exception {
         sqlSession.delete(NAMESPACE+".delete", reviewNo);
     }
+
+    @Override
+    public String getContentId(Integer reviewNo) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".getContentId", reviewNo);
+    }
 }

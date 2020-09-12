@@ -22,6 +22,7 @@ public class ContentVO {
     private Double imdbRating;
     private Integer imdbVotes;
     private Double rating;
+    private Integer reviewCnt;
 
     public String getContentId() {
         return contentId;
@@ -175,6 +176,14 @@ public class ContentVO {
         this.rating = rating;
     }
 
+    public Integer getReviewCnt() {
+        return reviewCnt;
+    }
+
+    public void setReviewCnt(Integer reviewCnt) {
+        this.reviewCnt = reviewCnt;
+    }
+
     @Override
     public String toString() {
         return "ContentVO{" +
@@ -197,6 +206,7 @@ public class ContentVO {
                 ", imdbRating=" + imdbRating +
                 ", imdbVotes=" + imdbVotes +
                 ", rating=" + rating +
+                ", reviewCnt=" + reviewCnt +
                 '}';
     }
 }

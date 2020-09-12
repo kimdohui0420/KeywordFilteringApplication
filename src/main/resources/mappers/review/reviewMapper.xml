@@ -42,6 +42,12 @@
         WHERE review_no = #{reviewNo}
     </delete>
 
+    <select id="getContentId" resultType="string">
+        SELECT content_id
+        FROM disney_review
+        WHERE review_no = #{reviewNo}
+    </select>
+
     <!-- [11-3] 댓글 페이징 -->
     <!--
     <select id="listPaging" resultMap="reviewResultMap">
@@ -65,13 +71,8 @@
         FROM disney_review
         WHERE article_no = #{articleNo}
     </select>
-
-    <select id="getArticleNo" resultType="int">
-        SELECT article_no
-        FROM disney_review
-        WHERE review_no = #{reviewNo}
-    </select>
     -->
+
     <resultMap id="ReviewResultMap" type="ReviewVO">
         <id property="reviewNo" column="review_no"/>
         <result property="contentId" column="content_id"/>

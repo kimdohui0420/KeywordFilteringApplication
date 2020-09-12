@@ -9,8 +9,8 @@ public interface ReviewDAO {
     void create(ReviewVO reviewVO) throws Exception;
     void update(ReviewVO reviewVO) throws Exception;
     void delete(Integer reviewNo) throws Exception;
+    String getContentId(Integer reviewNo) throws Exception;
     // 댓글 페이징
     //List<ReviewVO> listPaging(String contentId, Criteria criteria) throws Exception;
     //int countReplies(Integer contentId) throws Exception;
-    //int getArticleNo(Integer reviewNo) throws Exception;
 }

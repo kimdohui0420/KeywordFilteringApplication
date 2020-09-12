@@ -108,3 +108,17 @@ p {
 .comment-actions li:hover {
     color: #0095ff;
 }
+.comment-menu{
+    max-height: 3rem;
+    display: table;
+    width: 94%;
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.1875rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+    float: right;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}

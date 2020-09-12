@@ -86,7 +86,7 @@
                     </div>
                     <div class="comment-block">
                             <form action="">
-                                <textarea id="newReviewText" cols="30" rows="3" placeholder="Add comment..."></textarea>
+                                <textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>
                                 <input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>
                                 <div class="bottom-comment">
                                     <ul class="comment-actions">
@@ -97,23 +97,11 @@
                     </div>
                 </div>
 
+                <!-- TODO: 리뷰 개수 바로바로 갱신, 페이징-->
+                <div class="comment-menu commentMenu">
+                    ${content.reviewCnt}개의 Review
+                </div>
                 <div class="commentList">
-                    <!--div class="comment-wrap">
-                        <div class="photo">
-                            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
-                        </div>
-                        <div class="comment-block">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam reprehenderit quasi
-                                sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
-                            <div class="bottom-comment">
-                                <div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
-                                <ul class="comment-actions">
-                                    <li class="complain">Complain</li>
-                                    <li class="reply">Reply</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div-->
                 </div>
             </div>
             <!-- [12-2] 댓글 목록/페이징 --><!--
@@ -140,28 +128,6 @@
                     </div>
                 </div>
             </div>-->
-            <!-- [12-2] 댓글 삭제 modal --><!--
-            <div class="modal fade" id="delModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" date-dimiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">댓글 삭제</h4>
-                            <input type="hidden" class="rno" />
-                        </div>
-                        <div class="modal-body" data-rno>
-                            <p>댓글을 삭제하겠습니까?</p>
-                            <input type="hidden" class="rno" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left exitDelBtn" date-dimiss="modal">아니요</button>
-                            <button type="button" class="btn btn-primary modalDelBtn">네. 삭제!</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </main>
         <%@include file="../include/main_footer.jsp"%>
     </div>
@@ -170,7 +136,6 @@
 <%@ include file="../include/plugin_js.jsp"%>
 <script>
     var contentId = "${content.contentId}";
-
     function commentList(){
         $.ajax({
             type: "get",
@@ -230,6 +195,7 @@
                 console.log("result: " +result);
                 if(result=="regSuccess"){
                     alert("리뷰가 등록되었습니다.");
+
                     commentList();
 
                     reviewTextObj.val("");   // 댓글 내용 초기화

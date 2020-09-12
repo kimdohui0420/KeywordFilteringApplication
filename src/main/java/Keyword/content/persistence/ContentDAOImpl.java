@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ContentDAOImpl implements ContentDAO{
@@ -55,6 +57,15 @@ public class ContentDAOImpl implements ContentDAO{
     @Override
     public List<String> listRated() throws Exception {
         return sqlSession.selectList(NAMESPACE+".listRated");
+    }
+
+    @Override
+    public void updateReviewCnt(String contentId, int amount) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("amount", amount);
+
+        sqlSession.update(NAMESPACE+".updateReviewCnt", paramMap);
     }
 
 
