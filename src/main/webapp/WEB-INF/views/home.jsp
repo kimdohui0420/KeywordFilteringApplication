@@ -31,7 +31,7 @@
                                     <sub>키워드로 마음에 드는 컨텐츠를 찾아보세요!</sub>
                                 </div>
                                 <div class="col-lg-auto col-md-auto">
-                                    <button class="btn btn-secondary">전체 해제</button>
+                                    <button class="btn btn-secondary" id="All-off">전체 해제</button>
                                 </div>
                             </div>
                         </div>
@@ -270,6 +270,30 @@
             addArray(val, selTmArr, 1);
             //키워드 다시 출력
             printKeyword();
+            //배열값이 비었으면 빈 화면 다시 보여주기
+            if (!selTmArr.length) {
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+        })
+
+        //전체 해제 버튼 클릭
+        $("#All-off").click(function (e) {
+            //리스트 선택 해제
+            for (var i = 0; i <selTmArr.length; i++) {
+                $('.list-group a').filter(function() {return $(this).text() === selTmArr[i];}).removeClass( 'active' );
+            }
+            //배열에서 지우기
+            for (var i = selTmArr.length; i > 0; i--) {
+                selTmArr.pop();
+            }
+
+            //배열값이 비었으면 빈 화면 다시 보여주기
+            if (!selTmArr.length) {
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
         })
 
     });
