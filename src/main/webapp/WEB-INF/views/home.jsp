@@ -20,17 +20,17 @@
                 <div class="mt-4">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <div class="row align-middle">
-                                <div class="col-lg-auto col-md-auto nopadding">
-                                    <h4>
+                            <div class="row">
+                                <div class="col-lg-auto col-md-auto">
+                                    <h4 style="margin-top: 5px; margin-bottom:0px">
                                         <i class="fas fa-search"></i>
                                         키워드로 검색
                                     </h4>
                                 </div>
-                                <div class="col-lg-9 col-md-7 nopadding" >
+                                <div class="col" style="padding-top: 8px">
                                     <sub>키워드로 마음에 드는 컨텐츠를 찾아보세요!</sub>
                                 </div>
-                                <div class="col-lg-auto col-md-auto nopadding">
+                                <div class="col-lg-auto col-md-auto">
                                     <button class="btn btn-secondary">전체 해제</button>
                                 </div>
                             </div>
@@ -175,6 +175,7 @@
 </div>
 
 <%@ include file="include/plugin_js.jsp"%>
+
 
 <!-- 키워드 선택 제어-->
 <script>
