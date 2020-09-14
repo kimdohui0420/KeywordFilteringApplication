@@ -20,18 +20,18 @@
                 <div class="mt-4">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <div class="row align-middle">
-                                <div class="col-lg-auto col-md-auto nopadding">
-                                    <h4>
+                            <div class="row">
+                                <div class="col-lg-auto col-md-auto">
+                                    <h4 style="margin-top: 5px; margin-bottom:0px">
                                         <i class="fas fa-search"></i>
                                         키워드로 검색
                                     </h4>
                                 </div>
-                                <div class="col-lg-9 col-md-7 nopadding" >
+                                <div class="col" style="padding-top: 8px">
                                     <sub>키워드로 마음에 드는 컨텐츠를 찾아보세요!</sub>
                                 </div>
-                                <div class="col-lg-auto col-md-auto nopadding">
-                                    <button class="btn btn-secondary">전체 해제</button>
+                                <div class="col-lg-auto col-md-auto">
+                                    <button class="btn btn-secondary" id="All-off">전체 해제</button>
                                 </div>
                             </div>
                         </div>
@@ -72,20 +72,21 @@
                             </div>
                         </div>
                     </div>
+                    <!--로딩시 블러 처리 하고 싶으면 loading-overlay blurEffect 이 클래스 두개 추가하기 -->
                     <div class="ResultWrapper">
                         <div class="EmptyResult">
+                            <div class="Guide">
+                                <svg class="GuideIcon" viewBox="0 0 48 48" width="48" height="48">
+                                    <path d="M24 0L0 24h15v24h18V24h15z"></path>
+                                </svg>
+                            </div>
+                            좋아하는 키워드를 선택해보세요.
                         </div>
                         <div class="Result">
                             <div class="SelectedKeywordLists">
                                 <h2 class="invisible">선택된 키워드</h2>
                                 <ul class="KeywordLists">
                                     <li class="Keyword">
-                                        <button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton" data-tag-id="2612">
-                                            <span class="Keyword_Hash">#</span>fantasy
-                                            <svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">
-                                                <path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>
-                                            </svg>
-                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -95,7 +96,7 @@
                                 </div>
                                 <div class="tab">
                                     <label class="switch">
-                                        <input type="radio" name="filter">
+                                        <input type="radio" name="filter" checked>
                                         <span class="slider">최신순</span>
                                     </label>
                                     <label class="switch">
@@ -112,7 +113,7 @@
                                     </label>
                                 </div>
                             </header>
-                            <div class="ResultLists">
+                            <div class="ResultLists" id="ResultLists">
                                 <div class="movie_card" id="bright">
                                     <div class="info_section">
                                         <div class="movie_header">
@@ -175,18 +176,136 @@
 
 <%@ include file="include/plugin_js.jsp"%>
 
-//키워드 선택 전 후 화면 변화에 대한 제어
+
+<!-- 키워드 선택 제어-->
 <script>
     $(document).ready(function() {
-        //기본 설정
-        //$(".EmptyResult").show();
-        //$(".Result").hide();
 
-        //$("span.more").click(function() {
-            //3000 : 3초, 'slow', 'normal', 'fast'
-           // $("#moreRegion").show('3000'); //천천히 보이기
-           // $(this).hide('fast');//more버튼 숨기기
-       // });
+        $(".EmptyResult").show();
+        $(".Result").hide();
+
+        var selTmArr = new Array();
+
+
+        $(".list-group a").click(function (e) {
+
+            selList(this, 1); //선택 처리
+
+            //값 가져오기
+            var val = $(this).text();
+
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+
+            //배열에 값이 있으면 영화 리스트 보이기 + 키워드 나열
+            if (selTmArr.length ) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+
+                //선택 키워드 나열하기
+                printKeyword();
+            }
+            //배열에 값이 없으면 빈 화면 보여주기
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
+        })
+
+        //리스트 태그 선택처리
+        function selList(el, toggle) {
+            if(toggle == 1){
+                $(el).toggleClass('active');
+            }
+            else{
+                $(el).addClass('active');
+            }
+        }
+
+        function addArray(value, arr, toggle) {
+            if($.inArray(value, arr) != -1){ //배열에 값이 있다면
+                if(toggle == 1){
+                    //존재하는 값을 지운다
+                    arr.splice($.inArray(value, arr),1);
+                }
+                else {
+                    //이미 존재하면 추가하지 않음
+                }
+            }
+            else{
+                //배열추가
+                arr.push(value);
+            }
+        }
+
+        //선택 키워드 나열
+        function printKeyword() {
+            var textToInsert = [];
+            var i = 0;
+            for (var a = 0; a <selTmArr.length; a++) {
+                textToInsert[i++] = '<button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton">' +
+                    '<span class="Keyword_Hash">#</span>';
+                textToInsert[i++] = selTmArr[a];
+                textToInsert[i++] = '<svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">' +
+                    '<path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>' +
+                    '</svg>' +
+                    '</button>' ;
+            }
+
+            $(".Keyword").html("").append(textToInsert.join(''));
+        }
+
+        //키워드 버튼 클릭시
+        $(document).on("click",".Keyword_DeleteButton",function(){
+
+            //값 가져오기
+            var val = $(this).text();
+            //해쉬태그 제거
+            if( val.charAt( 0 ) === '#' )
+                val = val.slice( 1 );
+            //리스트 선택 처리
+            selList( $('.list-group a').filter(function() {return $(this).text() === val;}), 1);
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+            //키워드 다시 출력
+            printKeyword();
+            //배열값이 비었으면 빈 화면 다시 보여주기
+            if (!selTmArr.length) {
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+        })
+
+        //전체 해제 버튼 클릭
+        $("#All-off").click(function (e) {
+            //리스트 선택 해제
+            for (var i = 0; i <selTmArr.length; i++) {
+                $('.list-group a').filter(function() {return $(this).text() === selTmArr[i];}).removeClass( 'active' );
+            }
+            //배열에서 지우기
+            for (var i = selTmArr.length; i > 0; i--) {
+                selTmArr.pop();
+            }
+
+            //배열값이 비었으면 빈 화면 다시 보여주기
+            if (!selTmArr.length) {
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
+        })
+
+    });
+</script>
+
+<!-- 정렬 탭 제어 -->
+<script>
+    $(document).ready(function() {
+        $('.tab label').click(function(){
+           //새로고침 코드
+            $ ('.ResultWrapper .ResultLists').load ( window.location + '.ResultWrapper .ResultLists').hide().fadeIn('slow');
+        });
     });
 </script>
 
