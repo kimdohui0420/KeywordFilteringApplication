@@ -72,6 +72,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--로딩시 블러 처리 하고 싶으면 loading-overlay blurEffect 이 클래스 두개 추가하기 -->
                     <div class="ResultWrapper">
                         <div class="EmptyResult">
                             <div class="Guide">
@@ -181,17 +182,61 @@
 
 <%@ include file="include/plugin_js.jsp"%>
 
-<!-- 키워드 선택 전 후 화면 변화에 대한 제어-->
+<!-- 키워드 선택 제어-->
 <script>
     $(document).ready(function() {
-        //기본 설정
+
         $(".EmptyResult").show();
         $(".Result").hide();
 
-        $(".list-group-item-action").click(function() {
-            $(".EmptyResult").hide();
-            $(".Result").show();
-       });
+        var selTmArr = new Array();
+
+
+        $(".list-group a").click(function (e) {
+
+            selList(this, 1); //선택 처리
+
+            //값 가져오기
+            var val = $(this).text();
+
+            //배열에 저장
+            addArray(val, selTmArr, 1);
+
+            if (selTmArr.length ) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+            }
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+        })
+
+        //리스트 태그 선택처리
+        function selList(el, toggle) {
+            if(toggle == 1){
+                $(el).toggleClass('active');
+            }
+            else{
+                $(el).addClass('active');
+            }
+        }
+
+        function addArray(value, arr, toggle) {
+            if($.inArray(value, arr) != -1){ //배열에 값이 있다면
+                if(toggle == 1){
+                    //존재하는 값을 지운다
+                    arr.splice($.inArray(value, arr),1);
+                }
+                else {
+                    //이미 존재하면 추가하지 않음
+                }
+            }
+            else{
+                //배열추가
+                arr.push(value);
+            }
+        }
     });
 </script>
 
