@@ -10629,6 +10629,7 @@ section {
 }
 
 .ResultWrapper .SelectedKeywordLists .Keyword_DeleteButton {
+  margin: 1px 5px;
   -webkit-transition: background-color .2s;
   transition: background-color .2s;
 }

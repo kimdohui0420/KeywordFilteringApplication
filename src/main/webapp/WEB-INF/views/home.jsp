@@ -87,12 +87,6 @@
                                 <h2 class="invisible">선택된 키워드</h2>
                                 <ul class="KeywordLists">
                                     <li class="Keyword">
-                                        <button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton" data-tag-id="2612">
-                                            <span class="Keyword_Hash">#</span>fantasy
-                                            <svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">
-                                                <path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>
-                                            </svg>
-                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -199,17 +193,23 @@
             //값 가져오기
             var val = $(this).text();
 
-            //배열에 저장
+            //배열 업데이트
             addArray(val, selTmArr, 1);
 
+            //배열에 값이 있으면 영화 리스트 보이기 + 키워드 나열
             if (selTmArr.length ) {
                 $(".EmptyResult").hide();
                 $(".Result").show();
+
+                //선택 키워드 나열하기
+                printKeyword();
             }
+            //배열에 값이 없으면 빈 화면 보여주기
             else{
                 $(".Result").hide();
                 $(".EmptyResult").show();
             }
+
         })
 
         //리스트 태그 선택처리
@@ -237,6 +237,40 @@
                 arr.push(value);
             }
         }
+
+        //선택 키워드 나열
+        function printKeyword() {
+            var textToInsert = [];
+            var i = 0;
+            for (var a = 0; a <selTmArr.length; a++) {
+                textToInsert[i++] = '<button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton">' +
+                    '<span class="Keyword_Hash">#</span>';
+                textToInsert[i++] = selTmArr[a];
+                textToInsert[i++] = '<svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">' +
+                    '<path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>' +
+                    '</svg>' +
+                    '</button>' ;
+            }
+
+            $(".Keyword").html("").append(textToInsert.join(''));
+        }
+
+        //키워드 버튼 클릭시
+        $(document).on("click",".Keyword_DeleteButton",function(){
+
+            //값 가져오기
+            var val = $(this).text();
+            //해쉬태그 제거
+            if( val.charAt( 0 ) === '#' )
+                val = val.slice( 1 );
+            //리스트 선택 처리
+            selList( $('.list-group a').filter(function() {return $(this).text() === val;}), 1);
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+            //키워드 다시 출력
+            printKeyword();
+        })
+
     });
 </script>
 
