@@ -30,7 +30,7 @@ public class ReviewDAOTest {
 
     @Test
     public void testReviewList() throws Exception{
-        System.out.println(reviewDAO.list("tt3521164").toString());
+        System.out.println(reviewDAO.list("tt3521164", "").toString());
     }
 
     @Test

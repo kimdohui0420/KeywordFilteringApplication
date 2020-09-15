@@ -1,11 +1,14 @@
 package Keyword.review.persistence;
 
 import Keyword.review.domain.ReviewVO;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ReviewDAOImpl implements ReviewDAO{
@@ -18,8 +21,11 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public List<ReviewVO> list(String contentId) throws Exception {
-        return sqlSession.selectList(NAMESPACE+".list", contentId);
+    public List<ReviewVO> list(String contentId, String userName) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("userName", userName);
+        return sqlSession.selectList(NAMESPACE+".list", paramMap);
     }
 
     @Override
@@ -40,5 +46,13 @@ public class ReviewDAOImpl implements ReviewDAO{
     @Override
     public String getContentId(Integer reviewNo) throws Exception {
         return sqlSession.selectOne(NAMESPACE+".getContentId", reviewNo);
+    }
+
+    @Override
+    public ReviewVO getMyReview(String contentId, String userName) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("userName", userName);
+        return sqlSession.selectOne(NAMESPACE+".getMyReview", paramMap);
     }
 }
