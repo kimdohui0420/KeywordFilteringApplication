@@ -14,7 +14,8 @@
             , update_date
         FROM disney_review
         WHERE content_id = #{contentId}
-        ORDER BY review_no
+            and review_writer NOT IN(#{userName})
+        ORDER BY review_no DESC
     </select>
 
     <insert id="create">
@@ -46,6 +47,18 @@
         SELECT content_id
         FROM disney_review
         WHERE review_no = #{reviewNo}
+    </select>
+
+    <select id="getMyReview" resultMap="ReviewResultMap">
+        SELECT review_no
+            , content_id
+            , review_text
+            , review_writer
+            , reg_date
+            , update_date
+        FROM disney_review
+        WHERE content_id = #{contentId}
+             and review_writer = #{userName}
     </select>
 
     <!-- [11-3] 댓글 페이징 -->
