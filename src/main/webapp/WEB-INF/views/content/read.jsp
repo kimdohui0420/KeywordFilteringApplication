@@ -48,9 +48,9 @@
                     <div class="description">
 
                         <div class="column1">
-                            <span class="tag">action</span>
-                            <span class="tag">fantasy</span>
-                            <span class="tag">adventure</span>
+                            <c:forEach items="${keywordMaker.myGenre}" var="myGenre">
+                                <span class="tag">${myGenre}</span>
+                            </c:forEach>
                         </div>
 
                         <div class="column2">

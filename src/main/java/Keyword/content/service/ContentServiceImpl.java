@@ -56,4 +56,9 @@ public class ContentServiceImpl implements ContentService{
         return contentDAO.listRated();
     }
 
+    @Override
+    public List<String> listMyGenre(String contentId) throws Exception {
+        return contentDAO.listMyGenre(contentId);
+    }
+
 }

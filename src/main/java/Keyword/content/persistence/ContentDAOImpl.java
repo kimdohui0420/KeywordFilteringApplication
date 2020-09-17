@@ -68,5 +68,10 @@ public class ContentDAOImpl implements ContentDAO{
         sqlSession.update(NAMESPACE+".updateReviewCnt", paramMap);
     }
 
+    @Override
+    public List<String> listMyGenre(String contentId) throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listMyGenre", contentId);
+    }
+
 
 }

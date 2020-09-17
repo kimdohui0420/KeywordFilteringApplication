@@ -13,4 +13,5 @@ public interface ContentService {
     List<String> listType() throws Exception;
     List<String> listGenre() throws Exception;
     List<String> listRated() throws Exception;
+    List<String> listMyGenre(String contentId) throws Exception;
 }

@@ -6,6 +6,7 @@ public class KeywordMaker {
     private List<String> totalType;
     private List<String> totalGenre;
     private List<String> totalRated;
+    private List<String> myGenre;
 
     public List<String> getTotalType() {
         return totalType;
@@ -29,5 +30,13 @@ public class KeywordMaker {
 
     public void setTotalRated(List<String> totalRated) {
         this.totalRated = totalRated;
+    }
+
+    public List<String> getMyGenre() {
+        return myGenre;
+    }
+
+    public void setMyGenre(List<String> myGenre) {
+        this.myGenre = myGenre;
     }
 }
