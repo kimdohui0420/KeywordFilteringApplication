@@ -61,30 +61,29 @@
              and review_writer = #{userName}
     </select>
 
-    <!-- [11-3] 댓글 페이징 -->
-    <!--
-    <select id="listPaging" resultMap="reviewResultMap">
+    <!-- 페이징 -->
+    <select id="listPaging" resultMap="ReviewResultMap">
         SELECT
             review_no
-            , article_no
+            , content_id
             , review_text
             , review_writer
             , reg_date
             , update_date
             , user_img
         FROM disney_review
-        INNER JOIN tbl_user ON user_id = review_writer
-        WHERE article_no = #{articleNo}
+        INNER JOIN user ON user_name = review_writer
+        WHERE content_id = #{contentId}
         ORDER BY review_no DESC
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
     </select>
 
-    <select id="countReplies" resultType="int">
-        SELECT COUNT(article_no)
+    <select id="countReviews" resultType="int">
+        SELECT COUNT(content_id)
         FROM disney_review
-        WHERE article_no = #{articleNo}
+        WHERE content_id = #{contentId}
     </select>
-    -->
+
 
     <resultMap id="ReviewResultMap" type="ReviewVO">
         <id property="reviewNo" column="review_no"/>
@@ -96,25 +95,6 @@
         <!--association property="userVO" resultMap="userVOResultMap"/-->    <!-- [16-4.5] -->
     </resultMap>
 
-    <!-- TODO: 컨텐츠 테이블에 리뷰 갯수 포함 후
-    <resultMap id="ContentResultMap" type="ContentVO">
-        <id property="contentId" column="imdb_id"/>
-        <result property="title" column="title"/>
-        <result property="type" column="type"/>
-        <result property="rated" column="rated"/>
-        <result property="year" column="year"/>
-        <result property="releasedAt" column="released_at"/>
-        <result property="runtime" column="runtime"/>
-        <result property="director" column="director"/>
-        <result property="actor" column="actor"/>
-        <result property="awardWin" column="award_win"/>
-        <result property="awardNominate" column="award_nominate"/>
-        <result property="awardMajor" column="award_major"/>
-        <result property="awardMajorType" column="award_major_type"/>
-        <result property="imdbRating" column="imdb_rating"/>
-        <result property="rating" column="rating"/>
-    </resultMap>
-    -->
     <!-- [16-4.5] 게시글 작성자의 프로필 이미지 수정 -->
     <!--
     <resultMap id="userVOResultMap" type="UserVO">

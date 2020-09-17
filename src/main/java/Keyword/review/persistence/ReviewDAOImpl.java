@@ -1,5 +1,6 @@
 package Keyword.review.persistence;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.review.domain.ReviewVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
@@ -54,5 +55,18 @@ public class ReviewDAOImpl implements ReviewDAO{
         paramMap.put("contentId", contentId);
         paramMap.put("userName", userName);
         return sqlSession.selectOne(NAMESPACE+".getMyReview", paramMap);
+    }
+
+    @Override
+    public List<ReviewVO> listPaging(String contentId, Criteria criteria) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("criteria", criteria);
+        return sqlSession.selectList(NAMESPACE+".listPaging", paramMap);
+    }
+
+    @Override
+    public int countReviews(String contentId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".countReviews", contentId);
     }
 }
