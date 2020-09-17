@@ -39,7 +39,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <h5>TYPE</h5>
-                                    <div id="list-example1" class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <div id="list-TYPE" class="list-group" style="height: auto;">
                                         <c:forEach items="${keywordMaker.totalType}" var="contentType">
                                             <a class="list-group-item list-group-item-action" href="#list-item-1">${contentType}</a>
                                         </c:forEach>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <h5>GENRE</h5>
-                                    <div id="list-example2" class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <div id="list-GENRE" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalGenre}" var="contentGenre">
                                             <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
                                         </c:forEach>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <h5>RATED</h5>
-                                    <div id="list-example3" class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <div id="list-RATED" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalRated}" var="contentRated">
                                             <a class="list-group-item list-group-item-action" href="#list-item-1">${contentRated}</a>
                                         </c:forEach>
@@ -63,10 +63,27 @@
                                 </div>
                                 <div class="col-md-3">
                                     <h5>RUNNING TIME</h5>
-                                    <div id="list-example4" class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <div id="list-RTIME" class="list-group" style="height: auto;">
                                         <a class="list-group-item list-group-item-action" href="#list-item-1">1h 미만</a>
                                         <a class="list-group-item list-group-item-action" href="#list-item-1">1h 이상 2h 미만</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">2h 미만</a>
+                                        <a class="list-group-item list-group-item-action" href="#list-item-1">2h 이상</a>
+                                    </div>
+                                    <div class="filter">
+                                        <div style="width: 100%" class="row">
+                                            <div class="col-sm-10">
+                                                <label class="filter__label">
+                                                    <input type="text" class="filter__input" readonly>
+                                                </label>
+                                                ~
+                                                <label class="filter__label">
+                                                    <input type="text" class="filter__input" readonly>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button id="Rtime-btn" class="btn btn-light" type="button"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div id="Rtime_range" class="filter__slider-price" data-min="0" data-max="10" data-step="1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -119,11 +136,21 @@
                                         <div class="movie_header">
                                             <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
                                             <h1>Catch me if you can</h1>
-                                            <h4>2002, David Ayer</h4>
-                                            <span class="minutes">117 min</span>
-                                            <span class="rated">PG</span>
-                                            <div class="star-ratings-sprite"><span style="width:52%" class="star-ratings-sprite-rating"></span></div>
-                                        </div>
+                                            <h4 style="display: inline-block">2002, David Ayer</h4>
+                                            <div class="main_awards">
+                                                <div class="awards_icon"><i class="fas fa-medal"></i></div>
+                                                52
+                                                <div class="awards_icon"><i class="fas fa-award"></i></div>
+                                                28
+                                                <div class="awards_icon"><i class="fas fa-trophy"></i></div>
+                                                Oscar  6
+                                            </div>
+                                            <div style="display: block">
+                                                <span class="minutes">117 min</span>
+                                                <span class="rated">PG</span>
+                                                <div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>
+                                            </div>
+                                            </div>
                                         <div class="movie_desc">
                                             <p class="text">
                                                 A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor.
@@ -176,34 +203,163 @@
 
 <%@ include file="include/plugin_js.jsp"%>
 
-
 <!-- 키워드 선택 제어-->
 <script>
     $(document).ready(function() {
 
+        //초기상태 세팅
         $(".EmptyResult").show();
         $(".Result").hide();
 
+        //선택 키워드 저장할 배열 선언
         var selTmArr = new Array();
+        //TYPE 값
+        var selType;
+        var selRtime_start = -1;
+        var selRtime_end = -1;
 
 
-        $(".list-group a").click(function (e) {
+        //리스트 클릭 ---------------------------
+        //TYPE 키워드 선택
+        $("#list-TYPE a").click(function (e) {
 
-            selList(this, 1); //선택 처리
-
-            //값 가져오기
+            //리스트 값 가져오기
             var val = $(this).text();
+            selType = val;
+
+            //이전 선택 제거 (중복 막기 위해)
+            $('#list-TYPE a').each(function (index, item) {
+                if($(item).hasClass('active') === true) {
+                    if($(item).text() !== val) {
+                        $(item).removeClass('active');
+                        addArray($(item).text(), selTmArr, 1);
+                    }
+                }
+            });
+
+            //리스트  선택 처리
+            selList(this, 1);
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
 
-            //배열에 값이 있으면 영화 리스트 보이기 + 키워드 나열
+            //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length ) {
                 $(".EmptyResult").hide();
                 $(".Result").show();
-
                 //선택 키워드 나열하기
                 printKeyword();
+
+            }
+            //배열에 값이 없으면 빈 화면 보여주기
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
+        })
+        //GENRE 키워드 선택
+        $("#list-GENRE a").click(function (e) {
+
+            //리스트  선택 처리
+            selList(this, 1);
+
+            //리스트 값 가져오기
+            var val = $(this).text();
+            selType = val;
+
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+
+            //배열에 값이 있으면 결과창 보이게
+            if (selTmArr.length ) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+                //선택 키워드 나열하기
+                printKeyword();
+
+            }
+            //배열에 값이 없으면 빈 화면 보여주기
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
+        })
+        //RATED 키워드 선택
+        $("#list-RATED a").click(function (e) {
+
+            //리스트  선택 처리
+            selList(this, 1);
+
+            //리스트 값 가져오기
+            var val = $(this).text();
+            selType = val;
+
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+
+            //배열에 값이 있으면 결과창 보이게
+            if (selTmArr.length ) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+                //선택 키워드 나열하기
+                printKeyword();
+
+            }
+            //배열에 값이 없으면 빈 화면 보여주기
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+
+        })
+        //RUNNING TIME 키워드 선택
+        $("#list-RTIME a").click(function (e) {
+
+            //선택 리스트 값 가져오기
+            var val = $(this).text();
+
+            //이전 선택 제거 (중복 막기 위해)
+            $('#list-RTIME a').each(function (index, item) {
+                if($(item).hasClass('active') === true) {
+                    if($(item).text() !== val) {
+                        $(item).removeClass('active');
+                        addArray($(item).text(), selTmArr, 1);
+                    }
+                }
+            });
+
+            //리스트  선택 처리
+            selList(this, 1);
+
+            //배열 업데이트
+            addArray(val, selTmArr, 1);
+
+            if($.inArray(val, selTmArr) !== -1) { //배열이 값이 있다면
+                if (val === "1h 미만") {
+                    selRtime_start = 0;
+                    selRtime_end = 1;
+                } else if (val === "1h 이상 2h 미만") {
+                    selRtime_start = 1;
+                    selRtime_end = 2;
+                } else if (val === "2h 이상") {
+                    selRtime_start = 2;
+                    selRtime_end = 10; //최대값
+                }
+            }
+            else { //배열이 값이 없다면
+                selRtime_start = -1;
+                selRtime_end = -1;
+            }
+
+            //배열에 값이 있으면 결과창 보이게
+            if (selTmArr.length ) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+                //선택 키워드 나열하기
+                printKeyword();
+
             }
             //배열에 값이 없으면 빈 화면 보여주기
             else{
@@ -213,48 +369,45 @@
 
         })
 
-        //리스트 태그 선택처리
-        function selList(el, toggle) {
-            if(toggle == 1){
-                $(el).toggleClass('active');
-            }
-            else{
-                $(el).addClass('active');
-            }
-        }
+        //Running time slider bar 제어 --------
+        const slider = document.getElementById('Rtime_range');
+        const rangeMin = parseInt(slider.dataset.min);
+        const rangeMax = parseInt(slider.dataset.max);
+        const step = parseInt(slider.dataset.step);
+        const filterInputs = document.querySelectorAll('input.filter__input');
 
-        function addArray(value, arr, toggle) {
-            if($.inArray(value, arr) != -1){ //배열에 값이 있다면
-                if(toggle == 1){
-                    //존재하는 값을 지운다
-                    arr.splice($.inArray(value, arr),1);
-                }
-                else {
-                    //이미 존재하면 추가하지 않음
-                }
-            }
-            else{
-                //배열추가
-                arr.push(value);
-            }
-        }
+        noUiSlider.create(slider, {
+            start: [rangeMin, rangeMax],
+            connect: true,
+            step: step,
+            range: {
+                'min': rangeMin,
+                'max': rangeMax
+            },
+            margin: 1,
 
-        //선택 키워드 나열
-        function printKeyword() {
-            var textToInsert = [];
-            var i = 0;
-            for (var a = 0; a <selTmArr.length; a++) {
-                textToInsert[i++] = '<button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton">' +
-                    '<span class="Keyword_Hash">#</span>';
-                textToInsert[i++] = selTmArr[a];
-                textToInsert[i++] = '<svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">' +
-                    '<path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>' +
-                    '</svg>' +
-                    '</button>' ;
+            // make numbers whole
+            format: {
+                to: value => value,
+                from: value => value
             }
+        });
 
-            $(".Keyword").html("").append(textToInsert.join(''));
-        }
+        // bind inputs with noUiSlider
+        slider.noUiSlider.on('update', (values, handle) => {
+            filterInputs[handle].value = values[handle];
+        });
+
+        filterInputs.forEach((input, indexInput) => {
+            input.addEventListener('change', () => {
+                slider.noUiSlider.setHandle(indexInput, input.value);
+            })
+        });
+
+        $("#Rtime-btn").click(function (e) {
+            slider.noUiSlider.get
+        })
+
 
         //키워드 버튼 클릭시
         $(document).on("click",".Keyword_DeleteButton",function(){
@@ -295,6 +448,50 @@
             }
 
         })
+
+        //리스트 태그 선택처리 함수
+        function selList(el, toggle) {
+            if(toggle == 1){
+                $(el).toggleClass('active');
+            }
+            else{
+                $(el).addClass('active');
+            }
+        }
+
+        //배열 값 업데이트 함수
+        function addArray(value, arr, toggle) {
+            if($.inArray(value, arr) != -1){ //배열에 값이 있다면
+                if(toggle == 1){
+                    //존재하는 값을 지운다
+                    arr.splice($.inArray(value, arr),1);
+                }
+                else {
+                    //이미 존재하면 추가하지 않음
+                }
+            }
+            else{
+                //배열추가
+                arr.push(value);
+            }
+        }
+
+        //선택 키워드 나열(프린트) 함수
+        function printKeyword() {
+            var textToInsert = [];
+            var i = 0;
+            for (var a = 0; a <selTmArr.length; a++) {
+                textToInsert[i++] = '<button aria-label="선택 해제" class="btn btn-primary Keyword_DeleteButton">' +
+                    '<span class="Keyword_Hash">#</span>';
+                textToInsert[i++] = selTmArr[a];
+                textToInsert[i++] = '<svg class="RSGIcon RSGIcon-close RSGIcon-close2 DeleteIcon" viewBox="0 0 48 48" width="48" height="48">' +
+                    '<path d="M48 5.3L29.3 24 48 42.7 42.7 48 24 29.3 5.3 48 0 42.7 18.7 24 0 5.3 5.3 0 24 18.7 42.7 0 48 5.3z"></path>' +
+                    '</svg>' +
+                    '</button>' ;
+            }
+
+            $(".Keyword").html("").append(textToInsert.join(''));
+        }
 
     });
 </script>

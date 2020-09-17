@@ -18,7 +18,7 @@ public class ContentServiceImpl implements ContentService{
 
     @Override
     public void create(ContentVO contentVO) throws Exception {
-        contentDAO.create(contentVO);;
+        contentDAO.create(contentVO);
     }
 
     @Override
