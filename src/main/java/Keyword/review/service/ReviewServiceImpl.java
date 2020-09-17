@@ -21,8 +21,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<ReviewVO> getReviews(String contentId) throws Exception {
-        return reviewDAO.list(contentId);
+    public List<ReviewVO> getReviews(String contentId, String userName) throws Exception {
+        return reviewDAO.list(contentId, userName);
     }
 
     @Transactional
@@ -43,5 +43,10 @@ public class ReviewServiceImpl implements ReviewService{
         String contentId = reviewDAO.getContentId((reviewNo));
         reviewDAO.delete(reviewNo);
         contentDAO.updateReviewCnt(contentId, -1);
+    }
+
+    @Override
+    public ReviewVO getMyReview(String contentId, String userName) throws Exception {
+        return reviewDAO.getMyReview(contentId, userName);
     }
 }

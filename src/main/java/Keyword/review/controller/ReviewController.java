@@ -5,10 +5,7 @@ import Keyword.review.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -38,11 +35,12 @@ public class ReviewController {
     }
 
     // 리뷰 목록
-    @RequestMapping(value = "/all/{contentId}", method = RequestMethod.GET)
-    public ResponseEntity<List<ReviewVO>> list(@PathVariable("contentId") String contentId){
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<ReviewVO>> list(@RequestParam("contentId") String contentId,
+                                               @RequestParam("userName") String userName){
         ResponseEntity<List<ReviewVO>> entity = null;
         try {
-            entity = new ResponseEntity<>(reviewService.getReviews(contentId), HttpStatus.OK);
+            entity = new ResponseEntity<>(reviewService.getReviews(contentId, userName), HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -75,6 +73,20 @@ public class ReviewController {
         } catch (Exception e){
             e.printStackTrace();
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    // 내 리뷰 가져오기
+    @RequestMapping(value = "/mine", method = RequestMethod.GET)
+    public ResponseEntity<ReviewVO> getMyReview(@RequestParam("contentId") String contentId,
+                                                @RequestParam("userName") String userName){
+        ResponseEntity<ReviewVO> entity = null;
+        try {
+            entity = new ResponseEntity<>(reviewService.getMyReview(contentId, userName), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return entity;
     }

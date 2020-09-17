@@ -80,27 +80,14 @@
 
             <!-- 리뷰 작성 -->
             <div class="comments">
-                <div class="comment-wrap">
-                    <div class="photo">
-                        <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
-                    </div>
-                    <div class="comment-block">
-                            <form action="">
-                                <textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>
-                                <input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>
-                                <div class="bottom-comment">
-                                    <ul class="comment-actions">
-                                        <li class="reviewAddBtn">Reply</li>
-                                    </ul>
-                                </div>
-                            </form>
-                    </div>
-                </div>
-
-                <!-- TODO: 리뷰 개수 바로바로 갱신, 페이징-->
+                <!-- TODO: 리뷰 페이징-->
                 <div class="comment-menu commentMenu">
-                    ${content.reviewCnt}개의 Review
+                    <%--${content.reviewCnt}개의 Review--%>
                 </div>
+                <!-- 내 리뷰 상단 고정 -->
+                <div class="comment-wrap myComment">
+                </div>
+                <!-- 리뷰 목록 -->
                 <div class="commentList">
                 </div>
             </div>
@@ -136,29 +123,86 @@
 <%@ include file="../include/plugin_js.jsp"%>
 <script>
     var contentId = "${content.contentId}";
+    var mine = false;
+
+    function myComment() {
+        if(${empty login}){
+            mine = false;
+            var myReviewDiv = '';
+            myReviewDiv += '<div class="photo"><div class="avatar"></div></div>';
+            myReviewDiv += '<div class="comment-block"><p class="comment-text">리뷰를 남기려면 로그인이 필요합니다.</p></div>';
+            $(".myComment").html(myReviewDiv);
+            return;
+        }
+
+        $.ajax({
+            type: "get",
+            url: "/reviews/mine",
+            data: {
+                contentId: contentId,
+                userName: "${login.userName}"
+            },
+            success: function (result) {
+                var myReviewDiv = '';
+                if(!result){
+                    mine = false;
+                    myReviewDiv += '<div class="photo"><div class="avatar"></div></div>';
+                    myReviewDiv += '<div class="comment-block"><form action="">';
+                    myReviewDiv += '<textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>';
+                    myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>';
+                    myReviewDiv += '<div class="bottom-comment"><ul class="comment-actions">';
+                    myReviewDiv += '<li class="comment-delete" onclick="commentAdd();">Reply</li>';
+                    myReviewDiv += '</ul></div></form></div>';
+                }
+                else{
+                    mine = true;
+                    var formattedTime, dateStr='';
+                    if(result.updateDate!==result.regDate){
+                        formattedTime = new Date(result.updateDate).toISOString().slice(0, 19).replace('T', ' ');
+                        dateStr = '(수정됨)';
+                    }
+                    var formattedTime = new Date(result.updateDate).toISOString().slice(0, 19).replace('T', ' ');
+
+                    myReviewDiv += '<div class="photo"><div class="avatar"></div><div class="writer">'+result.reviewWriter+'</div></div>';
+                    myReviewDiv += '<div class="comment-block commentContent'+result.reviewNo+'"><p class="comment-text">'+result.reviewText+'</p>';
+                    myReviewDiv += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div>';
+                    if("${login.userName}"===result.reviewWriter) {
+                        myReviewDiv += '<ul class="comment-actions">';
+                        myReviewDiv += '<li class="comment-modify" onclick="commentUpdate('+result.reviewNo+',\''+result.reviewText+'\');return false;"> 수정 </li>';
+                        myReviewDiv += '<li class="comment-delete" onclick="commentDelete('+result.reviewNo+');"> 삭제</li></ul>';
+                    }
+                    myReviewDiv += '</div> </div>';
+                }
+                $(".myComment").html(myReviewDiv);
+            }
+        });
+    }
+
     function commentList(){
         $.ajax({
             type: "get",
-            url: "/reviews/all/"+contentId,
+            url: "/reviews/all",
             data: {
-                contentId: contentId
+                contentId: contentId,
+                userName: "${login.userName}"
             },
             success: function(result){
+                var reviewNum = mine?result.length+1:result.length;
+                $(".commentMenu").html(reviewNum+'개의 Review');
+
                 var eachReview ='';
                 $.each(result, function(key, value){
-                    // TODO: 등록일?수정일?
-                    var formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
+                    var formattedTime, dateStr='';
+                    if(value.updateDate!==value.regDate){
+                        formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
+                        dateStr = '(수정됨)';
+                    }
+                    formattedTime = new Date(value.regDate).toISOString().slice(0, 19).replace('T', ' ');
 
                     // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
                     eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
                     eachReview += '<div class="comment-block commentContent'+value.reviewNo+'"><p class="comment-text">'+value.reviewText+'</p>';
-                    eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+'</div>';
-                    if("${login.userName}"===value.reviewWriter) {
-                        eachReview += '<ul class="comment-actions">';
-                        eachReview += '<li class="comment-modify"><a onclick="commentUpdate('+value.reviewNo+',\''+value.reviewText+'\');return false;"> 수정 </a></li>';
-                        eachReview += '<li class="comment-delete"><a onclick="commentDelete('+value.reviewNo+');"> 삭제</a></li></ul>';
-                    }
-                    eachReview += '</div> </div> </div>';
+                    eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div></div> </div> </div>';
                 });
 
                 $(".commentList").html(eachReview);
@@ -167,12 +211,7 @@
     }
 
     // 리뷰 등록 처리
-    $(".reviewAddBtn").on("click", function () {
-        if (${empty login}){
-            alert("로그인시에만 리뷰 작성이 가능합니다.");
-            return;
-        }
-
+    function commentAdd(text) {
         var reviewWriterObj = $("#newReviewWriter");
         var reviewTextObj = $("#newReviewText");
         var reviewWriter = reviewWriterObj.val();
@@ -191,25 +230,22 @@
                 reviewText: reviewText,
                 reviewWriter: reviewWriter
             }),
-            success: function(result){
-                console.log("result: " +result);
-                if(result=="regSuccess"){
+            success: function (result) {
+                if (result == "regSuccess") {
                     alert("리뷰가 등록되었습니다.");
-
+                    myComment()
                     commentList();
-
-                    reviewTextObj.val("");   // 댓글 내용 초기화
                 }
             }
         });
-    });
+    }
 
     // 리뷰 수정 버튼 누름
     function commentUpdate(no, text){
         var modifyForm = '';
         modifyForm += '<textarea type="text" name="content_'+no+'">'+text+'</textarea>';
         modifyForm += '<div class="bottom-comment"><ul class="comment-actions">';
-        modifyForm += '<li class="comment-modify"><a onclick="commentUpdateProc('+no+');return false;">수정</a></li>';
+        modifyForm += '<li class="comment-modify"><a onclick="commentUpdateProc('+no+');return false;">수정완료</a></li>';
         modifyForm += '</ul></div>';
 
         $('.commentContent'+no).html(modifyForm);
@@ -217,9 +253,7 @@
 
     // 리뷰 수정 처리
     function commentUpdateProc(no){
-        console.log('commentUpdateProc' +no);
         var updateContent = $('[name=content_'+no+']').val();
-        console.log(updateContent);
         $.ajax({
             type: 'put',
             url: '/reviews/'+ no,
@@ -234,6 +268,7 @@
             success: function(result){
                 if(result=="modSuccess"){
                     alert("리뷰가 수정되었습니다.");
+                    myComment();
                     commentList();
                 }
             }
@@ -248,6 +283,7 @@
             success: function(result){
                 if(result=="delSuccess"){
                     alert("댓글이 삭제되었습니다.");
+                    myComment();
                     commentList();
                 }
             }
@@ -255,7 +291,7 @@
     }
 
     $(document).ready(function () {
-        // 리뷰 목록 출력
+        myComment();
         commentList();
     });
 </script>

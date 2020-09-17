@@ -21,6 +21,7 @@
                             <div class="card-body">
                                 <form action="${path}/user/signUp" method="post">
                                     <div class="form-group">
+                                        <!-- TODO: 아이디 중복확인 -->
                                         <label class="small mb-1" for="userId">아이디</label>
                                         <input class="form-control py-4" id="userId" name="userId" type="text" placeholder="아이디를 입력하세요" />
                                     </div>
@@ -39,6 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <!-- TODO: 이름 중복확인 -->
                                         <label class="small mb-1" for="userName">이름</label>
                                         <input class="form-control py-4" id="userName" name="userName" type="text" placeholder="이름을 입력하세요" />
                                     </div>
