@@ -1,5 +1,6 @@
 package Keyword.review.service;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.content.persistence.ContentDAO;
 import Keyword.review.domain.ReviewVO;
 import Keyword.review.persistence.ReviewDAO;
@@ -48,5 +49,15 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public ReviewVO getMyReview(String contentId, String userName) throws Exception {
         return reviewDAO.getMyReview(contentId, userName);
+    }
+
+    @Override
+    public List<ReviewVO> getReviewsPaging(String contentId, Criteria criteria) throws Exception {
+        return reviewDAO.listPaging(contentId, criteria);
+    }
+
+    @Override
+    public int countReviews(String contentId) throws Exception {
+        return reviewDAO.countReviews(contentId);
     }
 }

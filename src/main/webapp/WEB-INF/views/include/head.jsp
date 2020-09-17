@@ -19,4 +19,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     <link href="/dist/css/movieCard.css?a" rel="stylesheet" />
     <link href="/dist/css/comments.css?a" rel="stylesheet" />
+    <link href="/dist/css/pagination.css?a" rel="stylesheet" />
 </head>

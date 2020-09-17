@@ -1,5 +1,7 @@
 package Keyword.review.controller;
 
+import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.PageMaker;
 import Keyword.review.domain.ReviewVO;
 import Keyword.review.service.ReviewService;
 import org.springframework.http.HttpStatus;
@@ -8,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/reviews")
@@ -91,32 +95,31 @@ public class ReviewController {
         return entity;
     }
 
-    /*// 리뷰 페이징
-    @RequestMapping(value = "/{articleNo}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> listPaging(
-            @PathVariable("articleNo") Integer articleNo,
-            @PathVariable("page") Integer page){
+    // 리뷰 페이징
+    @RequestMapping(value = "/allPaging", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> listPaging(@RequestParam("contentId") String contentId,
+                                                          @RequestParam("page") Integer page){
         ResponseEntity<Map<String, Object>> entity = null;
         try {
             Criteria criteria = new Criteria();
             criteria.setPage(page);
 
-            List<ReplyVO> replies = replyService.getRepliesPaging(articleNo, criteria);
-            int repliesCount = replyService.countReplies(articleNo);
+            List<ReviewVO> reviews = reviewService.getReviewsPaging(contentId, criteria);
+            int reviewsCount = reviewService.countReviews(contentId);
 
             PageMaker pageMaker = new PageMaker();
             pageMaker.setCriteria(criteria);
-            pageMaker.setTotalCount(repliesCount);;
+            pageMaker.setTotalCount(reviewsCount);
 
             Map<String, Object> mapp = new HashMap<>();
-            mapp.put("replies", replies);
+            mapp.put("reviews", reviews);
             mapp.put("pageMaker", pageMaker);
 
             entity = new ResponseEntity<>(mapp, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.OK);
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return entity;
-    }*/
+    }
 }
