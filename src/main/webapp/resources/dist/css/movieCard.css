@@ -33,6 +33,9 @@ a:hover {
     border-radius: 5px;
     position: relative;
 }
+.containerMC svg {
+    margin-right: 3px;
+}
 
 .hero {
     height: 342px;
@@ -95,19 +98,27 @@ a:hover {
 }
 .details .likes {
     margin-left: 24px;
-    color: #C7C1BA;
+    color: hotpink;
 }
 .details .likes:before {
-    content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/icon_like.png");
     position: relative;
     top: 2px;
     padding-right: 7px;
+}
+.details .fixed-rating {
+    float: left;
+    color: #FFD700;
+    margin-right: 10px;
 }
 
 .description {
     bottom: 0px;
     font-size: 16px;
     line-height: 26px;
+}
+.description .awards{
+    font-style: italic;
+    margin-right: 20px;
 }
 
 .column1 {
@@ -256,13 +267,5 @@ a[data-tooltip][data-placement="top"]::after {
     bottom: 50px;
     left: 20px;
     margin-bottom: 4px;
-}
-
-/* 내가 추가한 css */
-.awards{
-    font-style: italic;
-}
-.nomination{
-    height: 30px;
 }
 

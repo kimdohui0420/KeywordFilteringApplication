@@ -26,20 +26,23 @@
                             <div class="title1">${content.title} (${content.year}) <span>${content.rated}</span></div>
 
                             <!-- TODO: 평점, like, 처리 -->
-                            <fieldset class="rating">
-                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                <input type="radio" id="star4" name="rating" value="4" checked /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                            </fieldset>
-
-                            <span class="likes">109 likes</span>
+                            <!--fieldset class="rating">
+                                <input type="radio" id="star10" name="rating" value="10" /><label class = "full" for="star5" title="Awesome - 10 stars"></label>
+                                <input type="radio" id="star9" name="rating" value="9" /><label class="half" for="star9" title="Pretty good - 9 stars"></label>
+                                <input type="radio" id="star8" name="rating" value="8" /><label class = "full" for="star8" title="Pretty good - 8 stars"></label>
+                                <input type="radio" id="star7" name="rating" value="7" /><label class="half" for="star7" title="Meh - 7 stars"></label>
+                                <input type="radio" id="star6" name="rating" value="6" /><label class = "full" for="star6" title="Meh - 6 stars"></label>
+                                <input type="radio" id="star5" name="rating" value="5" checked/><label class="half" for="star5" title="Kinda bad - 5 stars"></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Kinda bad - 4 stars"></label>
+                                <input type="radio" id="star3" name="rating" value="2" /><label class="half" for="star3" title="Meh - 3 stars"></label>
+                                <input type="radio" id="star2" name="rating" value="3" /><label class = "full" for="star2" title="Sucks big time - 2 star"></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label class="half" for="star1" title="Sucks big time - 1 stars"></label>
+                            </fieldset-->
+                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.imdbRating}</div>
+                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.rating}</div>
+                            <!--i class="far fa-star">https://fontawesome.com/icons/star?style=regular</i-->
+                            <!--i class="fas fa-star-half-alt">https://fontawesome.com/icons/star-half-alt?style=solid</i-->
+                            <span class="likes"><i class="fas fa-heart"></i>${content.likesCnt}</span>
 
                         </div> <!-- end details -->
 
@@ -60,17 +63,15 @@
                         <div class="column2">
                             ${content.plot}
                         </div>
-                        <div class="column2 awards">
+                        <div class="column2">
                             <c:if test="${not empty content.awardWin && content.awardWin ne 0}">
-                                ${content.awardWin} <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if>
+                                <span class="awards"><i class="fas fa-medal"></i>${content.awardWin} <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if></span>
                             </c:if>
                             <c:if test="${not empty content.awardNominate && content.awardNominate ne 0}">
-                            <img class="nomination" src="/dist/assets/img/nominated.png"/>
-                            ${content.awardNominate} nominated
+                                <span class="awards"><i class="fas fa-award"></i>${content.awardNominate} nominated</span>
                             </c:if>
                             <c:if test="${!empty content.awardMajor}">
-                            ${content.awardMajor}
-                            ${content.awardMajorType}
+                                <span class="awards"><i class="fas fa-trophy"></i>${content.awardMajor} ${content.awardMajorType}</span>
                             </c:if>
                         </div>
                     </div> <!-- end description -->
@@ -208,8 +209,10 @@
             str += "<a class='pg-index' href='"+(pageMaker.endPage+1)+"'>다음</a>";
         }
         str += "</span>";
-        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,-23.669348 19.1877962,-42.8571447 42.8571442,-42.8571446 23.669347,0 42.857144,19.1877966 42.857144,42.8571446" /></svg>';
-        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,23.669347 19.1877962,42.857144 42.8571442,42.857144 23.669347,0 42.857144,-19.187797 42.857144,-42.857144" /> </svg>';
+        if(pageMaker.totalCount>0){
+            str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,-23.669348 19.1877962,-42.8571447 42.8571442,-42.8571446 23.669347,0 42.857144,19.1877966 42.857144,42.8571446" /></svg>';
+            str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,23.669347 19.1877962,42.857144 42.8571442,42.857144 23.669347,0 42.857144,-19.187797 42.857144,-42.857144" /> </svg>';
+        }
         targetArea.html(str);
         commentPagingCSS();
     }

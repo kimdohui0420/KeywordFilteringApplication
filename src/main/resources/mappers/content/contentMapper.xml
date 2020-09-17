@@ -26,6 +26,7 @@
             , imdb_votes
             , rating
             , review_cnt
+            , likes_cnt
         ) VALUES (
             #{contentId}
             , #{title}
@@ -47,6 +48,7 @@
             , #{imdbVotes}
             , #{rating}
             , #{reviewCnt}
+            , #{likesCnt}
         )
     </insert>
 
@@ -69,14 +71,14 @@
             , imdb_rating
             , rating
             , review_cnt
+            , likes_cnt
         FROM    disney_contents
         WHERE   imdb_id = #{contentId}
     </select>
 
     <update id="update">
         UPDATE disney_contents
-        SET
-            title = #{title}
+        SET title = #{title}
         WHERE imdb_id = #{contentId}
     </update>
 
@@ -103,6 +105,7 @@
             , award_major_type
             , imdb_rating
             , review_cnt
+            , likes_cnt
         FROM    disney_contents
         ORDER BY title DESC
         ]]>
@@ -167,6 +170,7 @@
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
+        <result property="likesCnt" column="likes_cnt"/>
     </resultMap>
 
 </mapper>

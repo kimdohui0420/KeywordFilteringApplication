@@ -23,6 +23,7 @@ public class ContentVO {
     private Integer imdbVotes;
     private Double rating;
     private Integer reviewCnt;
+    private Integer likesCnt;   // TODO: likes 테이블 관련 패키지&클래스 생성
 
     public String getContentId() {
         return contentId;
@@ -184,6 +185,14 @@ public class ContentVO {
         this.reviewCnt = reviewCnt;
     }
 
+    public Integer getLikesCnt() {
+        return likesCnt;
+    }
+
+    public void setLikesCnt(Integer likesCnt) {
+        this.likesCnt = likesCnt;
+    }
+
     @Override
     public String toString() {
         return "ContentVO{" +
@@ -207,6 +216,7 @@ public class ContentVO {
                 ", imdbVotes=" + imdbVotes +
                 ", rating=" + rating +
                 ", reviewCnt=" + reviewCnt +
+                ", likesCnt=" + likesCnt +
                 '}';
     }
 }
