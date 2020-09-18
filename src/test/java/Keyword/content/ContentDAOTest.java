@@ -49,6 +49,14 @@ public class ContentDAOTest {
 
     @Test
     public void testListAll() throws Exception{
-        System.out.println(contentDAO.listAll());;
+        System.out.println(contentDAO.listAll());
     }
+
+    /*
+    @Test
+    public void ListSelected() throws Exception{
+        System.out.println(contentDAO.listSelected("movie", ));
+    }
+    */
+
 }

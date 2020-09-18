@@ -1,6 +1,7 @@
 package Keyword.content.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class ContentVO {
     private String contentId;
@@ -23,6 +24,7 @@ public class ContentVO {
     private Integer imdbVotes;
     private Double rating;
     private Integer reviewCnt;
+    private List<GenreVO> genres;
 
     public String getContentId() {
         return contentId;
@@ -184,6 +186,14 @@ public class ContentVO {
         this.reviewCnt = reviewCnt;
     }
 
+    public List<GenreVO> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<GenreVO> genres) {
+        this.genres = genres;
+    }
+
     @Override
     public String toString() {
         return "ContentVO{" +
@@ -207,6 +217,7 @@ public class ContentVO {
                 ", imdbVotes=" + imdbVotes +
                 ", rating=" + rating +
                 ", reviewCnt=" + reviewCnt +
+                ", genres=" + genres +
                 '}';
     }
 }

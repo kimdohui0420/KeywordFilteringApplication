@@ -3,14 +3,14 @@ package Keyword.content.controller;
 import Keyword.commons.filtering.KeywordMaker;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+//import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,10 +60,14 @@ public class ContentController {
     // 켄텐츠 목록
     // TODO: ajax로 처리할거라, 페이지 만들면서 확인해봐야 함
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<List<ContentVO>> list(){
+    public ResponseEntity<List<ContentVO>> list(@RequestParam("selType") String selType,
+                                                @RequestParam("selGenre") String[] selGenre,
+                                                @RequestParam("selRated") String[] selRated,
+                                                @RequestParam("selRtime_start") int selRtime_start,
+                                                @RequestParam("selRtime_end") int selRtime_end){
         ResponseEntity<List<ContentVO>> entity = null;
         try {
-            entity = new ResponseEntity<>(contentService.listAll(), HttpStatus.OK);
+            entity = new ResponseEntity<>(contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

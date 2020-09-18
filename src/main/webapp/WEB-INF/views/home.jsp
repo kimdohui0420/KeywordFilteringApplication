@@ -213,8 +213,10 @@
 
         //선택 키워드 저장할 배열 선언
         var selTmArr = new Array();
-        //TYPE 값
-        var selType;
+
+        var selType = "";
+        var selGenre = new Array();
+        var selRated = new Array();
         var selRtime_start = -1;
         var selRtime_end = -1;
 
@@ -243,6 +245,14 @@
             //배열 업데이트
             addArray(val, selTmArr, 1);
 
+            //db넘겨주기 위한 값 세팅
+            selType = ""
+            $('#list-TYPE a').each(function (index, item) {
+                if($(item).hasClass('active') === true) {
+                   selType = $(item).text();
+                }
+            });
+
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length ) {
                 $(".EmptyResult").hide();
@@ -270,6 +280,7 @@
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
+            addArray(val, selGenre, 1);
 
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length ) {
@@ -277,7 +288,6 @@
                 $(".Result").show();
                 //선택 키워드 나열하기
                 printKeyword();
-
             }
             //배열에 값이 없으면 빈 화면 보여주기
             else{
@@ -298,6 +308,7 @@
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
+            addArray(val, selRated, 1);
 
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length ) {
@@ -342,6 +353,7 @@
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
+
 
             if($.inArray(val, selTmArr) !== -1) { //배열이 값이 있다면
                 if (val === "1h 미만") {
@@ -436,6 +448,8 @@
             //배열에 추가
             selTmArr.push(slider_keyword);
 
+            selRtime_start = slider_val[0];
+            selRtime_end = slider_val[1];
 
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length ) {
@@ -464,6 +478,22 @@
             selList( $('.list-group a').filter(function() {return $(this).text() === val;}), 1);
             //배열 업데이트
             addArray(val, selTmArr, 1);
+
+            //db 값들 세팅
+            if(selType === val){
+                selType = "";
+            }
+            else if(val.includes( '이상' )){
+                selRtime_start =-1;
+                selRtime_end = -1;
+            }
+            else if(val.includes( '미만' )){
+                selRtime_start =-1;
+                selRtime_end = -1;
+            }
+            addArray(val, selGenre, 1);
+            addArray(val, selRated, 1);
+
             //키워드 다시 출력
             printKeyword();
             //배열값이 비었으면 빈 화면 다시 보여주기
@@ -536,7 +566,46 @@
             $(".Keyword").html("").append(textToInsert.join(''));
         }
 
+
+        //선택된 키워드에 맞게 영화 리스트 받아오는 함수
+        function get_movie_list() {
+            $.ajax({
+                type: "get",
+                url: "/list",
+                data: {
+                    selType: selType,
+                    selGenre: selGenre,
+                    selRated: selRated,
+                    selRtime_start: selRtime_start,
+                    selRtime_end : selRtime_end
+                },
+                success: function(result){
+                    var reviewNum = mine?result.length+1:result.length;
+                    $(".commentMenu").html(reviewNum+'개의 Review');
+
+                    var eachReview ='';
+                    $.each(result, function(key, value){
+                        var formattedTime, dateStr='';
+                        if(value.updateDate!==value.regDate){
+                            formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
+                            dateStr = '(수정됨)';
+                        }
+                        formattedTime = new Date(value.regDate).toISOString().slice(0, 19).replace('T', ' ');
+
+                        // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
+                        eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
+                        eachReview += '<div class="comment-block commentContent'+value.reviewNo+'"><p class="comment-text">'+value.reviewText+'</p>';
+                        eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div></div> </div> </div>';
+                    });
+
+                    $(".commentList").html(eachReview);
+                }
+            });
+
+        }
+
     });
+
 </script>
 
 <!-- 정렬 탭 제어 -->

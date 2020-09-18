@@ -68,5 +68,16 @@ public class ContentDAOImpl implements ContentDAO{
         sqlSession.update(NAMESPACE+".updateReviewCnt", paramMap);
     }
 
+    @Override
+    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("selType", selType);
+        paramMap.put("selGenre", selGenre);
+        paramMap.put("selRated", selRated);
+        paramMap.put("selRtime_start", selRtime_start);
+        paramMap.put("selRtime_end", selRtime_end);
+        return sqlSession.selectList(NAMESPACE+".listSelected", paramMap);
+    }
+
 
 }

@@ -56,4 +56,9 @@ public class ContentServiceImpl implements ContentService{
         return contentDAO.listRated();
     }
 
+    @Override
+    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
+        return contentDAO.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end);
+    }
+
 }

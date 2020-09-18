@@ -108,6 +108,60 @@
         ]]>
     </select>
 
+    <!--
+    <select id="listSelected" resultMap="ContentResultMap">
+        <![CDATA[
+        SELECT
+            A.imdb_id
+            , A.title
+            , A.type
+            , A.rated
+            , A.year
+            , A.released_at
+            , A.runtime
+            , A.director
+            , A.actor
+            , A.award_win
+            , A.award_nominate
+            , A.award_major
+            , A.award_major_type
+            , A.imdb_rating
+            , A.review_cnt
+            , B.genre
+        FROM disney_contents A
+        LEFT OUTER JOIN
+            (SELECT
+                imdb_id,
+                genre
+            FROM disney_genre
+            <where>
+                <if test = 'selGenre != ""'>
+                    genre in
+                    <foreach collection="selGenre" item="selGenre" open="(" close=")" separator=",">
+                        #{selGenre[index]}
+                    </foreach>
+                </if>
+            </where>
+            ) B ON A.imdb_id = B.imdb_id
+        <where>
+                <if test='selType != ""'>
+                    AND type = #{selType}
+                </if>
+                <if test = 'selRated != ""'>
+                    AND (rated in
+                        <foreach collection="selRated" item="selRated" open="(" close=")" separator=",">
+                            #{selRated[index]}
+                        </foreach>)
+                </if>
+                <if test='selRtime_start != -1 and selRtime_end != 1'>
+                    AND (runtime >= #{selRtime_start}*60 AND runtime < #{selRtime_end}*60)
+                </if>
+        </where>
+        ORDER BY A.released_at DESC
+        ]]>
+    </select>
+    -->
+
     <select id="listType" resultType="string">
         <![CDATA[
             SELECT DISTINCT type
@@ -158,6 +212,13 @@
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
+        <collection property="genres" javaType="java.util.ArrayList" resultMap="GenreResultMap"/>
     </resultMap>
+
+    <resultMap id="GenreResultMap" type="GenreVO">
+        <id property="contentId" column="imdb_id"/>
+        <result property="genre" column="genre"/>
+    </resultMap>
+
 
 </mapper>
