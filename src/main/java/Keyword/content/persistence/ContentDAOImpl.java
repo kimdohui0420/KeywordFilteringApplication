@@ -69,6 +69,11 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
+    public List<String> listMyGenre(String contentId) throws Exception {
+        return sqlSession.selectList(NAMESPACE+".listMyGenre", contentId);
+    }
+
+    @Override
     public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("selType", selType);

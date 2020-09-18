@@ -195,6 +195,15 @@
         WHERE imdb_id = #{contentId};
     </update>
 
+    <select id="listMyGenre" resultType="string">
+        <![CDATA[
+            SELECT genre
+            FROM disney_genre
+            WHERE imdb_id = #{contentId}
+            ORDER BY genre ASC;
+        ]]>
+    </select>
+
     <resultMap id="ContentResultMap" type="ContentVO">
         <id property="contentId" column="imdb_id"/>
         <result property="title" column="title"/>

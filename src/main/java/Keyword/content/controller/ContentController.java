@@ -78,6 +78,10 @@ public class ContentController {
     // 컨텐츠 조회 페이지 이동
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("contentId") String contentId, Model model) throws Exception{
+        KeywordMaker keywordMaker = new KeywordMaker();
+        keywordMaker.setMyGenre(contentService.listMyGenre(contentId));
+        model.addAttribute("keywordMaker", keywordMaker);
+
         model.addAttribute("content", contentService.read(contentId));
         return "content/read";
     }

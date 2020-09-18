@@ -20,6 +20,11 @@ public class ContentDAOTest {
     private ContentDAO contentDAO;
 
     @Test
+    public void testMyGenre() throws Exception{
+        System.out.println(contentDAO.listMyGenre("tt3521164"));
+    }
+
+    @Test
     public void testCreate() throws Exception{
         ContentVO content = new ContentVO();
         content.setContentId("tt0000000");

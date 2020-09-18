@@ -22,4 +22,5 @@
     <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/all.js"></script>
     <link href="/dist/css/movieCard.css?a" rel="stylesheet" />
     <link href="/dist/css/comments.css?a" rel="stylesheet" />
+    <link href="/dist/css/pagination.css?a" rel="stylesheet" />
 </head>

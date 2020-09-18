@@ -1,5 +1,6 @@
 package Keyword.review;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.review.domain.ReviewVO;
 import Keyword.review.persistence.ReviewDAO;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-config/applicationContext.xml"})
@@ -17,6 +19,17 @@ public class ReviewDAOTest {
     private static final Logger logger = LoggerFactory.getLogger(ReviewDAOTest.class);
     @Inject
     private ReviewDAO reviewDAO;
+
+    @Test
+    public void testReplyPaging() throws Exception{
+        Criteria criteria = new Criteria();
+        criteria.setPerPageNum(10);
+        criteria.setPage(1);
+
+        List<ReviewVO> reviews = reviewDAO.listPaging("tt3521164", criteria);
+        for(ReviewVO review: reviews)
+            System.out.println(review.getReviewNo()+": "+review.getReviewText());
+    }
 
     @Test
     public void testReviewCreate() throws Exception{

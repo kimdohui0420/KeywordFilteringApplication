@@ -48,9 +48,9 @@
                     <div class="description">
 
                         <div class="column1">
-                            <span class="tag">action</span>
-                            <span class="tag">fantasy</span>
-                            <span class="tag">adventure</span>
+                            <c:forEach items="${keywordMaker.myGenre}" var="myGenre">
+                                <span class="tag">${myGenre}</span>
+                            </c:forEach>
                         </div>
 
                         <div class="column2">
@@ -80,41 +80,19 @@
 
             <!-- 리뷰 작성 -->
             <div class="comments">
-                <!-- TODO: 리뷰 페이징-->
-                <div class="comment-menu commentMenu">
-                    <%--${content.reviewCnt}개의 Review--%>
-                </div>
                 <!-- 내 리뷰 상단 고정 -->
                 <div class="comment-wrap myComment">
+                </div>
+                <div class="comment-menu commentMenu">
                 </div>
                 <!-- 리뷰 목록 -->
                 <div class="commentList">
                 </div>
+                <!-- 페이징 목록 -->
+                <div class="text-center">
+                    <div class="pagination pg-container"></div>
+                </div>
             </div>
-            <!-- [12-2] 댓글 목록/페이징 --><!--
-            <div class="box box-success collapsed-box">
-                <div class="box-header with-border">
-                    <%--댓글 유무 / 댓글 갯수 / 댓글 펼치기,접기--%>
-                    <a href="" class="link-black text-lg"><i class="fa fa-comments-o margin-r-5 replyCount"></i> </a>
-                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <%--댓글 목록--%>
-                <div class="box-body repliesDiv">
-
-                </div>
-                <%--댓글 페이징--%>
-                <div class="box-footer">
-                    <div class="text-center">
-                        <ul class="pagination pagination-sm no-margin">
-
-                        </ul>
-                    </div>
-                </div>
-            </div>-->
         </main>
         <%@include file="../include/main_footer.jsp"%>
     </div>
@@ -123,7 +101,8 @@
 <%@ include file="../include/plugin_js.jsp"%>
 <script>
     var contentId = "${content.contentId}";
-    var mine = false;
+    var mine = false;   // 내 리뷰 존재 유무
+    var reviewPageNum = 1;  // 리뷰 페이징 번호
 
     function myComment() {
         if(${empty login}){
@@ -149,7 +128,7 @@
                     myReviewDiv += '<div class="photo"><div class="avatar"></div></div>';
                     myReviewDiv += '<div class="comment-block"><form action="">';
                     myReviewDiv += '<textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>';
-                    myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>';
+                    myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userName}" readonly hidden>';
                     myReviewDiv += '<div class="bottom-comment"><ul class="comment-actions">';
                     myReviewDiv += '<li class="comment-delete" onclick="commentAdd();">Reply</li>';
                     myReviewDiv += '</ul></div></form></div>';
@@ -178,20 +157,20 @@
         });
     }
 
-    function commentList(){
+    function commentList(reviewsUri, pageNum){
         $.ajax({
             type: "get",
-            url: "/reviews/all",
+            url: reviewsUri,
             data: {
                 contentId: contentId,
-                userName: "${login.userName}"
+                page: pageNum
             },
             success: function(result){
-                var reviewNum = mine?result.length+1:result.length;
+                var reviewNum = result.pageMaker.totalCount;
                 $(".commentMenu").html(reviewNum+'개의 Review');
 
                 var eachReview ='';
-                $.each(result, function(key, value){
+                $.each(result.reviews, function(key, value){
                     var formattedTime, dateStr='';
                     if(value.updateDate!==value.regDate){
                         formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
@@ -206,9 +185,60 @@
                 });
 
                 $(".commentList").html(eachReview);
+                printCommentPaging(result.pageMaker, $(".pagination"));
             }
         });
     }
+
+    // 페이징 목록
+    function printCommentPaging(pageMaker, targetArea) {
+        var str = "<span>";
+
+        // 이전 버튼
+        if(pageMaker.prev){
+            str += "<a class='pg-index' href='"+(pageMaker.startPage-1)+"'>이전</a>";
+        }
+        // 페이지 번호 버튼
+        for(var i = pageMaker.startPage, len=pageMaker.endPage; i<=len; i++){
+            //var strClass = pageMaker.criteria.page==i?'class=active':'';
+            str += "<a class='pg-index' href='"+i+"'>"+i+"</a>";
+        }
+        // 다음 버튼
+        if(pageMaker.next){
+            str += "<a class='pg-index' href='"+(pageMaker.endPage+1)+"'>다음</a>";
+        }
+        str += "</span>";
+        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,-23.669348 19.1877962,-42.8571447 42.8571442,-42.8571446 23.669347,0 42.857144,19.1877966 42.857144,42.8571446" /></svg>';
+        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,23.669347 19.1877962,42.857144 42.8571442,42.857144 23.669347,0 42.857144,-19.187797 42.857144,-42.857144" /> </svg>';
+        targetArea.html(str);
+        commentPagingCSS();
+    }
+
+    // 페이징 목록 css
+    function commentPagingCSS(){
+        const c = document.querySelector('.pg-container');
+        const indexList = Array.from(document.querySelectorAll('.pg-index'));
+        let cur = -1;
+        indexList.forEach((index, i) => {
+            index.addEventListener('click', function(){
+                c.className = 'pg-container';
+                void c.offsetWidth; // Reflow
+                c.classList.add('open');
+                c.classList.add('i'+(i+1));
+                if (cur>i) {
+                    c.classList.add('flip');
+                }
+                cur = i;
+            });
+        });
+    }
+
+    // 페이징 번호 클릭 이벤트
+    $('.pagination').on("click", "a", function (event) {
+        event.preventDefault();
+        reviewPageNum = $(this).attr("href");
+        commentList("/reviews/allPaging", reviewPageNum);
+    })
 
     // 리뷰 등록 처리
     function commentAdd(text) {
@@ -234,7 +264,8 @@
                 if (result == "regSuccess") {
                     alert("리뷰가 등록되었습니다.");
                     myComment()
-                    commentList();
+                    reviewPageNum = 1;
+                    commentList("/reviews/allPaging", reviewPageNum);
                 }
             }
         });
@@ -269,7 +300,7 @@
                 if(result=="modSuccess"){
                     alert("리뷰가 수정되었습니다.");
                     myComment();
-                    commentList();
+                    commentList("/reviews/allPaging", reviewPageNum);
                 }
             }
         });
@@ -284,7 +315,7 @@
                 if(result=="delSuccess"){
                     alert("댓글이 삭제되었습니다.");
                     myComment();
-                    commentList();
+                    commentList("/reviews/allPaging", reviewPageNum);
                 }
             }
         });
@@ -292,8 +323,9 @@
 
     $(document).ready(function () {
         myComment();
-        commentList();
+        commentList("/reviews/allPaging", reviewPageNum);
     });
+
 </script>
 </body>
 </html>
