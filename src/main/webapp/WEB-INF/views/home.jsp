@@ -239,6 +239,13 @@
                 }
             });
 
+            //이전에 슬라이더로 선택 된 게 있으면 지우기.
+            for(var index in selTmArr) {
+                if(selTmArr[index].includes( '이상' )){
+                    selTmArr.splice($.inArray(selTmArr[index], selTmArr),1);
+                }
+            }
+
             //리스트  선택 처리
             selList(this, 1);
 
@@ -378,7 +385,6 @@
                 $(".Result").show();
                 //선택 키워드 나열하기
                 printKeyword();
-
             }
             //배열에 값이 없으면 빈 화면 보여주기
             else{

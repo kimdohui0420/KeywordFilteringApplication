@@ -15,4 +15,5 @@ public interface ContentDAO {
     List<String> listRated() throws Exception;
     void updateReviewCnt(String contentId, int amount) throws Exception;
     List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;
+    List<String> listMyGenre(String contentId) throws Exception;
 }
