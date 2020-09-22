@@ -26,6 +26,7 @@
             , imdb_votes
             , rating
             , review_cnt
+            , likes_cnt
         ) VALUES (
             #{contentId}
             , #{title}
@@ -47,6 +48,7 @@
             , #{imdbVotes}
             , #{rating}
             , #{reviewCnt}
+            , #{likesCnt}
         )
     </insert>
 
@@ -69,6 +71,7 @@
             , imdb_rating
             , rating
             , review_cnt
+            , likes_cnt
         FROM    disney_contents
         WHERE   imdb_id = #{contentId}
     </select>
@@ -103,6 +106,7 @@
             , award_major_type
             , imdb_rating
             , review_cnt
+            , likes_cnt
         FROM    disney_contents
         ORDER BY title DESC
         ]]>
@@ -248,6 +252,7 @@
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
+        <result property="likesCnt" column="likes_cnt"/>
         <collection property="genres" ofType="GenreVO">
             <id property="genre" column="genre"/>
             <result property="contentId" column="imdb_id"/>
