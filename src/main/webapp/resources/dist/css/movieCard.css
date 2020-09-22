@@ -180,8 +180,8 @@ fieldset, label {
     display: none;
 }
 
-.rating > label:before {
-    margin: 5px;
+.rating > label::before {
+    margin: 1px;
     margin-top: 0;
     font-size: 1em;
     font-family: FontAwesome;
@@ -189,7 +189,7 @@ fieldset, label {
     content: "\f005";
 }
 
-.rating > .half:before {
+.rating > .half::before {
     content: "\f089";
     position: absolute;
 }
@@ -197,6 +197,27 @@ fieldset, label {
 .rating > label {
     color: #ddd;
     float: right;
+}
+
+.rating > span:before {
+    margin: 1px;
+    margin-top: 0;
+    font-size: 1em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating .fixed-full:before{
+    color: #FFD700;
+}
+.rating .fixed-half:before{
+    content: "\f089";
+    position: absolute;
+    color: #FFD700;
+}
+.rating .fixed-none:before{
+    color: #ddd;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/

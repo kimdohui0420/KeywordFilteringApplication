@@ -9,6 +9,7 @@ public class ReviewVO {
     private String reviewWriter;
     private Date regDate;
     private Date updateDate;
+    private Float reviewRating;
 
     public Integer getReviewNo() {
         return reviewNo;
@@ -58,6 +59,14 @@ public class ReviewVO {
         this.updateDate = updateDate;
     }
 
+    public Float getReviewRating() {
+        return reviewRating;
+    }
+
+    public void setReviewRating(Float reviewRating) {
+        this.reviewRating = reviewRating;
+    }
+
     @Override
     public String toString() {
         return "ReviewVO{" +
@@ -67,6 +76,7 @@ public class ReviewVO {
                 ", reviewWriter='" + reviewWriter + '\'' +
                 ", regDate=" + regDate +
                 ", updateDate=" + updateDate +
+                ", reviewRating=" + reviewRating +
                 '}';
     }
 }
