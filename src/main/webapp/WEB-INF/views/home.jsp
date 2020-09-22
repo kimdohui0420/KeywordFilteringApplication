@@ -237,14 +237,7 @@
                         addArray($(item).text(), selTmArr, 1);
                     }
                 }
-            });
-
-            //이전에 슬라이더로 선택 된 게 있으면 지우기.
-            for(var index in selTmArr) {
-                if(selTmArr[index].includes( '이상' )){
-                    selTmArr.splice($.inArray(selTmArr[index], selTmArr),1);
-                }
-            }
+            })
 
             //리스트  선택 처리
             selList(this, 1);
@@ -338,28 +331,32 @@
             //선택 리스트 값 가져오기
             var val = $(this).text();
 
-            //이전 선택 제거 (중복 막기 위해)
-            $('#list-RTIME a').each(function (index, item) {
-                if($(item).hasClass('active') === true) {
-                    if($(item).text() !== val) {
-                        $(item).removeClass('active');
-                        addArray($(item).text(), selTmArr, 1);
-                    }
-                }
-            });
-
-            //이전에 슬라이더로 선택 된 게 있으면 지우기.
+            //이전에 선택 된 게 있으면 배열에서 지우기.
             for(var index in selTmArr) {
-                if(selTmArr[index].includes( '이상' )){
+                if(selTmArr[index].includes( '이상' ) || selTmArr[index].includes( '미만' )){
                     selTmArr.splice($.inArray(selTmArr[index], selTmArr),1);
                 }
             }
 
+            //이전 선택된 게 있으면 리스트에서 지우기. 자기 자신 제외
+            $('#list-RTIME a').each(function (index, item) {
+                if($(item).hasClass('active') === true) {
+                    if($(item).text() !== val) {
+                        $(item).removeClass('active');
+                    }
+                }
+            });
+
             //리스트  선택 처리
             selList(this, 1);
 
-            //배열 업데이트
-            addArray(val, selTmArr, 1);
+            //선택된 게 있다면
+            $('#list-RTIME a').each(function (index, item) {
+                if($(item).hasClass('active') === true) {
+                    //배열 업데이트
+                    addArray($(item).text(), selTmArr, 1);
+                }
+            });
 
 
             if($.inArray(val, selTmArr) !== -1) { //배열이 값이 있다면
@@ -379,8 +376,9 @@
                 selRtime_end = -1;
             }
 
+
             //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length ) {
+            if (selTmArr.length) {
                 $(".EmptyResult").hide();
                 $(".Result").show();
                 //선택 키워드 나열하기
@@ -391,7 +389,6 @@
                 $(".Result").hide();
                 $(".EmptyResult").show();
             }
-
         })
 
         //Running time slider bar 제어 --------
@@ -544,9 +541,6 @@
                 if(toggle == 1){
                     //존재하는 값을 지운다
                     arr.splice($.inArray(value, arr),1);
-                }
-                else {
-                    //이미 존재하면 추가하지 않음
                 }
             }
             else{
