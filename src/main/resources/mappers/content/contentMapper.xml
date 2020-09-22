@@ -75,8 +75,7 @@
 
     <update id="update">
         UPDATE disney_contents
-        SET
-            title = #{title}
+        SET title = #{title}
         WHERE imdb_id = #{contentId}
     </update>
 

@@ -12,6 +12,7 @@
             , review_writer
             , reg_date
             , update_date
+            , rating
         FROM disney_review
         WHERE content_id = #{contentId}
             and review_writer NOT IN(#{userName})
@@ -23,10 +24,12 @@
             content_id
             , review_text
             , review_writer
+            , rating
         ) VALUES (
             #{contentId}
             , #{reviewText}
             , #{reviewWriter}
+            , #{reviewRating}
         )
     </insert>
 
@@ -35,6 +38,7 @@
         SET
             review_text = #{reviewText}
             , update_date = NOW()
+            , rating = #{reviewRating}
         WHERE review_no = #{reviewNo}
     </update>
 
@@ -56,6 +60,7 @@
             , review_writer
             , reg_date
             , update_date
+            , rating
         FROM disney_review
         WHERE content_id = #{contentId}
              and review_writer = #{userName}
@@ -70,6 +75,7 @@
             , review_writer
             , reg_date
             , update_date
+            , rating
             , user_img
         FROM disney_review
         INNER JOIN user ON user_name = review_writer
@@ -92,6 +98,7 @@
         <result property="reviewWriter" column="review_writer"/>
         <result property="regDate" column="reg_date"/>
         <result property="updateDate" column="update_date"/>
+        <result property="reviewRating" column="rating"/>
         <!--association property="userVO" resultMap="userVOResultMap"/-->    <!-- [16-4.5] -->
     </resultMap>
 

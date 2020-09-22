@@ -25,21 +25,10 @@
 
                             <div class="title1">${content.title} (${content.year}) <span>${content.rated}</span></div>
 
-                            <!-- TODO: 평점, like, 처리 -->
-                            <fieldset class="rating">
-                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                <input type="radio" id="star4" name="rating" value="4" checked /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                            </fieldset>
-
-                            <span class="likes">109 likes</span>
+                            <!-- TODO: like 처리 -->
+                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.imdbRating}</div>
+                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.rating}</div>
+                            <span class="likes"><i class="fas fa-heart"></i>${content.likesCnt}</span>
 
                         </div> <!-- end details -->
 
@@ -60,17 +49,15 @@
                         <div class="column2">
                             ${content.plot}
                         </div>
-                        <div class="column2 awards">
+                        <div class="column2">
                             <c:if test="${not empty content.awardWin && content.awardWin ne 0}">
-                                ${content.awardWin} <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if>
+                                <span class="awards"><i class="fas fa-medal"></i>${content.awardWin} <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if></span>
                             </c:if>
                             <c:if test="${not empty content.awardNominate && content.awardNominate ne 0}">
-                            <img class="nomination" src="/dist/assets/img/nominated.png"/>
-                            ${content.awardNominate} nominated
+                                <span class="awards"><i class="fas fa-award"></i>${content.awardNominate} nominated</span>
                             </c:if>
                             <c:if test="${!empty content.awardMajor}">
-                            ${content.awardMajor}
-                            ${content.awardMajorType}
+                                <span class="awards"><i class="fas fa-trophy"></i>${content.awardMajor} ${content.awardMajorType}</span>
                             </c:if>
                         </div>
                     </div> <!-- end description -->
@@ -83,6 +70,7 @@
                 <!-- 내 리뷰 상단 고정 -->
                 <div class="comment-wrap myComment">
                 </div>
+                <!-- 리뷰 갯수 메뉴 -->
                 <div class="comment-menu commentMenu">
                 </div>
                 <!-- 리뷰 목록 -->
@@ -108,7 +96,11 @@
         if(${empty login}){
             mine = false;
             var myReviewDiv = '';
-            myReviewDiv += '<div class="photo"><div class="avatar"></div></div>';
+            myReviewDiv += '<div class="photo"><div class="avatar"></div><div class="writer"></div>';
+            myReviewDiv += '<div class="rating">';
+            for(var i=0; i<5; i++)
+                myReviewDiv += '<span class="fixed-none"></span>';
+            myReviewDiv += '</div></div>';
             myReviewDiv += '<div class="comment-block"><p class="comment-text">리뷰를 남기려면 로그인이 필요합니다.</p></div>';
             $(".myComment").html(myReviewDiv);
             return;
@@ -125,7 +117,19 @@
                 var myReviewDiv = '';
                 if(!result){
                     mine = false;
-                    myReviewDiv += '<div class="photo"><div class="avatar"></div></div>';
+                    myReviewDiv += '<div class="photo"><div class="avatar"></div><div class="writer">${login.userName}</div>';
+                    myReviewDiv += '<fieldset class="rating"> ' +
+                        '<input type="radio" id="star10" name="rating" value="10" /><label class = "full" for="star10"></label> ' +
+                        '<input type="radio" id="star9" name="rating" value="9" /><label class="half" for="star9"></label> ' +
+                        '<input type="radio" id="star8" name="rating" value="8" /><label class = "full" for="star8"></label> ' +
+                        '<input type="radio" id="star7" name="rating" value="7" /><label class="half" for="star7"></label> ' +
+                        '<input type="radio" id="star6" name="rating" value="6" /><label class = "full" for="star6"></label> ' +
+                        '<input type="radio" id="star5" name="rating" value="5" /><label class="half" for="star5"></label> ' +
+                        '<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4"></label> ' +
+                        '<input type="radio" id="star3" name="rating" value="3" /><label class="half" for="star3"></label> ' +
+                        '<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2"></label> ' +
+                        '<input type="radio" id="star1" name="rating" value="1" /><label class="half" for="star1"></label> ' +
+                        '</fieldset></div>';
                     myReviewDiv += '<div class="comment-block"><form action="">';
                     myReviewDiv += '<textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>';
                     myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userName}" readonly hidden>';
@@ -142,12 +146,20 @@
                     }
                     var formattedTime = new Date(result.updateDate).toISOString().slice(0, 19).replace('T', ' ');
 
-                    myReviewDiv += '<div class="photo"><div class="avatar"></div><div class="writer">'+result.reviewWriter+'</div></div>';
+                    myReviewDiv += '<div class="photo"><div class="avatar"></div><div class="writer">'+result.reviewWriter+'</div>';
+                    myReviewDiv += '<div class="rating commentRating'+result.reviewNo+'">';
+                    for(var i=0; i<(result.reviewRating-result.reviewRating%2)/2; i++)
+                        myReviewDiv += '<span class="fixed-full"></span>';
+                    if(result.reviewRating%2===1)
+                        myReviewDiv += '<span class="fixed-half"></span>';
+                    for(var i=0; i<5-(result.reviewRating-result.reviewRating%2)/2; i++)
+                        myReviewDiv += '<span class="fixed-none"></span>';
+                    myReviewDiv += '</div></div>';
                     myReviewDiv += '<div class="comment-block commentContent'+result.reviewNo+'"><p class="comment-text">'+result.reviewText+'</p>';
                     myReviewDiv += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div>';
                     if("${login.userName}"===result.reviewWriter) {
                         myReviewDiv += '<ul class="comment-actions">';
-                        myReviewDiv += '<li class="comment-modify" onclick="commentUpdate('+result.reviewNo+',\''+result.reviewText+'\');return false;"> 수정 </li>';
+                        myReviewDiv += '<li class="comment-modify" onclick="commentUpdate('+result.reviewNo+',\''+result.reviewText+'\','+result.reviewRating+');return false;"> 수정 </li>';
                         myReviewDiv += '<li class="comment-delete" onclick="commentDelete('+result.reviewNo+');"> 삭제</li></ul>';
                     }
                     myReviewDiv += '</div> </div>';
@@ -179,8 +191,16 @@
                     formattedTime = new Date(value.regDate).toISOString().slice(0, 19).replace('T', ' ');
 
                     // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
-                    eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
-                    eachReview += '<div class="comment-block commentContent'+value.reviewNo+'"><p class="comment-text">'+value.reviewText+'</p>';
+                    eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div>';
+                    eachReview += '<div class="rating">';
+                    for(var i=0; i<(value.reviewRating-value.reviewRating%2)/2; i++)
+                        eachReview += '<span class="fixed-full"></span>';
+                    if(value.reviewRating%2===1)
+                        eachReview += '<span class="fixed-half"></span>';
+                    for(var i=0; i<5-(value.reviewRating-value.reviewRating%2)/2; i++)
+                        eachReview += '<span class="fixed-none"></span>';
+                    eachReview += '</div></div>';
+                    eachReview += '<div class="comment-block commentContent"><p class="comment-text">'+value.reviewText+'</p>';
                     eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div></div> </div> </div>';
                 });
 
@@ -208,8 +228,10 @@
             str += "<a class='pg-index' href='"+(pageMaker.endPage+1)+"'>다음</a>";
         }
         str += "</span>";
-        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,-23.669348 19.1877962,-42.8571447 42.8571442,-42.8571446 23.669347,0 42.857144,19.1877966 42.857144,42.8571446" /></svg>';
-        str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,23.669347 19.1877962,42.857144 42.8571442,42.857144 23.669347,0 42.857144,-19.187797 42.857144,-42.857144" /> </svg>';
+        if(pageMaker.totalCount>0){
+            str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,-23.669348 19.1877962,-42.8571447 42.8571442,-42.8571446 23.669347,0 42.857144,19.1877966 42.857144,42.8571446" /></svg>';
+            str += '<svg class="pg-svg" viewBox="0 0 100 100"><path class="pg-path" d="m 7.1428558,49.999998 c -1e-7,23.669347 19.1877962,42.857144 42.8571442,42.857144 23.669347,0 42.857144,-19.187797 42.857144,-42.857144" /> </svg>';
+        }
         targetArea.html(str);
         commentPagingCSS();
     }
@@ -242,10 +264,9 @@
 
     // 리뷰 등록 처리
     function commentAdd(text) {
-        var reviewWriterObj = $("#newReviewWriter");
-        var reviewTextObj = $("#newReviewText");
-        var reviewWriter = reviewWriterObj.val();
-        var reviewText = reviewTextObj.val();
+        var reviewRating = $('[name=rating]:checked').val();
+        var reviewWriter = $("#newReviewWriter").val();
+        var reviewText = $("#newReviewText").val();
 
         $.ajax({
             type: "post",
@@ -258,7 +279,8 @@
             data: JSON.stringify({
                 contentId: contentId,
                 reviewText: reviewText,
-                reviewWriter: reviewWriter
+                reviewWriter: reviewWriter,
+                reviewRating: reviewRating
             }),
             success: function (result) {
                 if (result == "regSuccess") {
@@ -272,19 +294,31 @@
     }
 
     // 리뷰 수정 버튼 누름
-    function commentUpdate(no, text){
+    function commentUpdate(no, text, rval){
         var modifyForm = '';
         modifyForm += '<textarea type="text" name="content_'+no+'">'+text+'</textarea>';
         modifyForm += '<div class="bottom-comment"><ul class="comment-actions">';
-        modifyForm += '<li class="comment-modify"><a onclick="commentUpdateProc('+no+');return false;">수정완료</a></li>';
+        modifyForm += '<li class="comment-delete"><a onclick="commentUpdateProc('+no+');return false;">수정완료</a></li>';
         modifyForm += '</ul></div>';
 
+        var modifyRating = '';
+        modifyRating += '<fieldset class="rating">';
+        for(var i=10; i>0; i--){
+            modifyRating += '<input type="radio" id="star'+i+'" name="rating" value="'+i+'" ';
+            if(i==rval)
+                modifyRating += 'checked';
+            var className = i%2==0?'full':'half';
+            modifyRating += ' /><label class = "'+className+'" for="star'+i+'"></label>';
+        }
+        modifyRating += '</fieldset>';
         $('.commentContent'+no).html(modifyForm);
+        $('.commentRating'+no).html(modifyRating);
     }
 
     // 리뷰 수정 처리
     function commentUpdateProc(no){
         var updateContent = $('[name=content_'+no+']').val();
+        var updateRating = $('[name=rating]:checked').val();
         $.ajax({
             type: 'put',
             url: '/reviews/'+ no,
@@ -294,7 +328,8 @@
             },
             dataType: "text",
             data: JSON.stringify({
-                reviewText: updateContent
+                reviewText: updateContent,
+                reviewRating: updateRating
             }),
             success: function(result){
                 if(result=="modSuccess"){
