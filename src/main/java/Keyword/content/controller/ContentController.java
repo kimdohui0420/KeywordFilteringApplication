@@ -1,9 +1,12 @@
 package Keyword.content.controller;
 
 import Keyword.commons.filtering.KeywordMaker;
+import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.PageMaker;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
 //import com.sun.org.apache.xpath.internal.operations.Mod;
+import Keyword.review.domain.ReviewVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -38,6 +44,7 @@ public class ContentController {
         keywordMaker.setTotalRated(contentService.listRated());
 
         model.addAttribute("keywordMaker", keywordMaker);
+
         return "home";
     }
 
@@ -60,14 +67,29 @@ public class ContentController {
     // 켄텐츠 목록
     // TODO: ajax로 처리할거라, 페이지 만들면서 확인해봐야 함
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<List<ContentVO>> list(@RequestParam("selType") String selType,
-                                                @RequestParam("selGenre") String[] selGenre,
-                                                @RequestParam("selRated") String[] selRated,
+    public ResponseEntity<Map<String, Object>> list(@RequestParam("selType") String selType,
+                                                @RequestParam(value = "selGenre", required=false) String[] selGenre,
+                                                @RequestParam(value = "selRated", required=false) String[] selRated,
                                                 @RequestParam("selRtime_start") int selRtime_start,
-                                                @RequestParam("selRtime_end") int selRtime_end){
-        ResponseEntity<List<ContentVO>> entity = null;
+                                                @RequestParam("selRtime_end") int selRtime_end,
+                                                Model model){
+
+        ResponseEntity<Map<String, Object>> entity = null;
         try {
-            entity = new ResponseEntity<>(contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end), HttpStatus.OK);
+            //Criteria criteria = new Criteria();
+            //criteria.setPage(page);
+
+            List<ContentVO> contents = contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end);
+            //int reviewsCount = reviewService.countReviews(contentId);
+
+            //PageMaker pageMaker = new PageMaker();
+            //pageMaker.setCriteria(criteria);
+            //pageMaker.setTotalCount(reviewsCount);
+
+            Map<String, Object> mapp = new HashMap<>();
+            mapp.put("contents", contents);
+
+            entity = new ResponseEntity<>(mapp, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

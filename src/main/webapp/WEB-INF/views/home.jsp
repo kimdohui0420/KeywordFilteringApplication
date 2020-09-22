@@ -131,7 +131,7 @@
                                 </div>
                             </header>
                             <div class="ResultLists" id="ResultLists">
-                                <div class="movie_card" id="bright">
+                                <div class="movie_card">
                                     <div class="info_section">
                                         <div class="movie_header">
                                             <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
@@ -151,31 +151,6 @@
                                                 <div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>
                                             </div>
                                             </div>
-                                        <div class="movie_desc">
-                                            <p class="text">
-                                                A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor.
-                                            </p>
-                                        </div>
-                                        <div class="movie_genre">
-                                            <ul>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="blur_back bright_back"></div>
-                                </div>
-                                <div class="movie_card" id="bright2">
-                                    <div class="info_section">
-                                        <div class="movie_header">
-                                            <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
-                                            <h1>Catch me if you can</h1>
-                                            <h4>2002, David Ayer</h4>
-                                            <span class="minutes">117 min</span>
-                                            <span class="rated">PG</span>
-                                            <div class="star-ratings-sprite"><span style="width:52%" class="star-ratings-sprite-rating"></span></div>
-                                        </div>
                                         <div class="movie_desc">
                                             <p class="text">
                                                 A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor.
@@ -214,6 +189,7 @@
         //선택 키워드 저장할 배열 선언
         var selTmArr = new Array();
 
+        //ajax로 넘길 데이터
         var selType = "";
         var selGenre = new Array();
         var selRated = new Array();
@@ -253,19 +229,9 @@
                 }
             });
 
-            //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length ) {
-                $(".EmptyResult").hide();
-                $(".Result").show();
-                //선택 키워드 나열하기
-                printKeyword();
+            printResult();
 
-            }
-            //배열에 값이 없으면 빈 화면 보여주기
-            else{
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
+            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
 
         })
         //GENRE 키워드 선택
@@ -276,54 +242,29 @@
 
             //리스트 값 가져오기
             var val = $(this).text();
-            selType = val;
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
             addArray(val, selGenre, 1);
 
-            //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length ) {
-                $(".EmptyResult").hide();
-                $(".Result").show();
-                //선택 키워드 나열하기
-                printKeyword();
-            }
-            //배열에 값이 없으면 빈 화면 보여주기
-            else{
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
+            printResult();
+            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
 
         })
         //RATED 키워드 선택
         $("#list-RATED a").click(function (e) {
-
             //리스트  선택 처리
             selList(this, 1);
 
             //리스트 값 가져오기
             var val = $(this).text();
-            selType = val;
 
             //배열 업데이트
             addArray(val, selTmArr, 1);
             addArray(val, selRated, 1);
 
-            //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length ) {
-                $(".EmptyResult").hide();
-                $(".Result").show();
-                //선택 키워드 나열하기
-                printKeyword();
-
-            }
-            //배열에 값이 없으면 빈 화면 보여주기
-            else{
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
-
+            printResult();
+            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
         //RUNNING TIME 키워드 선택
         $("#list-RTIME a").click(function (e) {
@@ -377,18 +318,8 @@
             }
 
 
-            //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length) {
-                $(".EmptyResult").hide();
-                $(".Result").show();
-                //선택 키워드 나열하기
-                printKeyword();
-            }
-            //배열에 값이 없으면 빈 화면 보여주기
-            else{
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
+            printResult();
+            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
 
         //Running time slider bar 제어 --------
@@ -454,19 +385,8 @@
             selRtime_start = slider_val[0];
             selRtime_end = slider_val[1];
 
-            //배열에 값이 있으면 결과창 보이게
-            if (selTmArr.length ) {
-                $(".EmptyResult").hide();
-                $(".Result").show();
-                //선택 키워드 나열하기
-                printKeyword();
-
-            }
-            //배열에 값이 없으면 빈 화면 보여주기
-            else{
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
+            printResult();
+            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
 
         //키워드 버튼 클릭시
@@ -494,8 +414,12 @@
                 selRtime_start =-1;
                 selRtime_end = -1;
             }
-            addArray(val, selGenre, 1);
-            addArray(val, selRated, 1);
+            else if($.inArray(val, selGenre) !== -1) {
+                addArray(val, selGenre, 1);
+            }
+            else if($.inArray(val, selRated) !== -1){
+                addArray(val, selRated, 1);
+            }
 
             //키워드 다시 출력
             printKeyword();
@@ -504,6 +428,7 @@
                 $(".Result").hide();
                 $(".EmptyResult").show();
             }
+            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
 
         //전체 해제 버튼 클릭
@@ -522,6 +447,19 @@
                 $(".Result").hide();
                 $(".EmptyResult").show();
             }
+
+            //ajax 데이터 초기화
+            selType = "";
+            for (var i = selGenre.length; i > 0; i--) {
+                selGenre.pop();
+            }
+            for (var i = selRated.length; i > 0; i--) {
+                selRated.pop();
+            }
+            selRtime_start = -1;
+            selRtime_end = -1;
+
+            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
 
         })
 
@@ -566,9 +504,28 @@
             $(".Keyword").html("").append(textToInsert.join(''));
         }
 
+        function printResult() {
+            //배열에 값이 있으면 결과창 보이게
+            if (selTmArr.length) {
+                $(".EmptyResult").hide();
+                $(".Result").show();
+                //영화 리스트 불러오기
+                get_movie_list();
+                //선택 키워드 나열하기
+                printKeyword();
+            }
+            //배열에 값이 없으면 빈 화면 보여주기
+            else{
+                $(".Result").hide();
+                $(".EmptyResult").show();
+            }
+        }
 
         //선택된 키워드에 맞게 영화 리스트 받아오는 함수
         function get_movie_list() {
+            var values = [];
+            //배열을 넘기기 위한 세팅
+            $.ajaxSettings.traditional = true;
             $.ajax({
                 type: "get",
                 url: "/list",
@@ -580,32 +537,50 @@
                     selRtime_end : selRtime_end
                 },
                 success: function(result){
-                    var reviewNum = mine?result.length+1:result.length;
-                    $(".commentMenu").html(reviewNum+'개의 Review');
-
-                    var eachReview ='';
-                    $.each(result, function(key, value){
-                        var formattedTime, dateStr='';
-                        if(value.updateDate!==value.regDate){
-                            formattedTime = new Date(value.updateDate).toISOString().slice(0, 19).replace('T', ' ');
-                            dateStr = '(수정됨)';
-                        }
-                        formattedTime = new Date(value.regDate).toISOString().slice(0, 19).replace('T', ' ');
-
-                        // TODO: 리뷰 목록에서 작성자 이미지 불러오기 해야 함
-                        eachReview += '<div class="comment-wrap"><div class="photo"><div class="avatar"></div><div class="writer">'+value.reviewWriter+'</div></div>';
-                        eachReview += '<div class="comment-block commentContent'+value.reviewNo+'"><p class="comment-text">'+value.reviewText+'</p>';
-                        eachReview += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div></div> </div> </div>';
+                    //var resultNum = result.pageMaker.totalCount;
+                    //$(".ResultCounter").html('<span class="ResultCounter_Number">'+ resultNum + '</span> 건의 작품이 있습니다.');
+                    var eachContent = '';
+                    //이미지, 별 평점, 장르 바꿔야 함.
+                    $.each(result.contents, function(key, value){
+                        eachContent += '<div class="movie_card">' +
+                                        '<div class="info_section">' +
+                                            '<div class="movie_header">' +
+                                                '<img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>' +
+                                                '<h1>'+ value.title +'</h1>' +
+                                                '<h4 style="display: inline-block">'+value.year+', '+value.director+'</h4>' +
+                                                '<div class="main_awards">' +
+                                                    '<div class="awards_icon"><i class="fas fa-medal"></i></div>'+
+                                                            value.awardWin +
+                                                    '<div class="awards_icon"><i class="fas fa-award"></i></div>' +
+                                                            value.awardNominate +
+                                                    '<div class="awards_icon"><i class="fas fa-trophy"></i></div>' +
+                                                            value.awardMajor + ' ' + value.awardMajorType +
+                                                '</div>' +
+                                                '<div style="display: block">' +
+                                                    '<span class="minutes">' + value.runtime +' min</span>' +
+                                                    '<span class="rated">'+ value.rated +'</span>' +
+                                                    '<div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="movie_desc">' +
+                                                '<p class="text">' + value.plot + '</p>' +
+                                            '</div>' +
+                                            '<div class="movie_genre">' +
+                                                '<ul>' +
+                                                    '<li><i>#fantasy</i></li>' +
+                                                    '<li><i>#fantasy</i></li>' +
+                                                    '<li><i>#fantasy</i></li>' +
+                                                '</ul>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="blur_back bright_back"></div>' +
+                                        '</div>';
                     });
-
-                    $(".commentList").html(eachReview);
+                    $(".ResultLists").html(eachContent);
                 }
             });
-
         }
-
     });
-
 </script>
 
 <!-- 정렬 탭 제어 -->
