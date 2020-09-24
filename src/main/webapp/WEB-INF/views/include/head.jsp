@@ -23,4 +23,5 @@
     <link href="/dist/css/movieCard.css?a" rel="stylesheet" />
     <link href="/dist/css/comments.css?a" rel="stylesheet" />
     <link href="/dist/css/pagination.css?a" rel="stylesheet" />
+    <link href="/dist/css/likes.css?a" rel="stylesheet" />
 </head>

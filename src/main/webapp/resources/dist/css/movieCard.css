@@ -4,24 +4,8 @@
 *, *:before, *:after {
     box-sizing: border-box;
 }
-
-/*
-body {
-    background: #43423E;
-}
-
-a {
-    text-decoration: none;
-    color: #5C7FB8;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-*/
 .movie-card {
     font: 14px/22px "Lato", Arial, sans-serif;
-    /*color: #A9A8A3;*/
     padding: 40px 0;
 }
 
@@ -34,7 +18,7 @@ a:hover {
     position: relative;
 }
 .containerMC svg {
-    margin-right: 3px;
+    margin-right: 0.5rem;
 }
 
 .hero {
@@ -72,6 +56,12 @@ a:hover {
     z-index: 2;
 }
 
+.action-likes {
+    margin-left: 730px; /* 780(hero)-50(likes-svg) */
+    border-radius: 100%;
+    background-color: rgba( 255, 255, 255, 0.5 );
+}
+
 .details {
     padding: 190px 0 0 280px;
 }
@@ -96,19 +86,16 @@ a:hover {
     font-weight: 300;
     margin-bottom: 15px;
 }
-.details .likes {
-    margin-left: 24px;
-    color: hotpink;
-}
-.details .likes:before {
-    position: relative;
-    top: 2px;
-    padding-right: 7px;
-}
 .details .fixed-rating {
     float: left;
     color: #FFD700;
     margin-right: 10px;
+    padding-top: 0.2rem;
+}
+.details .fixed-likes {
+    float: left;
+    padding-top: 0.2rem;
+    color: #E2264D;
 }
 
 .description {
