@@ -74,6 +74,15 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
+    public void updateLikesCnt(String contentId, int amount) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("amount", amount);
+
+        sqlSession.update(NAMESPACE+".updateLikesCnt", paramMap);
+    }
+
+    @Override
     public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("selType", selType);

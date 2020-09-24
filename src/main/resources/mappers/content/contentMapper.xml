@@ -225,6 +225,12 @@
         WHERE imdb_id = #{contentId};
     </update>
 
+    <update id="updateLikesCnt">
+        UPDATE disney_contents
+        SET likes_cnt = likes_cnt + #{amount}
+        WHERE imdb_id = #{contentId};
+    </update>
+
     <select id="listMyGenre" resultType="string">
         <![CDATA[
             SELECT genre

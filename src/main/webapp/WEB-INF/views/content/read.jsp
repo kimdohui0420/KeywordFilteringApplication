@@ -20,6 +20,7 @@
                     <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_cover.jpg" alt="cover" class="cover" /></a>
 
                     <div class="hero">
+                        <c:if test="${not empty login}">
                         <div class="action-likes">
                             <input type="checkbox" id="checkbox" />
                             <label for="checkbox">
@@ -66,12 +67,13 @@
                                 </svg>
                             </label>
                         </div>
+                        </c:if>
                         <div class="details">
                             <div class="title1">${content.title} (${content.year}) <span>${content.rated}</span></div>
 
                             <div class="fixed-rating"><i class="fas fa-star"></i>${content.imdbRating}</div>
                             <div class="fixed-rating"><i class="fas fa-star"></i>${content.rating}</div>
-                            <span class="fixed-likes"><i class="fas fa-heart"></i>${content.likesCnt}</span>
+                            <div class="fixed-likes"><i class="fas fa-heart"></i><span id="totalLikesCnt">${content.likesCnt}</span></div>
 
                         </div> <!-- end details -->
 
@@ -134,6 +136,67 @@
     var contentId = "${content.contentId}";
     var mine = false;   // 내 리뷰 존재 유무
     var reviewPageNum = 1;  // 리뷰 페이징 번호
+
+    function myLikes(){
+        $.ajax({
+            type: "get",
+            url: "/likes",
+            data: {
+                contentId: contentId,
+                userId: "${login.userId}"
+            },
+            success: function (result) {
+                if(!result)
+                    $("input:checkbox[id='checkbox']").prop("checked", false);
+                else
+                    $("input:checkbox[id='checkbox']").prop("checked", true);
+            }
+        });
+    }
+
+    // 좋아요 클릭 처리
+    $("#checkbox").change(function(){
+        if($("#checkbox").is(":checked")){
+            $.ajax({
+                type: "post",
+                url: "/likes",
+                headers: {
+                    "Content-type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                    contentId: contentId,
+                    userId: "${login.userId}"
+                }),
+                success: function (msg) {
+                    if(msg==="regSuccess"){
+                        $("#totalLikesCnt").html();
+                    }
+                    else
+                        $("input:checkbox[id='checkbox']").prop("checked", false);
+                }
+            });
+        }else{
+            $.ajax({
+                type: "delete",
+                url: "/likes",
+                headers: {
+                    "Content-type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                dataType: "text",
+                data: JSON.stringify({
+                    contentId: contentId,
+                    userId: "${login.userId}"
+                }),
+                success: function (msg) {
+                    if(msg!=="delSuccess")
+                        $("input:checkbox[id='checkbox']").prop("checked", true);
+                }
+            });
+        }
+    });
 
     function myComment() {
         if(${empty login}){
@@ -400,6 +463,7 @@
     }
 
     $(document).ready(function () {
+        myLikes();
         myComment();
         commentList("/reviews/allPaging", reviewPageNum);
     });
