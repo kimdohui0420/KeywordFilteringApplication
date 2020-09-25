@@ -86,7 +86,6 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
 }
 
 abbr[title],
@@ -10138,7 +10137,7 @@ body {
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
   padding-left: 225px;
-  padding-right: 255px;
+  padding-right: 300px;
   top: 56px;
 }
 
@@ -10318,12 +10317,12 @@ html, body {
   position: relative;
   display: block;
   width: 100%;
-  height: 300px;
+  height: 100%;
   margin: 40px auto;
   overflow: hidden;
   border-radius: 10px;
   transition: all 0.4s;
-  box-shadow: 0px 0px 120px -25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 100px -25px rgba(0, 0, 0, 0.5);
 }
 .movie_card:hover {
   transform: scale(1.02);
@@ -10340,8 +10339,7 @@ html, body {
 }
 .movie_card .info_section .movie_header {
   position: relative;
-  padding: 25px;
-  height: 50%;
+  padding: 25px 25px 0px;
 }
 .movie_card .info_section .movie_header h1 {
   color: black;
@@ -10351,19 +10349,13 @@ html, body {
   color: #555;
   font-weight: 400;
 }
-.movie_card .info_section .movie_header .minutes {
+.movie_card .info_section .movie_header .boxinfo{
   display: inline-block;
   color: #555;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.05);
-}
-.movie_card .info_section .movie_header .rated {
-  display: inline-block;
-  color: #555;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-right: 5px;
 }
 
 .movie_card .info_section .movie_header .star-ratings-sprite {
@@ -10374,7 +10366,7 @@ html, body {
   line-height: 0;
   overflow: hidden;
   width: 120px;
-  margin-left: 10px;
+  margin-left: 5px;
   vertical-align:middle;
 }
 
@@ -10397,20 +10389,20 @@ html, body {
 
 .movie_card .info_section .movie_header .main_awards{
   display: inline-block;
-  margin-top: 5px;
-  margin-left: 5px;
-  color: #555;
-  padding: 5px;
+  color: #666f75;
   border-radius: 5px;
   font-weight: 600;
   font-family: "Noto Sans";
+  vertical-align: middle;
 }
 
 .movie_card .info_section .movie_header .main_awards .awards_icon{
   display: inline-block;
   color: #FFD700;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   filter:drop-shadow(1px 2px 1px gray);
+  margin-right: 5px;
+  margin-left: 7px;
 }
 
 .movie_card .info_section .movie_header .locandina {
@@ -10422,7 +10414,6 @@ html, body {
 }
 .movie_card .info_section .movie_desc {
   padding: 25px;
-  height: 40%;
 }
 
 .movie_card .info_section .movie_desc .text  {
@@ -10438,8 +10429,6 @@ html, body {
   /* fix problem when last visible word doesn't adjoin right side  */
   text-align: justify;
   /* place for '...' */
-  margin-right: -1em;
-  padding-right: 1em;
 }
 /* create the ... */
 .movie_card .info_section .movie_desc .text:before {
@@ -10464,17 +10453,17 @@ html, body {
   height: 1em;
   margin-top: 0.2em;
   /* bg color = bg color under block */
-  background: white;
+  background: #e5e6e6;
 }
 
 .movie_card .info_section .movie_genre {
-  height: 10%;
   padding-left: 25px;
-  padding-bottom: 20px;
+  padding-bottom: 1rem;
 }
 .movie_card .info_section .movie_genre ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 .movie_card .info_section .movie_genre ul li {
   display: inline-block;
@@ -10497,7 +10486,6 @@ html, body {
 
 @media screen and (min-width: 768px) {
   .movie_header {
-    width: 65%;
   }
 
   .movie_desc {

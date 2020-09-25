@@ -16,7 +16,7 @@
     <title>Keyword Filtering Application</title>
     <link rel="stylesheet" href="https://unpkg.com/nouislider@10.0.0/distribute/nouislider.css">
     <link rel="stylesheet" href="https://unpkg.com/nouislider@10.0.0/distribute/nouislider.min.css">
-    <link href="/dist/css/styles.css?after56" rel="stylesheet" />
+    <link href="/dist/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/all.js"></script>

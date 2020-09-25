@@ -72,14 +72,14 @@ public class ContentController {
                                                 @RequestParam(value = "selRated", required=false) String[] selRated,
                                                 @RequestParam("selRtime_start") int selRtime_start,
                                                 @RequestParam("selRtime_end") int selRtime_end,
-                                                Model model){
+                                                @RequestParam("selSort") String selSort){
 
         ResponseEntity<Map<String, Object>> entity = null;
         try {
             //Criteria criteria = new Criteria();
             //criteria.setPage(page);
 
-            List<ContentVO> contents = contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end);
+            List<ContentVO> contents = contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end, selSort);
             //int reviewsCount = reviewService.countReviews(contentId);
 
             //PageMaker pageMaker = new PageMaker();

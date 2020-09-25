@@ -41,7 +41,7 @@
                                     <h5>TYPE</h5>
                                     <div id="list-TYPE" class="list-group" style="height: auto;">
                                         <c:forEach items="${keywordMaker.totalType}" var="contentType">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentType}</a>
+                                            <a class="list-group-item list-group-item-action">${contentType}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                     <h5>GENRE</h5>
                                     <div id="list-GENRE" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalGenre}" var="contentGenre">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
+                                            <a class="list-group-item list-group-item-action">${contentGenre}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -57,16 +57,16 @@
                                     <h5>RATED</h5>
                                     <div id="list-RATED" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalRated}" var="contentRated">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentRated}</a>
+                                            <a class="list-group-item list-group-item-action">${contentRated}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <h5>RUNNING TIME</h5>
                                     <div id="list-RTIME" class="list-group" style="height: auto;">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 미만</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 이상 2h 미만</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">2h 이상</a>
+                                        <a class="list-group-item list-group-item-action">1h 미만</a>
+                                        <a class="list-group-item list-group-item-action">1h 이상 2h 미만</a>
+                                        <a class="list-group-item list-group-item-action">2h 이상</a>
                                     </div>
                                     <div class="filter">
                                         <div style="width: 100%" class="row">
@@ -112,60 +112,25 @@
                                     <span class="ResultCounter_Number">374</span> 건의 작품이 있습니다.
                                 </div>
                                 <div class="tab">
-                                    <label class="switch">
+                                    <label class="switch" id = "Latest">
                                         <input type="radio" name="filter" checked>
                                         <span class="slider">최신순</span>
                                     </label>
-                                    <label class="switch">
+                                    <label class="switch" id = "imdb_rating">
                                         <input type="radio" name="filter">
                                         <span class="slider">imdb 평점순</span>
                                     </label>
-                                    <label class="switch">
+                                    <label class="switch"  id = "self_rating">
                                         <input type="radio" name="filter">
                                         <span class="slider">자체 평점순</span>
                                     </label>
-                                    <label class="switch">
+                                    <label class="switch" id = "Most_reviews">
                                         <input type="radio" name="filter">
                                         <span class="slider">리뷰 많은순</span>
                                     </label>
                                 </div>
                             </header>
                             <div class="ResultLists" id="ResultLists">
-                                <div class="movie_card">
-                                    <div class="info_section">
-                                        <div class="movie_header">
-                                            <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
-                                            <h1>Catch me if you can</h1>
-                                            <h4 style="display: inline-block">2002, David Ayer</h4>
-                                            <div class="main_awards">
-                                                <div class="awards_icon"><i class="fas fa-medal"></i></div>
-                                                52
-                                                <div class="awards_icon"><i class="fas fa-award"></i></div>
-                                                28
-                                                <div class="awards_icon"><i class="fas fa-trophy"></i></div>
-                                                Oscar  6
-                                            </div>
-                                            <div style="display: block">
-                                                <span class="minutes">117 min</span>
-                                                <span class="rated">PG</span>
-                                                <div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>
-                                            </div>
-                                            </div>
-                                        <div class="movie_desc">
-                                            <p class="text">
-                                                A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor.
-                                            </p>
-                                        </div>
-                                        <div class="movie_genre">
-                                            <ul>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="blur_back bright_back"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -195,6 +160,7 @@
         var selRated = new Array();
         var selRtime_start = -1;
         var selRtime_end = -1;
+        var selSort = "Latest"; //초기상태는 최신순
 
 
         //리스트 클릭 ---------------------------
@@ -228,11 +194,7 @@
                    selType = $(item).text();
                 }
             });
-
             printResult();
-
-            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
-
         })
         //GENRE 키워드 선택
         $("#list-GENRE a").click(function (e) {
@@ -386,7 +348,6 @@
             selRtime_end = slider_val[1];
 
             printResult();
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
 
         //키워드 버튼 클릭시
@@ -420,15 +381,7 @@
             else if($.inArray(val, selRated) !== -1){
                 addArray(val, selRated, 1);
             }
-
-            //키워드 다시 출력
-            printKeyword();
-            //배열값이 비었으면 빈 화면 다시 보여주기
-            if (!selTmArr.length) {
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
+            printResult();
         })
 
         //전체 해제 버튼 클릭
@@ -458,9 +411,6 @@
             }
             selRtime_start = -1;
             selRtime_end = -1;
-
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
-
         })
 
         //리스트 태그 선택처리 함수
@@ -504,6 +454,7 @@
             $(".Keyword").html("").append(textToInsert.join(''));
         }
 
+        //결과 화면 출력
         function printResult() {
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length) {
@@ -521,7 +472,28 @@
             }
         }
 
-        //선택된 키워드에 맞게 영화 리스트 받아오는 함수
+        <!-- 정렬 탭 제어 -->
+        $('.tab label').click(function(){
+
+            var id = $(this).attr('id');
+            if(id == 'Latest'){
+                selSort = "Latest";
+            }
+            else if(id == 'imdb_rating'){
+                selSort = "imdb_rating";
+            }
+            else if(id == 'self_rating'){
+                selSort = "self_rating";
+            }
+            else if(id == 'Most_reviews'){
+                selSort = "Most_reviews";
+            }
+            //새로고침 코드
+            $ ('.ResultWrapper .ResultLists').load ( window.location + '.ResultWrapper .ResultLists').hide().fadeIn('slow');
+            get_movie_list();
+        });
+
+        //선택된 조건에 맞게 영화 리스트 받아오는 함수
         function get_movie_list() {
             var values = [];
             //배열을 넘기기 위한 세팅
@@ -534,7 +506,8 @@
                     selGenre: selGenre,
                     selRated: selRated,
                     selRtime_start: selRtime_start,
-                    selRtime_end : selRtime_end
+                    selRtime_end : selRtime_end,
+                    selSort : selSort
                 },
                 success: function(result){
                     //var resultNum = result.pageMaker.totalCount;
@@ -547,49 +520,83 @@
                                             '<div class="movie_header">' +
                                                 '<img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>' +
                                                 '<h1>'+ value.title +'</h1>' +
-                                                '<h4 style="display: inline-block">'+value.year+', '+value.director+'</h4>' +
-                                                '<div class="main_awards">' +
-                                                    '<div class="awards_icon"><i class="fas fa-medal"></i></div>'+
-                                                            value.awardWin +
-                                                    '<div class="awards_icon"><i class="fas fa-award"></i></div>' +
-                                                            value.awardNominate +
-                                                    '<div class="awards_icon"><i class="fas fa-trophy"></i></div>' +
-                                                            value.awardMajor + ' ' + value.awardMajorType +
-                                                '</div>' +
-                                                '<div style="display: block">' +
-                                                    '<span class="minutes">' + value.runtime +' min</span>' +
-                                                    '<span class="rated">'+ value.rated +'</span>' +
-                                                    '<div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>' +
+                                                '<h4 style="display: inline-block">'+value.year;
+                                                if(value.director != null){
+                                                    eachContent += ', ' + value.director;
+                                                }
+                                                else{
+                                                    eachContent += ', No Data';
+                                                }
+                                                eachContent += '</h4>' +
+                                                '<div style="display: block">';
+                                                    if(value.runtime != null){
+                                                        eachContent += '<span class="boxinfo">' + value.runtime +' min</span>';
+                                                    }
+                                                    else{
+                                                        eachContent += '<span class="boxinfo">no data</span>';
+                                                    }
+                                                    if(value.rated != null){
+                                                        eachContent += '<span class="boxinfo">'+ value.rated +'</span>';
+                                                    }
+                                                    else{
+                                                        eachContent += '<span class="boxinfo">no data</span>';
+                                                    }
+                                                    eachContent += '<div class="star-ratings-sprite"><span style="width:';
+                                                    if(value.imdbRating == null){
+                                                        eachContent += 0;
+                                                    }
+                                                    else{
+                                                        eachContent += value.imdbRating*10;
+                                                    }
+                                                    eachContent += '%" class="star-ratings-sprite-rating"></span></div>' +
+                                                    '<div class="main_awards">';
+                                                        if(value.awardWin !== 0 && value.awardWin != null) {
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-medal"></i></div>'+ value.awardWin;
+                                                        }
+                                                        if(value.awardNominate !== 0 && value.awardNominate != null){
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-award"></i></div>' + value.awardNominate;
+                                                        }
+                                                        if(value.awardMajor != null){
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-trophy"></i></div>' + value.awardMajor + ' ' + value.awardMajorType;
+                                                        }
+                                                    eachContent += '</div>' +
                                                 '</div>' +
                                             '</div>' +
-                                            '<div class="movie_desc">' +
-                                                '<p class="text">' + value.plot + '</p>' +
-                                            '</div>' +
+                                            '<div class="movie_desc">';
+                                                if(value.plot != "" && value.plot != null){
+                                                    eachContent += '<p class="text">' + value.plot + '</p>';
+                                                }
+                                                else{
+                                                    eachContent += '<p class="text">no data</p>';
+                                                }
+                                            eachContent += '</div>' +
                                             '<div class="movie_genre">' +
-                                                '<ul>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                '</ul>' +
+                                                '<ul>';
+                                                for(var index in value.genres) {
+                                                    eachContent += '<li><i>#'+ value.genres[index].genre +'</i></li>';
+                                                }
+                                                eachContent += '</ul>' +
                                             '</div>' +
                                         '</div>' +
                                         '<div class="blur_back bright_back"></div>' +
                                         '</div>';
                     });
-                    $(".ResultLists").html(eachContent);
+                    //결과가 안 비었을 때
+                    if(eachContent != ''){
+                        $(".ResultHeader").show();
+                        $(".ResultLists").html(eachContent);
+                    }
+                    //결과가 비었을 때
+                    else{
+                        var EmptyResult = '';
+                        EmptyResult = '<div class="EmptyResult"><h2 style="color: #0b2e13; font-weight: 700; margin-top: 25px;">검색 결과가 없습니다.</h2>키워드를 다시 선택해보세요. </div>';
+                        $(".ResultHeader").hide();
+                        $ ('.ResultWrapper .ResultLists').html(EmptyResult);
+                    }
                 }
             });
         }
-    });
-</script>
 
-<!-- 정렬 탭 제어 -->
-<script>
-    $(document).ready(function() {
-        $('.tab label').click(function(){
-           //새로고침 코드
-            $ ('.ResultWrapper .ResultLists').load ( window.location + '.ResultWrapper .ResultLists').hide().fadeIn('slow');
-        });
     });
 </script>
 

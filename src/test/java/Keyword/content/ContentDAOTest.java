@@ -60,11 +60,11 @@ public class ContentDAOTest {
 
     @Test
     public void ListSelected() throws Exception{
-        String[] selGenre = new String[3];
-        String[] selRated = new String[3];
+        String[] selGenre = null;
+        String[] selRated = null;
         int selRtime_start = -1;
         int selRtime_end = -1;
-        System.out.println(contentDAO.listSelected("", selGenre, selRated, selRtime_start, selRtime_end));
+        System.out.println(contentDAO.listSelected("movie", selGenre, selRated, selRtime_start, selRtime_end, "Latest"));
     }
 
 
