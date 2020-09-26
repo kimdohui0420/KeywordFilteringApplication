@@ -39,7 +39,6 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <%-- TODO: 로그인 후 원래페이지로 돌아가도록 --%>
                 <a class="dropdown-item" href="${path}/user/login">로그인</a>
                 <a class="dropdown-item" href="${path}/user/signUp">회원가입</a>
             </div>

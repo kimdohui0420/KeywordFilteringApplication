@@ -30,7 +30,11 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(@ModelAttribute("loginDTO") LoginDTO loginDTO){
+    public String loginGET(@ModelAttribute("loginDTO") LoginDTO loginDTO,
+                           HttpServletRequest request){
+        // 로그인 후 되돌아가기 위해
+        if(request.getSession().getAttribute("destination")==null)
+            request.getSession().setAttribute("destination", request.getHeader("Referer"));
         return "user/login";
     }
 
