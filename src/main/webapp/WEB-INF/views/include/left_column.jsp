@@ -9,7 +9,7 @@
                     Home
                 </a>
                 <c:if test="${not empty login}">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                     카트
                 </a>
@@ -20,8 +20,8 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="/dist/layout-static.html">Static Navigation</a>
-                        <a class="nav-link" href="/dist/layout-sidenav-light.html">Light Sidenav</a>
+                        <a class="nav-link" onclick="goMyInfo()" style="cursor:pointer">내 정보</a>
+                        <a class="nav-link" onclick="goMyLikes()" style="cursor:pointer">즐겨찾기</a>
                     </nav>
                 </div>
                 </c:if>
@@ -32,4 +32,12 @@
             Start Bootstrap
         </div>
     </nav>
+    <script>
+        function goMyInfo(){
+            self.location = "/user/myInfo?userId="+"${login.userId}";
+        }
+        function goMyLikes(){
+            self.location = "/user/myLikes?userId="+"${login.userId}";
+        }
+    </script>
 </div>

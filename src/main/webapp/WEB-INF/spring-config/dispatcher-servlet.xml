@@ -37,6 +37,11 @@
             <ref bean="loginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
+            <mvc:mapping path="/user/myInfo"/>
+            <mvc:mapping path="/user/myLikes"/>
+            <ref bean="authInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/**/"/>
             <ref bean="rememberMeInterceptor"/>
         </mvc:interceptor>
