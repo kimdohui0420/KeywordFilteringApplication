@@ -4585,10 +4585,11 @@ input[type=button].btn-block {
 }
 
 .pagination {
-  display: flex;
+  display: inline-flex;
   padding-left: 0;
   list-style: none;
   border-radius: 0.25rem;
+  margin-top: 10px;
 }
 
 .page-link {
@@ -4608,7 +4609,7 @@ input[type=button].btn-block {
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
-.page-link:focus {
+.page-link:active {
   z-index: 3;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -5035,6 +5036,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   text-decoration: none;
   background-color: #cce5ff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .list-group-item-action:active {
@@ -10322,12 +10324,13 @@ html, body {
   overflow: hidden;
   border-radius: 10px;
   transition: all 0.4s;
-  box-shadow: 0px 0px 100px -25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 90px -25px rgba(0, 0, 0, 0.5);
 }
 .movie_card:hover {
   transform: scale(1.02);
   box-shadow: 0px 0px 80px -25px rgba(0, 0, 0, 0.5);
   transition: all 0.4s;
+  cursor: pointer;
 }
 .movie_card .info_section {
   position: relative;
@@ -10648,7 +10651,7 @@ section {
 
 .ResultWrapper .ResultHeader {
   position: relative;
-  margin: 30px 10px 40px;
+  margin: 30px 10px 70px;
 }
 
 .ResultHeader .ResultCounter {
@@ -10667,6 +10670,10 @@ section {
 
 }
 
+.ResultWrapper .Paging {
+  padding: 40px 10px 30px;
+  text-align: center;
+}
 
 .tab {
   display: inline-block;
@@ -10723,8 +10730,6 @@ input:checked + .slider {
 input:checked + .slider:before {
   left: 100px;
 }
-
-
 
 *, *:before, *:after {
   box-sizing: border-box;

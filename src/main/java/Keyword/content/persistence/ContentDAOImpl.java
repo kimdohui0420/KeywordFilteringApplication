@@ -1,5 +1,6 @@
 package Keyword.content.persistence;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.content.domain.ContentVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -74,7 +75,21 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
-    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end, String selSort) throws Exception {
+    public int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+
+        paramMap.put("selType", selType);
+        paramMap.put("selGenre", selGenre);
+        paramMap.put("selRated", selRated);
+        paramMap.put("selRtime_start", selRtime_start);
+        paramMap.put("selRtime_end", selRtime_end);
+        return sqlSession.selectOne(NAMESPACE+".countResult", paramMap);
+    }
+
+    @Override
+    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end, String selSort, Criteria criteria) throws Exception {
+
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("selType", selType);
         paramMap.put("selGenre", selGenre);
@@ -82,6 +97,7 @@ public class ContentDAOImpl implements ContentDAO{
         paramMap.put("selRtime_start", selRtime_start);
         paramMap.put("selRtime_end", selRtime_end);
         paramMap.put("selSort", selSort);
+        paramMap.put("criteria", criteria);
         return sqlSession.selectList(NAMESPACE+".listSelected", paramMap);
     }
 

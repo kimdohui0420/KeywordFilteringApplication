@@ -128,12 +128,23 @@
                , A.award_major_type
                , A.imdb_rating
                , A.review_cnt
-               , B.genre
+           FROM disney_contents A
+           ]]>
+        <include refid ="filtering"/>
+        <include refid= "sorting"/>
+        <![CDATA[
+            LIMIT #{criteria.pageStart}, 10
+          ]]>
+    </select>
+
+    <select id="countResult" resultType="int">
+        <![CDATA[
+           SELECT
+               COUNT(DISTINCT A.imdb_id)
            FROM disney_contents A
            LEFT OUTER JOIN disney_genre B ON A.imdb_id = B.imdb_id
            ]]>
         <include refid ="filtering"/>
-        <include refid= "sorting"/>
     </select>
 
     <sql id = "filtering">
@@ -166,19 +177,20 @@
     <sql id = "sorting">
         <choose>
             <when test='selSort == "Latest"'>
-                ORDER BY A.released_at DESC
+                ORDER BY A.released_at DESC, A.title
             </when>
             <when test='selSort == "imdb_rating"'>
-                ORDER BY A.imdb_rating DESC
+                ORDER BY A.imdb_rating DESC, A.title
             </when>
             <when test='selSort == "self_rating"'>
-                ORDER BY A.rating DESC
+                ORDER BY A.rating DESC, A.title
             </when>
             <when test='selSort == "Most_reviews"'>
-                ORDER BY A.review_cnt DESC
+                ORDER BY A.review_cnt DESC, A.title
             </when>
         </choose>
     </sql>
+
 
     <select id="listType" resultType="string">
         <![CDATA[
@@ -240,10 +252,6 @@
         <result property="imdbRating" column="imdb_rating"/>
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
-        <collection property="genres" ofType="GenreVO">
-            <id property="genre" column="genre"/>
-            <result property="contentId" column="imdb_id"/>
-        </collection>
     </resultMap>
 
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,29 +66,49 @@ public class ContentController {
     }
 
     // 켄텐츠 목록
-    // TODO: ajax로 처리할거라, 페이지 만들면서 확인해봐야 함
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> list(@RequestParam("selType") String selType,
                                                 @RequestParam(value = "selGenre", required=false) String[] selGenre,
                                                 @RequestParam(value = "selRated", required=false) String[] selRated,
                                                 @RequestParam("selRtime_start") int selRtime_start,
                                                 @RequestParam("selRtime_end") int selRtime_end,
-                                                @RequestParam("selSort") String selSort){
+                                                @RequestParam("selSort") String selSort,
+                                                @RequestParam("page") Integer page){
 
         ResponseEntity<Map<String, Object>> entity = null;
         try {
-            //Criteria criteria = new Criteria();
-            //criteria.setPage(page);
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
 
-            List<ContentVO> contents = contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end, selSort);
-            //int reviewsCount = reviewService.countReviews(contentId);
+            List<ContentVO> contents = contentService.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end, selSort, criteria);
+            int resultCount = contentService.countResult(selType, selGenre, selRated, selRtime_start, selRtime_end);
 
-            //PageMaker pageMaker = new PageMaker();
-            //pageMaker.setCriteria(criteria);
-            //pageMaker.setTotalCount(reviewsCount);
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+            pageMaker.setTotalCount(resultCount);
 
             Map<String, Object> mapp = new HashMap<>();
             mapp.put("contents", contents);
+            mapp.put("pageMaker", pageMaker);
+
+            entity = new ResponseEntity<>(mapp, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    //목록에서 장르 받아오기 (중첩 ajax 이용)
+    @RequestMapping(value = "/list/genres", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>>  genres(@RequestParam("contentId") String contentId, Model model) throws Exception{
+        ResponseEntity<Map<String, Object>> entity = null;
+        try {
+            KeywordMaker keywordMaker = new KeywordMaker();
+            keywordMaker.setMyGenre(contentService.listMyGenre(contentId));
+
+            Map<String, Object> mapp = new HashMap<>();
+            mapp.put("keywordMaker", keywordMaker);
 
             entity = new ResponseEntity<>(mapp, HttpStatus.OK);
         } catch (Exception e) {
