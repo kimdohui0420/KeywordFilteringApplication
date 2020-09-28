@@ -114,33 +114,6 @@
 
     <select id="listSelected" resultMap="ContentResultMap">
         <![CDATA[
-        SELECT
-            A.imdb_id
-            , A.title
-            , A.plot
-            , A.type
-            , A.rated
-            , A.year
-            , A.released_at
-            , A.runtime
-            , A.director
-            , A.actor
-            , A.award_win
-            , A.award_nominate
-            , A.award_major
-            , A.award_major_type
-            , A.imdb_rating
-            , A.review_cnt
-            , B.imdb_id
-            , B.genre
-        FROM    disney_contents A
-        LEFT OUTER JOIN disney_genre B ON A.imdb_id = B.imdb_id
-        ORDER BY A.released_at DESC
-        ]]>
-    </select>
-    <!--
-       <select id="listSelected" resultMap="ContentResultMap">
-           <![CDATA[
            SELECT
                A.imdb_id
                , A.title
@@ -158,40 +131,70 @@
                , A.award_major_type
                , A.imdb_rating
                , A.review_cnt
-               , B.genre
            FROM disney_contents A
-           LEFT OUTER JOIN
-               (SELECT
-                   imdb_id,
-                   genre
-               FROM disney_genre
-               <where>
-                   <if test = 'selGenre != ""'>
-                       genre in
-                       <foreach collection="selGenre" item="selGenre" open="(" close=")" separator=",">
-                           #{selGenre[index]}
-                       </foreach>
-                   </if>
-               </where>
-               ) B ON A.imdb_id = B.imdb_id
-           <where>
-                   <if test='selType != ""'>
-                       AND type = #{selType}
-                   </if>
-                   <if test = 'selRated != ""'>
-                       AND (rated in
-                           <foreach collection="selRated" item="selRated" open="(" close=")" separator=",">
-                               #{selRated[index]}
-                           </foreach>)
-                   </if>
-                   <if test='selRtime_start != -1 and selRtime_end != -1'>
-                       AND (runtime >= #{selRtime_start}*60 AND runtime < #{selRtime_end}*60)
-                   </if>
-           </where>
-           ORDER BY A.released_at DESC
            ]]>
-       </select>
-   -->
+        <include refid ="filtering"/>
+        <include refid= "sorting"/>
+        <![CDATA[
+            LIMIT #{criteria.pageStart}, 10
+          ]]>
+    </select>
+
+    <select id="countResult" resultType="int">
+        <![CDATA[
+           SELECT
+               COUNT(DISTINCT A.imdb_id)
+           FROM disney_contents A
+           LEFT OUTER JOIN disney_genre B ON A.imdb_id = B.imdb_id
+           ]]>
+        <include refid ="filtering"/>
+    </select>
+
+    <sql id = "filtering">
+        <where>
+            <if test='selType != ""'>
+                AND type = #{selType}
+            </if>
+            <if test = 'selRated != null and selRated != ""'>
+                AND rated in
+                <foreach collection="selRated" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test='selGenre != null and selGenre != ""'>
+                AND not EXISTS (
+                select C.imdb_id
+                from (select distinct genre from disney_genre where genre in
+                <foreach collection="selGenre" item="selGenre" open="(" close=")" separator=",">
+                    #{selGenre}
+                </foreach>)D
+                LEFT JOIN (select * from disney_genre where A.imdb_id = disney_genre.imdb_id) C ON D.genre = C.genre
+                where C.genre is null)
+            </if>
+           <if test='selRtime_start != -1 and selRtime_end != -1'>
+               AND (runtime >= #{selRtime_start}*60 AND runtime &lt; #{selRtime_end}*60)
+           </if>
+        </where>
+    </sql>
+
+    <sql id = "sorting">
+        <choose>
+            <when test='selSort == "Latest"'>
+                ORDER BY A.released_at DESC, A.title
+            </when>
+            <when test='selSort == "imdb_rating"'>
+                ORDER BY A.imdb_rating DESC, A.title
+            </when>
+            <when test='selSort == "self_rating"'>
+                ORDER BY A.rating DESC, A.title
+            </when>
+            <when test='selSort == "Most_reviews"'>
+                ORDER BY A.review_cnt DESC, A.title
+            </when>
+        </choose>
+    </sql>
+
+
     <select id="listType" resultType="string">
         <![CDATA[
             SELECT DISTINCT type
@@ -259,10 +262,6 @@
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
         <result property="likesCnt" column="likes_cnt"/>
-        <collection property="genres" ofType="GenreVO">
-            <id property="genre" column="genre"/>
-            <result property="contentId" column="imdb_id"/>
-        </collection>
     </resultMap>
 
 </mapper>

@@ -1,5 +1,6 @@
 package Keyword.content.service;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.content.domain.ContentVO;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface ContentService {
     List<String> listType() throws Exception;
     List<String> listGenre() throws Exception;
     List<String> listRated() throws Exception;
-    List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;
+    List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end, String selSort, Criteria criteria) throws Exception;
     List<String> listMyGenre(String contentId) throws Exception;
+    int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;
 }

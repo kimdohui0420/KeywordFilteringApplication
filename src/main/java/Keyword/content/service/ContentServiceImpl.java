@@ -1,5 +1,6 @@
 package Keyword.content.service;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.persistence.ContentDAO;
 import org.springframework.stereotype.Service;
@@ -57,13 +58,19 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
-        return contentDAO.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end);
+    public List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end, String selSort, Criteria criteria) throws Exception {
+        return contentDAO.listSelected(selType, selGenre, selRated, selRtime_start, selRtime_end, selSort, criteria);
     }
 
     @Override
     public List<String> listMyGenre(String contentId) throws Exception {
         return contentDAO.listMyGenre(contentId);
     }
+
+    @Override
+    public int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception {
+        return contentDAO.countResult(selType, selGenre, selRated, selRtime_start, selRtime_end);
+    }
+
 
 }

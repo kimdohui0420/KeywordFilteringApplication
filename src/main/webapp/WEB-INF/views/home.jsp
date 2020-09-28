@@ -41,7 +41,7 @@
                                     <h5>TYPE</h5>
                                     <div id="list-TYPE" class="list-group" style="height: auto;">
                                         <c:forEach items="${keywordMaker.totalType}" var="contentType">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentType}</a>
+                                            <a class="list-group-item list-group-item-action">${contentType}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                     <h5>GENRE</h5>
                                     <div id="list-GENRE" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalGenre}" var="contentGenre">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentGenre}</a>
+                                            <a class="list-group-item list-group-item-action">${contentGenre}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -57,16 +57,16 @@
                                     <h5>RATED</h5>
                                     <div id="list-RATED" class="list-group" style="height: 200px; overflow-y: scroll">
                                         <c:forEach items="${keywordMaker.totalRated}" var="contentRated">
-                                            <a class="list-group-item list-group-item-action" href="#list-item-1">${contentRated}</a>
+                                            <a class="list-group-item list-group-item-action">${contentRated}</a>
                                         </c:forEach>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <h5>RUNNING TIME</h5>
                                     <div id="list-RTIME" class="list-group" style="height: auto;">
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 미만</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">1h 이상 2h 미만</a>
-                                        <a class="list-group-item list-group-item-action" href="#list-item-1">2h 이상</a>
+                                        <a class="list-group-item list-group-item-action">1h 미만</a>
+                                        <a class="list-group-item list-group-item-action">1h 이상 2h 미만</a>
+                                        <a class="list-group-item list-group-item-action">2h 이상</a>
                                     </div>
                                     <div class="filter">
                                         <div style="width: 100%" class="row">
@@ -108,64 +108,24 @@
                                 </ul>
                             </div>
                             <header class="ResultHeader">
-                                <div class="ResultCounter">
-                                    <span class="ResultCounter_Number">374</span> 건의 작품이 있습니다.
-                                </div>
-                                <div class="tab">
-                                    <label class="switch">
-                                        <input type="radio" name="filter" checked>
-                                        <span class="slider">최신순</span>
-                                    </label>
-                                    <label class="switch">
-                                        <input type="radio" name="filter">
-                                        <span class="slider">imdb 평점순</span>
-                                    </label>
-                                    <label class="switch">
-                                        <input type="radio" name="filter">
-                                        <span class="slider">자체 평점순</span>
-                                    </label>
-                                    <label class="switch">
-                                        <input type="radio" name="filter">
-                                        <span class="slider">리뷰 많은순</span>
-                                    </label>
-                                </div>
                             </header>
                             <div class="ResultLists" id="ResultLists">
-                                <div class="movie_card">
-                                    <div class="info_section">
-                                        <div class="movie_header">
-                                            <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
-                                            <h1>Catch me if you can</h1>
-                                            <h4 style="display: inline-block">2002, David Ayer</h4>
-                                            <div class="main_awards">
-                                                <div class="awards_icon"><i class="fas fa-medal"></i></div>
-                                                52
-                                                <div class="awards_icon"><i class="fas fa-award"></i></div>
-                                                28
-                                                <div class="awards_icon"><i class="fas fa-trophy"></i></div>
-                                                Oscar  6
-                                            </div>
-                                            <div style="display: block">
-                                                <span class="minutes">117 min</span>
-                                                <span class="rated">PG</span>
-                                                <div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>
-                                            </div>
-                                            </div>
-                                        <div class="movie_desc">
-                                            <p class="text">
-                                                A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor. A seasoned FBI agent pursues Frank Abagnale Jr. who, before his 19th birthday, successfully forged millions of dollars' worth of checks while posing as a Pan Am pilot, a doctor, and a legal prosecutor.
-                                            </p>
-                                        </div>
-                                        <div class="movie_genre">
-                                            <ul>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                                <li><i>#fantasy</i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="blur_back bright_back"></div>
-                                </div>
+                            </div>
+                            <div class="Paging">
+                                <!--
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                                        <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                                    <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                                </ul>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -180,7 +140,7 @@
 
 <!-- 키워드 선택 제어-->
 <script>
-    $(document).ready(function() {
+    $(window).ready(function() {
 
         //초기상태 세팅
         $(".EmptyResult").show();
@@ -195,6 +155,10 @@
         var selRated = new Array();
         var selRtime_start = -1;
         var selRtime_end = -1;
+        var selSort = "Latest"; //초기상태는 최신순
+
+        // 결과 페이징 번호
+        var resultPageNum = 1;
 
 
         //리스트 클릭 ---------------------------
@@ -228,11 +192,7 @@
                    selType = $(item).text();
                 }
             });
-
             printResult();
-
-            //alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
-
         })
         //GENRE 키워드 선택
         $("#list-GENRE a").click(function (e) {
@@ -386,7 +346,6 @@
             selRtime_end = slider_val[1];
 
             printResult();
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
         })
 
         //키워드 버튼 클릭시
@@ -420,15 +379,7 @@
             else if($.inArray(val, selRated) !== -1){
                 addArray(val, selRated, 1);
             }
-
-            //키워드 다시 출력
-            printKeyword();
-            //배열값이 비었으면 빈 화면 다시 보여주기
-            if (!selTmArr.length) {
-                $(".Result").hide();
-                $(".EmptyResult").show();
-            }
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
+            printResult();
         })
 
         //전체 해제 버튼 클릭
@@ -458,9 +409,6 @@
             }
             selRtime_start = -1;
             selRtime_end = -1;
-
-            alert(selType + "/" + selGenre + "/" + selRated + "/" + selRtime_start + "/" + selRtime_end);
-
         })
 
         //리스트 태그 선택처리 함수
@@ -504,11 +452,15 @@
             $(".Keyword").html("").append(textToInsert.join(''));
         }
 
+        //결과 화면 출력
         function printResult() {
             //배열에 값이 있으면 결과창 보이게
             if (selTmArr.length) {
                 $(".EmptyResult").hide();
                 $(".Result").show();
+                //키워드에 변화가 있을 때는 늘 최신순으로 정렬!
+                selSort = "Latest";
+                resultPageNum = 1;
                 //영화 리스트 불러오기
                 get_movie_list();
                 //선택 키워드 나열하기
@@ -521,7 +473,32 @@
             }
         }
 
-        //선택된 키워드에 맞게 영화 리스트 받아오는 함수
+        //정렬탭 제어 함수
+        $(document).on("click",".tab label",function(){
+            var id = $(this).attr('id');
+            var check = false;
+            if(id == 'Latest' && selSort != id){
+                selSort = "Latest";
+                check = true;
+            }
+            else if(id == 'imdb_rating' && selSort != id){
+                selSort = "imdb_rating";
+                check = true;
+            }
+            else if(id == 'self_rating' && selSort != id){
+                selSort = "self_rating";
+                check = true;
+            }
+            else if(id == 'Most_reviews' && selSort != id){
+                selSort = "Most_reviews";
+                check = true;
+            }
+            if(check){
+                get_movie_list();
+            }
+        })
+
+        //선택된 조건에 맞게 영화 리스트 받아오는 함수
         function get_movie_list() {
             var values = [];
             //배열을 넘기기 위한 세팅
@@ -529,67 +506,222 @@
             $.ajax({
                 type: "get",
                 url: "/list",
+                async : false,
                 data: {
                     selType: selType,
                     selGenre: selGenre,
                     selRated: selRated,
                     selRtime_start: selRtime_start,
-                    selRtime_end : selRtime_end
+                    selRtime_end : selRtime_end,
+                    selSort : selSort,
+                    page: resultPageNum
                 },
                 success: function(result){
-                    //var resultNum = result.pageMaker.totalCount;
-                    //$(".ResultCounter").html('<span class="ResultCounter_Number">'+ resultNum + '</span> 건의 작품이 있습니다.');
+                    //결과 헤더 :갯수 + 정렬탭
+                    var resultNum = result.pageMaker.totalCount;
+                    var resultheader = '';
+                    resultheader += '<div class="ResultCounter">' +
+                        '               <span class="ResultCounter_Number">'+ resultNum +'</span> 건의 작품이 있습니다.' +
+                        '            </div>' +
+                        '            <div class="tab">' +
+                        '               <label class="switch" id = "Latest">' +
+                        '                   <input type="radio" name="filter"';
+                                            if(selSort == "Latest"){
+                                                resultheader += 'checked';
+                                            }
+                                            resultheader += '>' +
+                        '                   <span class="slider">최신순</span>' +
+                        '               </label>' +
+                        '               <label class="switch" id = "imdb_rating">' +
+                        '                   <input type="radio" name="filter"';
+                                            if(selSort == "imdb_rating"){
+                                                resultheader += 'checked';
+                                            }
+                                            resultheader += '>' +
+                        '                   <span class="slider">imdb 평점순</span>' +
+                        '               </label>' +
+                        '               <label class="switch"  id = "self_rating">' +
+                        '                   <input type="radio" name="filter"';
+                                            if(selSort == "self_rating"){
+                                                resultheader += 'checked';
+                                            }
+                                            resultheader += '>' +
+                        '                   <span class="slider">자체 평점순</span>' +
+                        '               </label>' +
+                        '               <label class="switch" id = "Most_reviews">' +
+                        '                   <input type="radio" name="filter"';
+                                            if(selSort == "Most_reviews"){
+                                                resultheader += 'checked';
+                                            }
+                                            resultheader += '>' +
+                        '                    <span class="slider">리뷰 많은순</span>' +
+                        '                </label>' +
+                        '             </div>';
+
                     var eachContent = '';
-                    //이미지, 별 평점, 장르 바꿔야 함.
+                    //컨텐츠마다 이미지 바꿔야 함.
                     $.each(result.contents, function(key, value){
-                        eachContent += '<div class="movie_card">' +
+                        eachContent += '<div class="movie_card" id="' + value.contentId + '">' +
                                         '<div class="info_section">' +
                                             '<div class="movie_header">' +
                                                 '<img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>' +
                                                 '<h1>'+ value.title +'</h1>' +
-                                                '<h4 style="display: inline-block">'+value.year+', '+value.director+'</h4>' +
-                                                '<div class="main_awards">' +
-                                                    '<div class="awards_icon"><i class="fas fa-medal"></i></div>'+
-                                                            value.awardWin +
-                                                    '<div class="awards_icon"><i class="fas fa-award"></i></div>' +
-                                                            value.awardNominate +
-                                                    '<div class="awards_icon"><i class="fas fa-trophy"></i></div>' +
-                                                            value.awardMajor + ' ' + value.awardMajorType +
-                                                '</div>' +
-                                                '<div style="display: block">' +
-                                                    '<span class="minutes">' + value.runtime +' min</span>' +
-                                                    '<span class="rated">'+ value.rated +'</span>' +
-                                                    '<div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>' +
+                                                '<h4 style="display: inline-block">'+value.year;
+                                                if(value.director != null){
+                                                    eachContent += ', ' + value.director;
+                                                }
+                                                else{
+                                                    eachContent += ', No Data';
+                                                }
+                                                eachContent += '</h4>' +
+                                                '<div style="display: block">';
+                                                    if(value.runtime != null){
+                                                        eachContent += '<span class="boxinfo">' + value.runtime +' min</span>';
+                                                    }
+                                                    else{
+                                                        eachContent += '<span class="boxinfo">no data</span>';
+                                                    }
+                                                    if(value.rated != null){
+                                                        eachContent += '<span class="boxinfo">'+ value.rated +'</span>';
+                                                    }
+                                                    else{
+                                                        eachContent += '<span class="boxinfo">no data</span>';
+                                                    }
+                                                    eachContent += '<div class="star-ratings-sprite"><span style="width:';
+                                                    if(value.imdbRating == null){
+                                                        eachContent += 0;
+                                                    }
+                                                    else{
+                                                        eachContent += value.imdbRating*10;
+                                                    }
+                                                    eachContent += '%" class="star-ratings-sprite-rating"></span></div>' +
+                                                    '<div class="main_awards">';
+                                                        if(value.awardWin !== 0 && value.awardWin != null) {
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-medal" title="win"></i></div>'+ value.awardWin;
+                                                        }
+                                                        if(value.awardNominate !== 0 && value.awardNominate != null){
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-award" title="nominate"></i></div>' + value.awardNominate;
+                                                        }
+                                                        if(value.awardMajor != null){
+                                                            eachContent += '<div class="awards_icon"><i class="fas fa-trophy" title="major award"></i></div>' + value.awardMajor + ' ' + value.awardMajorType;
+                                                        }
+                                                    eachContent += '</div>' +
                                                 '</div>' +
                                             '</div>' +
-                                            '<div class="movie_desc">' +
-                                                '<p class="text">' + value.plot + '</p>' +
-                                            '</div>' +
+                                            '<div class="movie_desc">';
+                                                if(value.plot != "" && value.plot != null){
+                                                    eachContent += '<p class="text">' + value.plot + '</p>';
+                                                }
+                                                else{
+                                                    eachContent += '<p class="text">no data</p>';
+                                                }
+                                            eachContent += '</div>' +
                                             '<div class="movie_genre">' +
-                                                '<ul>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                    '<li><i>#fantasy</i></li>' +
-                                                '</ul>' +
+                                                '<ul>';
+                                               $.ajax({
+                                                   type: "get",
+                                                    url: "/list/genres",
+                                                    async : false,
+                                                    data: {
+                                                        contentId: value.contentId,
+                                                    },
+                                                    success: function(result2){
+                                                        for(var i in result2.keywordMaker.myGenre){
+                                                            eachContent += '<li><i>#'+ result2.keywordMaker.myGenre[i] +'</i></li>';
+                                                       }
+                                                    }
+                                                });
+                                                eachContent += '</ul>' +
                                             '</div>' +
                                         '</div>' +
                                         '<div class="blur_back bright_back"></div>' +
                                         '</div>';
                     });
-                    $(".ResultLists").html(eachContent);
+                    //결과가 안 비었을 때
+                    if(eachContent != ''){
+                        $(".ResultHeader").show();
+                        $(".ResultHeader").html(resultheader);
+                        $(".ResultLists").hide();
+                        $(".ResultLists").html(eachContent).fadeIn('slow');
+                        $(".Paging").show();
+                        printPaging(result.pageMaker);
+                    }
+                    //결과가 비었을 때
+                    else{
+                        var EmptyResult = '';
+                        EmptyResult = '<div class="EmptyResult"><h2 style="color: #0b2e13; font-weight: 700; margin-top: 25px;">검색 결과가 없습니다.</h2>키워드를 다시 선택해보세요. </div>';
+                        $(".ResultHeader").hide();
+                        $(".Paging").hide();
+                        $ ('.ResultWrapper .ResultLists').html(EmptyResult);
+                    }
+                    //스크롤 위로 올리기
+                    $('html, body').animate({scrollTop: 0}, 0);
+
+                    //read 페이지 이동
+                    $(document).on("click",".movie_card",function(){
+                        var id = $(this).attr('id');
+                        var link =  '/read?contentId=' + id;
+                        $(location).attr('href',link);
+                    })
                 }
             });
         }
-    });
-</script>
 
-<!-- 정렬 탭 제어 -->
-<script>
-    $(document).ready(function() {
-        $('.tab label').click(function(){
-           //새로고침 코드
-            $ ('.ResultWrapper .ResultLists').load ( window.location + '.ResultWrapper .ResultLists').hide().fadeIn('slow');
-        });
+        //페이지 번호 프린트
+        function printPaging(pageMaker) {
+            var str = '<ul class="pagination">';
+
+            // 이전 버튼
+            if(pageMaker.prev){
+                str +=
+                '<li class="paginate_button page-item previous" id="dataTable_previous">' +
+                    '<a href="#' + (pageMaker.startPage-1) +
+                    '" aria-controls="dataTable" data-dt-idx="'+(pageMaker.startPage-1)+'" tabindex="0" class="page-link">Previous</a>' +
+                '</li>';
+            }
+            // 페이지 번호 버튼
+            for(var i = pageMaker.startPage, len=pageMaker.endPage; i<=len; i++){
+
+                str +=
+                    '<li class="paginate_button page-item" id ="'+i+'">' +
+                        '<a href="#' + i +
+                        '" aria-controls="dataTable" data-dt-idx="'+i+'" tabindex="0" class="page-link">'+i+'</a>' +
+                    '</li>';
+            }
+            if(pageMaker.next){
+                str +=
+                    '<li class="paginate_button page-item next" id="dataTable_next">' +
+                        '<a href="#' + (pageMaker.endPage+1) +
+                        '" aria-controls="dataTable" data-dt-idx="'+(pageMaker.endPage+1)+'" tabindex="0" class="page-link">Next</a>' +
+                    '</li>';
+            }
+            str += '</ul>';
+
+            str += '<form id="listPageForm">' +
+                        '<input type="hidden" name="page" value="'+ pageMaker.criteria.page+'">' +
+                        '<input type="hidden" name="perPageNum" value="'+ pageMaker.criteria.perPageNum+'">' +
+                    '</form>';
+
+            $(".Paging").html(str);
+
+            $('.pagination li').each(function() {
+                if($(this).attr("id") == resultPageNum){
+                   $(this).addClass("active");
+                }
+            });
+
+        }
+
+        // 페이징 번호 클릭 이벤트
+        $('.Paging').on("click", "a", function (event) {
+
+            resultPageNum = $(this).attr("href");
+            //해쉬태그 제거
+            if( resultPageNum.charAt( 0 ) === '#' )
+                resultPageNum = resultPageNum.slice( 1 );
+            get_movie_list();
+        })
+
     });
 </script>
 
