@@ -25,7 +25,6 @@ public class ContentVO {
     private Double rating;
     private Integer reviewCnt;
     private Integer likesCnt;
-    private List<GenreVO> genres;
 
     public String getContentId() {
         return contentId;

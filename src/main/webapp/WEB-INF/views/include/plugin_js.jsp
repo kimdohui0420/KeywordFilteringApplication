@@ -7,7 +7,6 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="/dist/assets/demo/datatables-demo.js"></script>
-<script src="/dist/js/nouislider.js"></script>
 <script src="https://unpkg.com/wnumb@1.1.0"></script>
 <script src="https://unpkg.com/nouislider@10.0.0/distribute/nouislider.js"></script>
 <script src="https://unpkg.com/nouislider@10.0.0/distribute/nouislider.min.js"></script>

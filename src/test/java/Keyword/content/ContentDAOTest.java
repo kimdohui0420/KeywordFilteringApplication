@@ -1,5 +1,6 @@
 package Keyword.content;
 
+import Keyword.commons.paging.Criteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.persistence.ContentDAO;
 import org.junit.Test;
@@ -8,8 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-config/applicationContext.xml"})
@@ -60,11 +64,30 @@ public class ContentDAOTest {
 
     @Test
     public void ListSelected() throws Exception{
-        String[] selGenre = new String[3];
-        String[] selRated = new String[3];
+        String[] selGenre = null;
+        String[] selRated = null;
         int selRtime_start = -1;
         int selRtime_end = -1;
-        System.out.println(contentDAO.listSelected("", selGenre, selRated, selRtime_start, selRtime_end));
+
+        Criteria criteria = new Criteria();
+        criteria.setPage(1);
+
+        List<ContentVO> contents = contentDAO.listSelected("episode", selGenre, selRated, selRtime_start, selRtime_end,"Latest", criteria);
+
+        for(ContentVO content : contents) {
+            logger.info(content.getContentId() + " : " + content.getTitle());
+        }
+    }
+
+    @Test
+    public void testURI() throws Exception {
+        UriComponents uriComponents= UriComponentsBuilder.newInstance()
+                .path("/article/read")
+                .queryParam("articleNo", 12)
+                .queryParam("perPageNum",20)
+                .build();
+
+        logger.info(uriComponents.toString());
     }
 
 
