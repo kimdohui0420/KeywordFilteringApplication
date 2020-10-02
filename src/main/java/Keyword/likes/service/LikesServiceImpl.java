@@ -38,9 +38,4 @@ public class LikesServiceImpl implements LikesService{
     public LikesVO isLiked(String contentId, String userId) throws Exception {
         return likesDAO.isLiked(contentId, userId);
     }
-
-    @Override
-    public List<LikesVO> getMyLikes(String userId) throws Exception {
-        return likesDAO.getMyLikes(userId);
-    }
 }

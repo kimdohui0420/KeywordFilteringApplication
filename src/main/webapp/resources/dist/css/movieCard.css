@@ -17,9 +17,6 @@
     border-radius: 5px;
     position: relative;
 }
-.containerMC svg {
-    margin-right: 0.5rem;
-}
 
 .hero {
     height: 342px;
@@ -57,7 +54,9 @@
 }
 
 .action-likes {
-    margin-left: 730px; /* 780(hero)-50(likes-svg) */
+    float: right;
+    z-index: 3;
+    position: relative;
     border-radius: 100%;
     background-color: rgba( 255, 255, 255, 0.5 );
 }
@@ -220,6 +219,10 @@ fieldset, label {
 .rating > label:hover ~ input:checked ~ label,
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
+}
+
+.svg-text{
+    padding-left: 0.5rem;
 }
 
 a[data-tooltip] {

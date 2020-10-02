@@ -17,4 +17,5 @@ public interface ContentService {
     List<ContentVO> listSelected(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end, String selSort, Criteria criteria) throws Exception;
     List<String> listMyGenre(String contentId) throws Exception;
     int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;
+    List<ContentVO> getMyLikes(String userId) throws Exception;
 }

@@ -19,4 +19,5 @@ public interface ContentDAO {
     List<String> listMyGenre(String contentId) throws Exception;
     void updateLikesCnt(String contentId, int amount) throws Exception;
     int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;   // 페이징
+    List<ContentVO> getMyLikes(String userId) throws Exception;
 }

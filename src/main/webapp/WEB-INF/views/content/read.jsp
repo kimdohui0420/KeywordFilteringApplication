@@ -19,11 +19,11 @@
 
                     <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_cover.jpg" alt="cover" class="cover" /></a>
 
-                    <div class="hero">
+                    <div class="hero" id="${content.contentId}">
                         <c:if test="${not empty login}">
                         <div class="action-likes">
-                            <input type="checkbox" id="checkbox" />
-                            <label for="checkbox">
+                            <input type="checkbox" id="like-checkbox" />
+                            <label for="like-checkbox">
                                 <svg id="heart-svg" class="likes-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                                     <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
                                         <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
@@ -71,9 +71,11 @@
                         <div class="details">
                             <div class="title1">${content.title} (${content.year}) <span>${content.rated}</span></div>
 
-                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.imdbRating}</div>
-                            <div class="fixed-rating"><i class="fas fa-star"></i>${content.rating}</div>
-                            <div class="fixed-likes"><i class="fas fa-heart"></i><span id="totalLikesCnt">${content.likesCnt}</span></div>
+                            <div class="fixed-rating"><i class="fas fa-star"></i><span class="svg-text">${content.imdbRating}</span></div>
+                            <!-- TODO: 별점 반영 -->
+                            <div class="fixed-rating"><i class="fas fa-star"></i><span class="svg-text">${content.rating}</span></div>
+                            <!-- TODO: 좋아요 실시간 카운트 반영 -->
+                            <div class="fixed-likes"><i class="fas fa-heart"></i><span id="totalLikesCnt" class="svg-text">${content.likesCnt}</span></div>
 
                         </div> <!-- end details -->
 
@@ -96,13 +98,13 @@
                         </div>
                         <div class="column2">
                             <c:if test="${not empty content.awardWin && content.awardWin ne 0}">
-                                <span class="awards"><i class="fas fa-medal"></i>${content.awardWin} <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if></span>
+                                <span class="awards"><i class="fas fa-medal"></i><span class="svg-text">${content.awardWin}</span> <c:if test="${content.awardWin eq 1}">win</c:if><c:if test="${content.awardWin ne 1}">wins</c:if></span>
                             </c:if>
                             <c:if test="${not empty content.awardNominate && content.awardNominate ne 0}">
-                                <span class="awards"><i class="fas fa-award"></i>${content.awardNominate} nominated</span>
+                                <span class="awards"><i class="fas fa-award"></i><span class="svg-text">${content.awardNominate}</span> nominated</span>
                             </c:if>
                             <c:if test="${!empty content.awardMajor}">
-                                <span class="awards"><i class="fas fa-trophy"></i>${content.awardMajor} ${content.awardMajorType}</span>
+                                <span class="awards"><i class="fas fa-trophy"></i><span class="svg-text">${content.awardMajor}</span> ${content.awardMajorType}</span>
                             </c:if>
                         </div>
                     </div> <!-- end description -->
@@ -136,6 +138,7 @@
     var contentId = "${content.contentId}";
     var mine = false;   // 내 리뷰 존재 유무
     var reviewPageNum = 1;  // 리뷰 페이징 번호
+    var userId = "${login.userId}";
 
     function myLikes(){
         $.ajax({
@@ -147,56 +150,12 @@
             },
             success: function (result) {
                 if(!result)
-                    $("input:checkbox[id='checkbox']").prop("checked", false);
+                    $("input:checkbox[id='like-checkbox']").prop("checked", false);
                 else
-                    $("input:checkbox[id='checkbox']").prop("checked", true);
+                    $("input:checkbox[id='like-checkbox']").prop("checked", true);
             }
         });
     }
-
-    // 좋아요 클릭 처리
-    $("#checkbox").change(function(){
-        if($("#checkbox").is(":checked")){
-            $.ajax({
-                type: "post",
-                url: "/likes",
-                headers: {
-                    "Content-type": "application/json",
-                    "X-HTTP-Method-Override": "POST"
-                },
-                dataType: "text",
-                data: JSON.stringify({
-                    contentId: contentId,
-                    userId: "${login.userId}"
-                }),
-                success: function (msg) {
-                    if(msg==="regSuccess"){
-                        $("#totalLikesCnt").html();
-                    }
-                    else
-                        $("input:checkbox[id='checkbox']").prop("checked", false);
-                }
-            });
-        }else{
-            $.ajax({
-                type: "delete",
-                url: "/likes",
-                headers: {
-                    "Content-type": "application/json",
-                    "X-HTTP-Method-Override": "POST"
-                },
-                dataType: "text",
-                data: JSON.stringify({
-                    contentId: contentId,
-                    userId: "${login.userId}"
-                }),
-                success: function (msg) {
-                    if(msg!=="delSuccess")
-                        $("input:checkbox[id='checkbox']").prop("checked", true);
-                }
-            });
-        }
-    });
 
     function myComment() {
         if(${empty login}){

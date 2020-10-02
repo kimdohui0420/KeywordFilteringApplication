@@ -8,5 +8,4 @@ public interface LikesDAO {
     void create(LikesVO likesVO) throws Exception;
     void delete(LikesVO likesVO) throws Exception;
     LikesVO isLiked(String contentId, String userId) throws Exception;
-    List<LikesVO> getMyLikes(String userId) throws Exception;
 }

@@ -194,14 +194,6 @@ public class ContentVO {
         this.likesCnt = likesCnt;
     }
 
-    public List<GenreVO> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<GenreVO> genres) {
-        this.genres = genres;
-    }
-
     @Override
     public String toString() {
         return "ContentVO{" +
@@ -226,7 +218,6 @@ public class ContentVO {
                 ", rating=" + rating +
                 ", reviewCnt=" + reviewCnt +
                 ", likesCnt=" + likesCnt +
-                ", genres=" + genres +
                 '}';
     }
 }

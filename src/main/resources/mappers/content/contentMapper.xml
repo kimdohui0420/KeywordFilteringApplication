@@ -243,6 +243,35 @@
         ]]>
     </select>
 
+    <select id="getMyLikes" resultMap="ContentResultMap">
+        SELECT
+            imdb_id
+            , title
+            , plot
+            , type
+            , rated
+            , year
+            , released_at
+            , runtime
+            , director
+            , actor
+            , award_win
+            , award_nominate
+            , award_major
+            , award_major_type
+            , imdb_rating
+            , rating
+            , review_cnt
+            , likes_cnt
+        FROM disney_contents
+        WHERE imdb_id IN (
+            SELECT content_id
+            FROM likes
+            WHERE user_id = #{userId}
+            ORDER BY reg_date DESC
+            );
+    </select>
+
     <resultMap id="ContentResultMap" type="ContentVO">
         <id property="contentId" column="imdb_id"/>
         <result property="title" column="title"/>

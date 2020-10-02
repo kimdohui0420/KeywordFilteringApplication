@@ -110,5 +110,8 @@ public class ContentDAOImpl implements ContentDAO{
         return sqlSession.selectList(NAMESPACE+".listSelected", paramMap);
     }
 
-
+    @Override
+    public List<ContentVO> getMyLikes(String userId) throws Exception {
+        return sqlSession.selectList(NAMESPACE+".getMyLikes", userId);
+    }
 }

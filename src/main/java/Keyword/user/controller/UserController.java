@@ -1,6 +1,6 @@
 package Keyword.user.controller;
 
-import Keyword.likes.service.LikesService;
+import Keyword.content.service.ContentService;
 import Keyword.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +14,12 @@ import javax.inject.Inject;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    private final LikesService likesService;
+    private final ContentService contentService;
 
     @Inject
-    public UserController(UserService userService, LikesService likesService) {
+    public UserController(UserService userService, ContentService contentService) {
         this.userService = userService;
-        this.likesService = likesService;
+        this.contentService = contentService;
     }
 
     // myInfo 페이지
@@ -31,8 +31,7 @@ public class UserController {
     // myLikes 페이지
     @RequestMapping(value = "/myLikes", method = RequestMethod.GET)
     public String myLikes(@RequestParam("userId") String userId, Model model) throws Exception{
-        model.addAttribute("likes", likesService.getMyLikes(userId));
-
+        model.addAttribute("likes", contentService.getMyLikes(userId));
         return "user/myLikes";
     }
 }

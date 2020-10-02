@@ -72,5 +72,10 @@ public class ContentServiceImpl implements ContentService{
         return contentDAO.countResult(selType, selGenre, selRated, selRtime_start, selRtime_end);
     }
 
+    @Override
+    public List<ContentVO> getMyLikes(String userId) throws Exception {
+        return contentDAO.getMyLikes(userId);
+    }
+
 
 }

@@ -61,17 +61,4 @@ public class likesController {
         }
         return entity;
     }
-
-    // 내 좋아요 목록 가져오기
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<LikesVO>> list(@RequestParam("userId") String userId){
-        ResponseEntity<List<LikesVO>> entity = null;
-        try {
-            entity = new ResponseEntity<>(likesService.getMyLikes(userId), HttpStatus.OK);
-        } catch (Exception e){
-            e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return entity;
-    }
 }

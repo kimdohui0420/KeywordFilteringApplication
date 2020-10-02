@@ -36,9 +36,4 @@ public class LikesDAOImpl implements LikesDAO{
         paramMap.put("userId", userId);
         return sqlSession.selectOne(NAMESPACE+".isLiked", paramMap);
     }
-
-    @Override
-    public List<LikesVO> getMyLikes(String userId) throws Exception {
-        return sqlSession.selectList(NAMESPACE+".getMyLikes", userId);
-    }
 }
