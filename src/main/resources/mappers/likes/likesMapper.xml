@@ -35,6 +35,12 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="countMyLikes" resultType="int">
+        SELECT COUNT(content_id)
+        FROM likes
+        WHERE user_id = #{userId}
+    </select>
+
     <resultMap id="LikesResultMap" type="LikesVO">
         <id property="contentId" column="content_id"/>
         <result property="userId" column="user_id"/>

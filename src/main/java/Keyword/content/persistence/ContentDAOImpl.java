@@ -111,7 +111,10 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
-    public List<ContentVO> getMyLikes(String userId) throws Exception {
-        return sqlSession.selectList(NAMESPACE+".getMyLikes", userId);
+    public List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("criteria", criteria);
+        return sqlSession.selectList(NAMESPACE+".getMyLikes", paramMap);
     }
 }

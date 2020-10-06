@@ -73,8 +73,8 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<ContentVO> getMyLikes(String userId) throws Exception {
-        return contentDAO.getMyLikes(userId);
+    public List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception {
+        return contentDAO.getMyLikes(userId, criteria);
     }
 
 

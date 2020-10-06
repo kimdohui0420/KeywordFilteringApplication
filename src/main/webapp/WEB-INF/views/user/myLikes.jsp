@@ -17,7 +17,7 @@
                     <!-- 결과 갯수, 정렬 버튼 -->
                     <header class="ResultHeader">
                         <div class="ResultCounter">
-                            <span class="ResultCounter_Number">${likes.size()}</span> 건의 작품이 있습니다.
+                            총 <span class="ResultCounter_Number">${pageMaker.totalCount}</span> 건의 작품이 있습니다.
                         </div>
                         <div class="tab">
                             <label class="switch" id="Latest">
@@ -40,7 +40,6 @@
                     </header>
                     <!-- 내 좋아요 리스트 -->
                     <div class="resultLists">
-                        <!-- TODO: 페이징-->
                         <c:forEach items="${likes}" var="like">
                         <div class="movie_card" id="${like.contentId}">
                             <div class="action-likes">
@@ -126,6 +125,33 @@
                         </div>
                         </c:forEach>
                     </div>
+                    <!-- 페이징 -->
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <form id="pagingForm">
+                                <input type="hidden" name="userId" value="${login.userId}">
+                                <input type="hidden" name="page" value="${pageMaker.criteria.page}">
+                                <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+                            </form>
+                            <ul class="pagination">
+                                <c:if test="${pageMaker.prev}">
+                                    <li class="paginate_button page-item previous">
+                                        <a href="${pageMaker.startPage-1}" class="page-link">이전</a>
+                                    </li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                                    <li class="paginate_button page-item <c:out value="${pageMaker.criteria.page==idx?'active':''}"/>" >
+                                        <a href="${idx}" class="page-link">${idx}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${pageMaker.next && pageMaker.endPage>0}">
+                                    <li class="paginate_button page-item next">
+                                        <a href="${pageMaker.endPage+1}" class="page-link">다음</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -141,6 +167,15 @@
         var contentId = $(this).parent().attr('id');
         var link =  '/read?contentId=' + contentId;
         $(location).attr('href',link);
+    });
+
+    $(".pagination li a").on("click", function (event) {
+        event.preventDefault();
+
+        var listPageForm = $("#pagingForm");
+        listPageForm.find("[name='page']").val($(this).attr("href"));
+        listPageForm.attr("action", "myLikes").attr("method", "get");
+        listPageForm.submit();
     });
 </script>
 </body>

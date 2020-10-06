@@ -36,4 +36,9 @@ public class LikesDAOImpl implements LikesDAO{
         paramMap.put("userId", userId);
         return sqlSession.selectOne(NAMESPACE+".isLiked", paramMap);
     }
+
+    @Override
+    public int countMyLikes(String userId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".countMyLikes", userId);
+    }
 }

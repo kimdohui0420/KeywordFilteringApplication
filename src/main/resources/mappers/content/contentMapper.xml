@@ -269,7 +269,8 @@
             FROM likes
             WHERE user_id = #{userId}
             ORDER BY reg_date DESC
-            );
+            )
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum};
     </select>
 
     <resultMap id="ContentResultMap" type="ContentVO">

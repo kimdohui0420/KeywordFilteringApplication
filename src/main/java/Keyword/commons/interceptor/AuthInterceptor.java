@@ -16,7 +16,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         UserVO user = (UserVO) request.getSession().getAttribute("login");
         String query = request.getQueryString();
-        String qId = query.substring(query.indexOf("?userId=")+8);
+        Integer sIdx = query.indexOf("?userId=")+8;
+        Integer eIdx = query.indexOf("&");
+
+        String qId;
+        if(eIdx==-1)    qId = query.substring(sIdx);
+        else            qId = query.substring(sIdx, eIdx);
 
         if(user==null || !user.getUserId().equals(qId)){
             logger.info("Wrong Access..");
