@@ -1,5 +1,6 @@
 package Keyword.user.controller;
 
+import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
 import Keyword.user.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.inject.Inject;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -31,7 +33,17 @@ public class UserController {
     // myLikes 페이지
     @RequestMapping(value = "/myLikes", method = RequestMethod.GET)
     public String myLikes(@RequestParam("userId") String userId, Model model) throws Exception{
-        model.addAttribute("likes", contentService.getMyLikes(userId));
+
+        List<ContentVO> likes = contentService.getMyLikes(userId);
+        model.addAttribute("likes", likes);
+
+        Map<String, List<String>> genres = new HashMap<>();
+        for(int i=0; i<likes.size(); i++){
+            String contentId = likes.get(i).getContentId();
+            genres.put(contentId, contentService.listMyGenre(contentId));
+        }
+        model.addAttribute("genres", genres);
+
         return "user/myLikes";
     }
 }

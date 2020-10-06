@@ -39,8 +39,4 @@ public class LikesDAOTest {
         System.out.println(likesDAO.isLiked("tt3521164", "RM").toString());
     }
 
-    @Test
-    public void testGetMyLikes() throws Exception{
-        System.out.println(likesDAO.getMyLikes("RM").toString());
-    }
 }

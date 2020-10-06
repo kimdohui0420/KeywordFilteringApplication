@@ -115,9 +115,10 @@
                                 </div>
                                 <div class="movie_genre">
                                     <ul>
-                                        <li><i>#fantasy</i></li>
-                                        <li><i>#fantasy</i></li>
-                                        <li><i>#fantasy</i></li>
+                                        <c:set var="cId" value="${like.contentId}"/>
+                                        <c:forEach items="${genres.get(cId)}" var="genre">
+                                        <li><i>#${genre}</i></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
