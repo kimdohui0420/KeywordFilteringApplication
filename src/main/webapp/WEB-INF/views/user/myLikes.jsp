@@ -97,7 +97,7 @@
                                     <div style="display: block">
                                         <span class="boxinfo">${like.runtime} min</span>
                                         <span class="boxinfo">${like.rated}</span>
-                                        <div class="star-ratings-sprite"><span style="width:60%" class="star-ratings-sprite-rating"></span></div>
+                                        <div class="star-ratings-sprite"><span style="width:${like.imdbRating*10}%" class="star-ratings-sprite-rating"></span></div>
                                         <div class="main_awards">
                                             <div class="awards_icon"><i class="fas fa-medal"></i></div>
                                                 ${like.awardWin}
