@@ -19,7 +19,7 @@
                         <div class="ResultCounter">
                             총 <span class="ResultCounter_Number">${pageMaker.totalCount}</span> 건의 작품이 있습니다.
                         </div>
-                        <div class="tab">
+                        <!--div class="tab">
                             <label class="switch" id="Latest">
                                 <input type="radio" name="filter" checked="">
                                 <span class="slider">최신순</span>
@@ -36,7 +36,7 @@
                                 <input type="radio" name="filter">
                                 <span class="slider">리뷰 많은순</span>
                             </label>
-                        </div>
+                        </div-->
                     </header>
                     <!-- 내 좋아요 리스트 -->
                     <div class="resultLists">

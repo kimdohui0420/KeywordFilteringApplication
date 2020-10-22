@@ -6,12 +6,12 @@ import Keyword.review.domain.ReviewVO;
 import java.util.List;
 
 public interface ReviewDAO {
-    List<ReviewVO> list(String contentId, String userName) throws Exception;
+    List<ReviewVO> list(String contentId, String userId) throws Exception;
     void create(ReviewVO reviewVO) throws Exception;
     void update(ReviewVO reviewVO) throws Exception;
     void delete(Integer reviewNo) throws Exception;
     String getContentId(Integer reviewNo) throws Exception;
-    ReviewVO getMyReview(String contentId, String userName) throws Exception;   // 내 리뷰 가져오기
+    ReviewVO getMyReview(String contentId, String userId) throws Exception;   // 내 리뷰 가져오기
     List<ReviewVO> listPaging(String contentId, Criteria criteria) throws Exception;    // 페이징
     int countReviews(String contentId) throws Exception;   // 페이징
 }

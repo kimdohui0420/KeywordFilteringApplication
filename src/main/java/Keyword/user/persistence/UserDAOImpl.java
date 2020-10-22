@@ -45,4 +45,9 @@ public class UserDAOImpl implements UserDAO{
     public UserVO checkUserWithSessionKey(String value) throws Exception {
         return sqlSession.selectOne(NAMESPACE+".checkUserWithSessionKey", value);
     }
+
+    @Override
+    public Integer dupCheck(String uncheckedId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".dupCheck", uncheckedId);
+    }
 }

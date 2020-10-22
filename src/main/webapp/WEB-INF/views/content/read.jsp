@@ -176,7 +176,7 @@
             url: "/reviews/mine",
             data: {
                 contentId: contentId,
-                userName: "${login.userName}"
+                userId: "${login.userId}"
             },
             success: function (result) {
                 var myReviewDiv = '';
@@ -197,7 +197,7 @@
                         '</fieldset></div>';
                     myReviewDiv += '<div class="comment-block"><form action="">';
                     myReviewDiv += '<textarea id="newReviewText" cols="30" rows="3" placeholder="Add review..."></textarea>';
-                    myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userName}" readonly hidden>';
+                    myReviewDiv += '<input id="newReviewWriter" type="text" value="${login.userId}" readonly hidden>';
                     myReviewDiv += '<div class="bottom-comment"><ul class="comment-actions">';
                     myReviewDiv += '<li class="comment-delete" onclick="commentAdd();">Reply</li>';
                     myReviewDiv += '</ul></div></form></div>';
@@ -222,7 +222,7 @@
                     myReviewDiv += '</div></div>';
                     myReviewDiv += '<div class="comment-block commentContent'+result.reviewNo+'"><p class="comment-text">'+result.reviewText+'</p>';
                     myReviewDiv += '<div class="bottom-comment"><div class="comment-date">'+formattedTime+dateStr+'</div>';
-                    if("${login.userName}"===result.reviewWriter) {
+                    if("${login.userId}"===result.reviewWriter) {
                         myReviewDiv += '<ul class="comment-actions">';
                         myReviewDiv += '<li class="comment-modify" onclick="commentUpdate('+result.reviewNo+',\''+result.reviewText+'\','+result.reviewRating+');return false;"> 수정 </li>';
                         myReviewDiv += '<li class="comment-delete" onclick="commentDelete('+result.reviewNo+');"> 삭제</li></ul>';

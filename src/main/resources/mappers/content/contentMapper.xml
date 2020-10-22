@@ -270,6 +270,7 @@
             WHERE user_id = #{userId}
             ORDER BY reg_date DESC
             )
+        ORDER BY title
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum};
     </select>
 

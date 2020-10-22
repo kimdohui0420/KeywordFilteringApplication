@@ -22,10 +22,10 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public List<ReviewVO> list(String contentId, String userName) throws Exception {
+    public List<ReviewVO> list(String contentId, String userId) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("contentId", contentId);
-        paramMap.put("userName", userName);
+        paramMap.put("userId", userId);
         return sqlSession.selectList(NAMESPACE+".list", paramMap);
     }
 
@@ -50,10 +50,10 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public ReviewVO getMyReview(String contentId, String userName) throws Exception {
+    public ReviewVO getMyReview(String contentId, String userId) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("contentId", contentId);
-        paramMap.put("userName", userName);
+        paramMap.put("userId", userId);
         return sqlSession.selectOne(NAMESPACE+".getMyReview", paramMap);
     }
 

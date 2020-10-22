@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService{
     public UserVO checkLoginBefore(String value) throws Exception {
         return userDAO.checkUserWithSessionKey(value);
     }
+
+    @Override
+    public Integer dupCheck(String uncheckedId) throws Exception{
+        return userDAO.dupCheck(uncheckedId);
+    }
 }

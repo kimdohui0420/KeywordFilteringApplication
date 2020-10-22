@@ -15,7 +15,6 @@
             , rating
         FROM disney_review
         WHERE content_id = #{contentId}
-            and review_writer NOT IN(#{userName})
         ORDER BY review_no DESC
     </select>
 
@@ -63,7 +62,7 @@
             , rating
         FROM disney_review
         WHERE content_id = #{contentId}
-             and review_writer = #{userName}
+             and review_writer = #{userId}
     </select>
 
     <!-- 페이징 -->
@@ -78,7 +77,7 @@
             , rating
             , user_img
         FROM disney_review
-        INNER JOIN user ON user_name = review_writer
+        INNER JOIN user ON user_id = review_writer
         WHERE content_id = #{contentId}
         ORDER BY review_no DESC
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}

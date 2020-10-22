@@ -41,10 +41,10 @@ public class ReviewController {
     // 리뷰 목록
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<ReviewVO>> list(@RequestParam("contentId") String contentId,
-                                               @RequestParam("userName") String userName){
+                                               @RequestParam("userId") String userId){
         ResponseEntity<List<ReviewVO>> entity = null;
         try {
-            entity = new ResponseEntity<>(reviewService.getReviews(contentId, userName), HttpStatus.OK);
+            entity = new ResponseEntity<>(reviewService.getReviews(contentId, userId), HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -84,10 +84,10 @@ public class ReviewController {
     // 내 리뷰 가져오기
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
     public ResponseEntity<ReviewVO> getMyReview(@RequestParam("contentId") String contentId,
-                                                @RequestParam("userName") String userName){
+                                                @RequestParam("userId") String userId){
         ResponseEntity<ReviewVO> entity = null;
         try {
-            entity = new ResponseEntity<>(reviewService.getMyReview(contentId, userName), HttpStatus.OK);
+            entity = new ResponseEntity<>(reviewService.getMyReview(contentId, userId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

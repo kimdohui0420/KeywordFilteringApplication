@@ -10,4 +10,5 @@ public interface UserDAO {
     UserVO login(LoginDTO loginDTO) throws Exception;
     void keepLogin(String userId, String sessionId, Date sessionLimit) throws Exception;
     UserVO checkUserWithSessionKey(String value) throws Exception;
+    Integer dupCheck(String uncheckedId) throws Exception;
 }

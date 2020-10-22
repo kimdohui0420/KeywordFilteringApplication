@@ -10854,4 +10854,13 @@ width: 100%;
 margin: 20px 5px 0;
 }
 
-
+/* sighUp -> 아이디 중복확인 버튼*/
+.btnCheck {
+  background-color: lightskyblue;
+  color: white;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
