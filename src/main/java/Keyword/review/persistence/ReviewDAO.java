@@ -13,5 +13,6 @@ public interface ReviewDAO {
     String getContentId(Integer reviewNo) throws Exception;
     ReviewVO getMyReview(String contentId, String userId) throws Exception;   // 내 리뷰 가져오기
     List<ReviewVO> listPaging(String contentId, Criteria criteria) throws Exception;    // 페이징
-    int countReviews(String contentId) throws Exception;   // 페이징
+    Integer countReviews(String contentId) throws Exception;   // 페이징
+    Float getAvgRatings(String contentId) throws Exception;
 }

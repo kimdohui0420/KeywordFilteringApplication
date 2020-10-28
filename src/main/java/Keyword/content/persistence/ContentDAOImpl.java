@@ -61,12 +61,13 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
-    public void updateReviewCnt(String contentId, int amount) throws Exception {
+    public void updateReview(String contentId, int amount, float rating) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("contentId", contentId);
         paramMap.put("amount", amount);
+        paramMap.put("rating", rating);
 
-        sqlSession.update(NAMESPACE+".updateReviewCnt", paramMap);
+        sqlSession.update(NAMESPACE+".updateReview", paramMap);
     }
 
     @Override

@@ -393,6 +393,7 @@
             },
             dataType: "text",
             data: JSON.stringify({
+                contentId: contentId,
                 reviewText: updateContent,
                 reviewRating: updateRating
             }),

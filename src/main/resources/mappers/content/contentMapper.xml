@@ -222,9 +222,10 @@
         ]]>
     </select>
 
-    <update id="updateReviewCnt">
+    <update id="updateReview">
         UPDATE disney_contents
-        SET review_cnt = review_cnt + #{amount}
+        SET review_cnt = review_cnt + #{amount},
+            rating = #{rating}
         WHERE imdb_id = #{contentId};
     </update>
 

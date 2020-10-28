@@ -83,13 +83,17 @@
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
     </select>
 
-    <select id="countReviews" resultType="int">
+    <select id="countReviews" resultType="Integer">
         SELECT COUNT(content_id)
         FROM disney_review
         WHERE content_id = #{contentId}
     </select>
 
-
+    <select id="ratingsAvg" resultType="Float">
+        SELECT AVG(rating)
+        FROM disney_review
+        WHERE content_id = #{contentId};
+    </select>
     <resultMap id="ReviewResultMap" type="ReviewVO">
         <id property="reviewNo" column="review_no"/>
         <result property="contentId" column="content_id"/>

@@ -30,12 +30,16 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public void addReview(ReviewVO reviewVO) throws Exception {
         reviewDAO.create(reviewVO);
-        contentDAO.updateReviewCnt(reviewVO.getContentId(), 1);
+        Float ratings = reviewDAO.getAvgRatings(reviewVO.getContentId());
+        contentDAO.updateReview(reviewVO.getContentId(), 1, ratings);
     }
 
+    @Transactional
     @Override
     public void modifyReview(ReviewVO reviewVO) throws Exception {
         reviewDAO.update(reviewVO);
+        Float ratings = reviewDAO.getAvgRatings(reviewVO.getContentId());
+        contentDAO.updateReview(reviewVO.getContentId(), 0, ratings);
     }
 
     @Transactional
@@ -43,7 +47,9 @@ public class ReviewServiceImpl implements ReviewService{
     public void removeReview(Integer reviewNo) throws Exception {
         String contentId = reviewDAO.getContentId((reviewNo));
         reviewDAO.delete(reviewNo);
-        contentDAO.updateReviewCnt(contentId, -1);
+        Float ratings = reviewDAO.getAvgRatings(contentId);
+        ratings = ratings==null?0:ratings;
+        contentDAO.updateReview(contentId, -1, ratings);
     }
 
     @Override

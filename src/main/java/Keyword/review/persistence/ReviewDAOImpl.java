@@ -66,7 +66,12 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
-    public int countReviews(String contentId) throws Exception {
+    public Integer countReviews(String contentId) throws Exception {
         return sqlSession.selectOne(NAMESPACE+".countReviews", contentId);
+    }
+
+    @Override
+    public Float getAvgRatings(String contentId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE+".ratingsAvg", contentId);
     }
 }
