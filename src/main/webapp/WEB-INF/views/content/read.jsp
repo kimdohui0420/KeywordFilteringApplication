@@ -4,7 +4,7 @@
 <html>
 
 <%@include file="../include/head.jsp"%>
-
+<%@ include file="../include/plugin_js.jsp"%>
 <body class="sb-nav-fixed">
 <%@include file="../include/main_header.jsp"%>
 <div id="layoutSidenav">
@@ -133,7 +133,6 @@
     </div>
 </div>
 
-<%@ include file="../include/plugin_js.jsp"%>
 <script>
     var contentId = "${content.contentId}";
     var mine = false;   // 내 리뷰 존재 유무

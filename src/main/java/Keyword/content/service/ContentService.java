@@ -1,6 +1,7 @@
 package Keyword.content.service;
 
 import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ContentService {
     List<String> listMyGenre(String contentId) throws Exception;
     int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;
     List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception;
+    int countSearchedContents(SearchCriteria searchCriteria) throws Exception;   // 검색 결과 카운트
+    List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception;  // 검색 결과
 }

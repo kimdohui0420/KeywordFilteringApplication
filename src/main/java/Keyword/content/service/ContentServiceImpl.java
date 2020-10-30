@@ -1,6 +1,7 @@
 package Keyword.content.service;
 
 import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.persistence.ContentDAO;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,16 @@ public class ContentServiceImpl implements ContentService{
     @Override
     public List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception {
         return contentDAO.getMyLikes(userId, criteria);
+    }
+
+    @Override
+    public int countSearchedContents(SearchCriteria searchCriteria) throws Exception{
+        return contentDAO.countSearchedContents(searchCriteria);
+    }
+
+    @Override
+    public List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception{
+        return contentDAO.listSearch(searchCriteria);
     }
 
 

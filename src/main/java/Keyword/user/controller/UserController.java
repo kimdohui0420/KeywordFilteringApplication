@@ -1,12 +1,13 @@
 package Keyword.user.controller;
 
-import Keyword.commons.paging.Criteria;
 import Keyword.commons.paging.PageMaker;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
 import Keyword.likes.service.LikesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,15 +29,23 @@ public class UserController {
 
     // myInfo 페이지
     @RequestMapping(value = "/myInfo", method = RequestMethod.GET)
-    public String myInfo(){
+    public String myInfo(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                         Model model){
+
+        // 검색어 처리
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        model.addAttribute("pageMaker", pageMaker);
+
         return "user/myInfo";
     }
 
     // myLikes 페이지
     @RequestMapping(value = "/myLikes", method = RequestMethod.GET)
-    public String myLikes(@RequestParam("userId") String userId, Model model, Criteria criteria) throws Exception{
+    public String myLikes(@RequestParam("userId") String userId, Model model,/* Criteria criteria,*/
+                          @ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception{
 
-        List<ContentVO> likes = contentService.getMyLikes(userId, criteria);
+        List<ContentVO> likes = contentService.getMyLikes(userId, searchCriteria);
         model.addAttribute("likes", likes);
 
         Map<String, List<String>> genres = new HashMap<>();
@@ -47,7 +56,7 @@ public class UserController {
         model.addAttribute("genres", genres);
 
         PageMaker pageMaker = new PageMaker();
-        pageMaker.setCriteria(criteria);
+        pageMaker.setCriteria(searchCriteria);
         pageMaker.setTotalCount(likesService.countMyLikes(userId));
         model.addAttribute("pageMaker", pageMaker);
 

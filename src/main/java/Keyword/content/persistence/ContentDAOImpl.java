@@ -1,6 +1,7 @@
 package Keyword.content.persistence;
 
 import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -117,5 +118,15 @@ public class ContentDAOImpl implements ContentDAO{
         paramMap.put("userId", userId);
         paramMap.put("criteria", criteria);
         return sqlSession.selectList(NAMESPACE+".getMyLikes", paramMap);
+    }
+
+    @Override
+    public int countSearchedContents(SearchCriteria searchCriteria) throws Exception{
+        return sqlSession.selectOne(NAMESPACE+".countSearchedContents", searchCriteria);
+    }
+
+    @Override
+    public List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception{
+        return sqlSession.selectList(NAMESPACE+".listSearch", searchCriteria);
     }
 }

@@ -1,6 +1,7 @@
 package Keyword.content.persistence;
 
 import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface ContentDAO {
     void updateLikesCnt(String contentId, int amount) throws Exception;
     int countResult(String selType, String[] selGenre, String[] selRated, int selRtime_start, int selRtime_end) throws Exception;   // 페이징
     List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception;
+    int countSearchedContents(SearchCriteria searchCriteria) throws Exception;
+    List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception;
 }

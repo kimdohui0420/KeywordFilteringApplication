@@ -3,6 +3,7 @@ package Keyword.content.controller;
 import Keyword.commons.filtering.KeywordMaker;
 import Keyword.commons.paging.Criteria;
 import Keyword.commons.paging.PageMaker;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,13 +35,18 @@ public class ContentController {
     }
 
     @RequestMapping("/")
-    public String home(Model model) throws Exception{
+    public String home(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                       Model model) throws Exception{
         KeywordMaker keywordMaker = new KeywordMaker();
         keywordMaker.setTotalType(contentService.listType());
         keywordMaker.setTotalGenre(contentService.listGenre());
         keywordMaker.setTotalRated(contentService.listRated());
-
         model.addAttribute("keywordMaker", keywordMaker);
+
+        // 검색어 처리
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        model.addAttribute("pageMaker", pageMaker);
 
         return "home";
     }
@@ -115,10 +122,18 @@ public class ContentController {
 
     // 컨텐츠 조회 페이지 이동
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("contentId") String contentId, Model model) throws Exception{
+    public String read(@RequestParam("contentId") String contentId,
+                       @ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                       Model model) throws Exception{
+
         KeywordMaker keywordMaker = new KeywordMaker();
         keywordMaker.setMyGenre(contentService.listMyGenre(contentId));
         model.addAttribute("keywordMaker", keywordMaker);
+
+        // 검색어 처리
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        model.addAttribute("pageMaker", pageMaker);
 
         model.addAttribute("content", contentService.read(contentId));
         return "content/read";
@@ -151,5 +166,29 @@ public class ContentController {
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
         return "redirect:/list";
+    }
+
+    // 검색 처리
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                         Model model) throws Exception{
+
+        List<ContentVO> contents = contentService.listSearch(searchCriteria);
+        model.addAttribute("contents", contents);
+
+        Map<String, List<String>> genres = new HashMap<>();
+        for(int i=0; i<contents.size(); i++){
+            String contentId = contents.get(i).getContentId();
+            genres.put(contentId, contentService.listMyGenre(contentId));
+        }
+        model.addAttribute("genres", genres);
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        pageMaker.setTotalCount(contentService.countSearchedContents(searchCriteria));
+        model.addAttribute("pageMaker", pageMaker);
+
+
+        return "content/search";
     }
 }

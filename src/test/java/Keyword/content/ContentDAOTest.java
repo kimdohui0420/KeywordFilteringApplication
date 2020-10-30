@@ -1,6 +1,7 @@
 package Keyword.content;
 
 import Keyword.commons.paging.Criteria;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.persistence.ContentDAO;
 import org.junit.Test;
@@ -22,6 +23,14 @@ public class ContentDAOTest {
 
     @Inject
     private ContentDAO contentDAO;
+
+    @Test
+    public void testSearch() throws Exception{
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setSearchType("c");
+        searchCriteria.setSearchKeyword("Robert");
+        System.out.println(contentDAO.listSearch(searchCriteria));
+    }
 
     @Test
     public void testMyGenre() throws Exception{

@@ -1,5 +1,7 @@
 package Keyword.user.controller;
 
+import Keyword.commons.paging.PageMaker;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.user.domain.LoginDTO;
 import Keyword.user.domain.UserVO;
 import Keyword.user.service.UserService;
@@ -31,7 +33,14 @@ public class UserLoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGET(@ModelAttribute("loginDTO") LoginDTO loginDTO,
-                           HttpServletRequest request){
+                           HttpServletRequest request,
+                           @ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                           Model model){
+        // 검색어 처리
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        model.addAttribute("pageMaker", pageMaker);
+
         // 로그인 후 되돌아가기 위해
         if(request.getSession().getAttribute("destination")==null)
             request.getSession().setAttribute("destination", request.getHeader("Referer"));

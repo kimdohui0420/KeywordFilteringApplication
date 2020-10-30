@@ -1,11 +1,15 @@
 package Keyword.user.controller;
 
+import Keyword.commons.paging.PageMaker;
+import Keyword.commons.paging.SearchCriteria;
 import Keyword.user.domain.UserVO;
 import Keyword.user.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +28,13 @@ public class UserSignUpController {
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
-    public String registerGET() throws Exception{
+    public String registerGET(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                              Model model) throws Exception{
+        // 검색어 처리
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+        model.addAttribute("pageMaker", pageMaker);
+
         return "user/signUp";
     }
 

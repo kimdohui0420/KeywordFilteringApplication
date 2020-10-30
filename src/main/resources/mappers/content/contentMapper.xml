@@ -275,6 +275,55 @@
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum};
     </select>
 
+    <select id="countSearchedContents" resultType="int">
+        <![CDATA[
+        SELECT COUNT(imdb_id)
+        FROM disney_contents
+        ]]>
+        <include refid="search"/>
+    </select>
+    <select id="listSearch" resultMap="ContentResultMap">
+        <![CDATA[SELECT
+            imdb_id
+            , title
+            , plot
+            , type
+            , rated
+            , year
+            , released_at
+            , runtime
+            , director
+            , actor
+            , award_win
+            , award_nominate
+            , award_major
+            , award_major_type
+            , imdb_rating
+            , rating
+            , review_cnt
+            , likes_cnt
+        FROM disney_contents
+        ]]>
+            <include refid="search"/>
+        <![CDATA[
+        ORDER BY title
+        LIMIT #{pageStart}, #{perPageNum};
+        ]]>
+    </select>
+
+    <sql id="search">
+        <if test="searchType!=null">
+            WHERE
+            <if test="searchType=='t'.toString()">
+                title LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+            <if test="searchType=='c'.toString()">
+                director LIKE CONCAT('%', #{searchKeyword}, '%')
+                OR actor LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+        </if>
+    </sql>
+
     <resultMap id="ContentResultMap" type="ContentVO">
         <id property="contentId" column="imdb_id"/>
         <result property="title" column="title"/>

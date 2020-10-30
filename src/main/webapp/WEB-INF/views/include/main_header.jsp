@@ -3,16 +3,20 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Keyword Filtering</a>
     <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
+    <%-- TODO: 검색어 처리 --%>
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+            <select class="input-group-prepend" name="searchType" id="searchType">
+                <option value="t" <c:out value="${searchCriteria.searchType==null or searchCriteria.searchType eq 't'?'selected':''}"/> >Title</option>
+                <option value="c" <c:out value="${searchCriteria.searchType eq 'c'?'selected':''}"/> >Celeb</option>
+            </select>
+            <input class="form-control" type="text" id="searchInput" value="${searchCriteria.searchKeyword}" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                <button class="btn btn-primary" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
             </div>
         </div>
     </form>
-    <!-- Navbar-->
+
     <!-- 로그인 메뉴 -->
     <c:if test="${not empty login}">
     <ul class="navbar-nav ml-auto ml-md-0">
@@ -46,3 +50,12 @@
     </ul>
     </c:if>
 </nav>
+
+<script>
+    $("#searchBtn").on("click", function(){
+        self.location =
+            "/search?page=1&perPageNum=10"
+            + "&searchType=" + $("select option:selected").val()
+            + "&searchKeyword=" + encodeURIComponent($("#searchInput").val());
+    });
+</script>
