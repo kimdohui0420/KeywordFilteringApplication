@@ -4,7 +4,6 @@
 <html>
 
 <%@include file="../include/head.jsp"%>
-<%@ include file="../include/plugin_js.jsp"%>
 <body class="sb-nav-fixed">
 <%@include file="../include/main_header.jsp"%>
 <div id="layoutSidenav">
@@ -42,11 +41,11 @@
                     <!-- 내 좋아요 리스트 -->
                     <div class="resultLists">
                         <c:forEach items="${contents}" var="content">
+                            <c:set var="cId" value="${content.contentId}"/>
                             <div class="movie_card" id="${content.contentId}">
-                                <!-- TODO: 내 좋아요 확인-->
                                 <c:if test="${not empty login}">
                                 <div class="action-likes">
-                                    <input type="checkbox" id="like-checkbox"/>
+                                    <input type="checkbox" id="like-checkbox" <c:if test="${not empty likes.get(cId)}">checked</c:if>/>
                                     <label for="like-checkbox">
                                         <svg id="heart-svg" class="likes-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                                             <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
@@ -118,7 +117,6 @@
                                     </div>
                                     <div class="movie_genre">
                                         <ul>
-                                            <c:set var="cId" value="${content.contentId}"/>
                                             <c:forEach items="${genres.get(cId)}" var="genre">
                                                 <li><i>#${genre}</i></li>
                                             </c:forEach>
@@ -163,6 +161,7 @@
         <%@include file="../include/main_footer.jsp"%>
     </div>
 </div>
+<%@ include file="../include/plugin_js.jsp"%>
 <script>
     $(document).on("click",".info_section",function(){
         var contentId = $(this).parent().attr('id');

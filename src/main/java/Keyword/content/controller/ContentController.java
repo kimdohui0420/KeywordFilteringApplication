@@ -6,6 +6,9 @@ import Keyword.commons.paging.PageMaker;
 import Keyword.commons.paging.SearchCriteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.service.ContentService;
+import Keyword.likes.domain.LikesVO;
+import Keyword.likes.service.LikesService;
+import Keyword.user.domain.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +32,12 @@ import java.util.Map;
 public class ContentController {
     private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
     private final ContentService contentService;
+    private final LikesService likesService;
 
     @Inject
-    public ContentController(ContentService contentService) {
+    public ContentController(ContentService contentService, LikesService likesService) {
         this.contentService = contentService;
+        this.likesService = likesService;
     }
 
     @RequestMapping("/")
@@ -171,7 +177,7 @@ public class ContentController {
     // 검색 처리
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
-                         Model model) throws Exception{
+                         HttpServletRequest request, Model model) throws Exception{
 
         List<ContentVO> contents = contentService.listSearch(searchCriteria);
         model.addAttribute("contents", contents);
@@ -188,6 +194,18 @@ public class ContentController {
         pageMaker.setTotalCount(contentService.countSearchedContents(searchCriteria));
         model.addAttribute("pageMaker", pageMaker);
 
+        Map<String, LikesVO> likes = new HashMap<>();
+        UserVO user = (UserVO) request.getSession().getAttribute("login");
+        if(user!=null){
+            String userId = user.getUserId();
+            for(int i=0; i<contents.size(); i++){
+                String contentId = contents.get(i).getContentId();
+                LikesVO likesVO = likesService.isLiked(contentId, userId);
+                if(likesVO != null)
+                    likes.put(contentId, likesVO);
+            }
+        }
+        model.addAttribute("likes", likes);
 
         return "content/search";
     }

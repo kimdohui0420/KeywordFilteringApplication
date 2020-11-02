@@ -4,7 +4,6 @@
 <html>
 
 <%@include file="../include/head.jsp"%>
-<%@ include file="../include/plugin_js.jsp"%>
 <body class="sb-nav-fixed">
 <%@include file="../include/main_header.jsp"%>
 <div id="layoutSidenav">
@@ -51,7 +50,7 @@
         <%@include file="../include/main_footer.jsp"%>
     </div>
 </div>
-
+<%@ include file="../include/plugin_js.jsp"%>
 <script>
     var msg = "${msg}";
     if(msg==="REGISTERED")

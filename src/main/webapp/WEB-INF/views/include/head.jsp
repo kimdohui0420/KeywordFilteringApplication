@@ -24,4 +24,5 @@
     <link href="/dist/css/comments.css?a" rel="stylesheet" />
     <link href="/dist/css/pagination.css?a" rel="stylesheet" />
     <link href="/dist/css/likes.css?a" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 </head>
