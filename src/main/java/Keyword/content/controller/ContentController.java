@@ -177,9 +177,12 @@ public class ContentController {
     // 검색 처리
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
+                         @ModelAttribute("selSort") String selSort,
                          HttpServletRequest request, Model model) throws Exception{
 
-        List<ContentVO> contents = contentService.listSearch(searchCriteria);
+        if(selSort.isEmpty())   selSort = "Latest";
+        model.addAttribute("selSort", selSort);
+        List<ContentVO> contents = contentService.listSearch(searchCriteria, selSort);
         model.addAttribute("contents", contents);
 
         Map<String, List<String>> genres = new HashMap<>();

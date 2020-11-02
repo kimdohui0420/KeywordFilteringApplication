@@ -74,8 +74,8 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception {
-        return contentDAO.getMyLikes(userId, criteria);
+    public List<ContentVO> getMyLikes(String userId, Criteria criteria, String selSort) throws Exception {
+        return contentDAO.getMyLikes(userId, criteria, selSort);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception{
-        return contentDAO.listSearch(searchCriteria);
+    public List<ContentVO> listSearch(SearchCriteria searchCriteria, String selSort) throws Exception{
+        return contentDAO.listSearch(searchCriteria, selSort);
     }
 
 

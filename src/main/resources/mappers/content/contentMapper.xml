@@ -253,80 +253,80 @@
 
     <select id="getMyLikes" resultMap="ContentResultMap">
         SELECT
-            imdb_id
-            , title
-            , plot
-            , type
-            , rated
-            , year
-            , released_at
-            , runtime
-            , director
-            , actor
-            , award_win
-            , award_nominate
-            , award_major
-            , award_major_type
-            , imdb_rating
-            , rating
-            , review_cnt
-            , likes_cnt
-        FROM disney_contents
+            A.imdb_id
+            , A.title
+            , A.plot
+            , A.type
+            , A.rated
+            , A.year
+            , A.released_at
+            , A.runtime
+            , A.director
+            , A.actor
+            , A.award_win
+            , A.award_nominate
+            , A.award_major
+            , A.award_major_type
+            , A.imdb_rating
+            , A.rating
+            , A.review_cnt
+            , A.likes_cnt
+        FROM disney_contents as A
         WHERE imdb_id IN (
             SELECT content_id
             FROM likes
             WHERE user_id = #{userId}
             ORDER BY reg_date DESC
             )
-        ORDER BY title
+        <include refid="sorting"/>
         LIMIT #{criteria.pageStart}, #{criteria.perPageNum};
     </select>
 
     <select id="countSearchedContents" resultType="int">
         <![CDATA[
-        SELECT COUNT(imdb_id)
-        FROM disney_contents
+        SELECT COUNT(A.imdb_id)
+        FROM disney_contents as A
         ]]>
         <include refid="search"/>
     </select>
     <select id="listSearch" resultMap="ContentResultMap">
         <![CDATA[SELECT
-            imdb_id
-            , title
-            , plot
-            , type
-            , rated
-            , year
-            , released_at
-            , runtime
-            , director
-            , actor
-            , award_win
-            , award_nominate
-            , award_major
-            , award_major_type
-            , imdb_rating
-            , rating
-            , review_cnt
-            , likes_cnt
-        FROM disney_contents
+            A.imdb_id
+            , A.title
+            , A.plot
+            , A.type
+            , A.rated
+            , A.year
+            , A.released_at
+            , A.runtime
+            , A.director
+            , A.actor
+            , A.award_win
+            , A.award_nominate
+            , A.award_major
+            , A.award_major_type
+            , A.imdb_rating
+            , A.rating
+            , A.review_cnt
+            , A.likes_cnt
+        FROM disney_contents as A
         ]]>
             <include refid="search"/>
+            <include refid="sorting"/>
         <![CDATA[
-        ORDER BY title
-        LIMIT #{pageStart}, #{perPageNum};
+        LIMIT #{searchCriteria.pageStart}, #{searchCriteria.perPageNum};
         ]]>
     </select>
 
     <sql id="search">
-        <if test="searchType!=null">
+        <if test="searchCriteria.searchType!=null">
             WHERE
-            <if test="searchType=='t'.toString()">
-                title LIKE CONCAT('%', #{searchKeyword}, '%')
+            <if test="searchCriteria.searchType=='t'.toString()">
+                A.title LIKE CONCAT('%', #{searchCriteria.searchKeyword}, '%')
             </if>
-            <if test="searchType=='c'.toString()">
-                director LIKE CONCAT('%', #{searchKeyword}, '%')
-                OR actor LIKE CONCAT('%', #{searchKeyword}, '%')
+            <if test="searchCriteria.searchType=='c'.toString()">
+                A.director LIKE CONCAT('%', #{searchCriteria.searchKeyword}, '%')
+                OR A.actor LIKE CONCAT('%', #{searchCriteria.searchKeyword}, '%')
             </if>
         </if>
     </sql>

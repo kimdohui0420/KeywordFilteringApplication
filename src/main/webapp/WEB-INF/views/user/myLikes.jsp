@@ -19,24 +19,30 @@
                         <div class="ResultCounter">
                             총 <span class="ResultCounter_Number">${pageMaker.totalCount}</span> 건의 작품이 있습니다.
                         </div>
-                        <!--div class="tab">
+                        <div class="tab">
+                            <form id="sortingForm">
+                                <input type="hidden" name="userId" value="${login.userId}">
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+                                <input type="hidden" name="selSort" value="${selSort}">
+                            </form>
                             <label class="switch" id="Latest">
-                                <input type="radio" name="filter" checked="">
+                                <input type="radio" name="filter" <c:if test="${selSort eq 'Latest'}">checked</c:if>>
                                 <span class="slider">최신순</span>
                             </label>
                             <label class="switch" id="imdb_rating">
-                                <input type="radio" name="filter">
+                                <input type="radio" name="filter" <c:if test="${selSort eq 'imdb_rating'}">checked</c:if>>
                                 <span class="slider">imdb 평점순</span>
                             </label>
                             <label class="switch" id="self_rating">
-                                <input type="radio" name="filter">
+                                <input type="radio" name="filter" <c:if test="${selSort eq 'self_rating'}">checked</c:if>>
                                 <span class="slider">자체 평점순</span>
                             </label>
                             <label class="switch" id="Most_reviews">
-                                <input type="radio" name="filter">
+                                <input type="radio" name="filter" <c:if test="${selSort eq 'Most_reviews'}">checked</c:if>>
                                 <span class="slider">리뷰 많은순</span>
                             </label>
-                        </div-->
+                        </div>
                     </header>
                     <!-- 내 좋아요 리스트 -->
                     <div class="resultLists">
@@ -132,6 +138,7 @@
                                 <input type="hidden" name="userId" value="${login.userId}">
                                 <input type="hidden" name="page" value="${pageMaker.criteria.page}">
                                 <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+                                <input type="hidden" name="selSort" value="${selSort}">
                             </form>
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
@@ -176,6 +183,18 @@
         listPageForm.attr("action", "myLikes").attr("method", "get");
         listPageForm.submit();
     });
+
+    //정렬탭 제어 함수
+    $(document).on("click",".tab label",function(){
+        var selSort = "${selSort}";
+        var sortId = $(this).attr('id');
+        if(selSort !== sortId){
+            var listPageForm = $("#sortingForm");
+            listPageForm.find("[name='selSort']").val(sortId);
+            listPageForm.attr("action", "myLikes").attr("method", "get");
+            listPageForm.submit();
+        }
+    })
 </script>
 </body>
 </html>

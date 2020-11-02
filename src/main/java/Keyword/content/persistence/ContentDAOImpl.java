@@ -113,21 +113,27 @@ public class ContentDAOImpl implements ContentDAO{
     }
 
     @Override
-    public List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception {
+    public List<ContentVO> getMyLikes(String userId, Criteria criteria, String selSort) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("userId", userId);
         paramMap.put("criteria", criteria);
+        paramMap.put("selSort", selSort);
         return sqlSession.selectList(NAMESPACE+".getMyLikes", paramMap);
     }
 
     @Override
     public int countSearchedContents(SearchCriteria searchCriteria) throws Exception{
-        return sqlSession.selectOne(NAMESPACE+".countSearchedContents", searchCriteria);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("searchCriteria", searchCriteria);
+        return sqlSession.selectOne(NAMESPACE+".countSearchedContents", paramMap);
     }
 
     @Override
-    public List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception{
-        return sqlSession.selectList(NAMESPACE+".listSearch", searchCriteria);
+    public List<ContentVO> listSearch(SearchCriteria searchCriteria, String selSort) throws Exception{
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("searchCriteria", searchCriteria);
+        paramMap.put("selSort", selSort);
+        return sqlSession.selectList(NAMESPACE+".listSearch", paramMap);
     }
 
     @Override
