@@ -112,20 +112,6 @@
                             <div class="ResultLists" id="ResultLists">
                             </div>
                             <div class="Paging">
-                                <!--
-                                <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                                        <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                    </li>
-                                    <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                                    <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
-                                    <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-                                </ul>
-                                -->
                             </div>
                         </div>
                     </div>
@@ -557,13 +543,13 @@
                         '             </div>';
 
                     var eachContent = '';
-                    //컨텐츠마다 이미지 바꿔야 함.
                     $.each(result.contents, function(key, value){
                         eachContent += '<div class="movie_card" id="' + value.contentId + '">' +
                                         '<div class="info_section">' +
                                             '<div class="movie_header">' +
-                                                '<img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>' +
-                                                '<h1>'+ value.title +'</h1>' +
+                                                '<img class="locandina"';
+                                                eachContent += 'src="'+  value.poster +'"/>';
+                                                eachContent +='<h1>'+ value.title +'</h1>' +
                                                 '<h4 style="display: inline-block">'+value.year;
                                                 if(value.director != null){
                                                     eachContent += ', ' + value.director;
@@ -632,7 +618,7 @@
                                                 eachContent += '</ul>' +
                                             '</div>' +
                                         '</div>' +
-                                        '<div class="blur_back bright_back"></div>' +
+                                        '<div class="blur_back"  style="background-image: url('; eachContent += "'"; eachContent+= value.poster ; eachContent += "'"; eachContent +=');"></div>' +
                                         '</div>';
                     });
                     //결과가 안 비었을 때

@@ -129,4 +129,14 @@ public class ContentDAOImpl implements ContentDAO{
     public List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception{
         return sqlSession.selectList(NAMESPACE+".listSearch", searchCriteria);
     }
+
+    @Override
+    public void setPoster(String contentId, String poster) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("poster", poster);
+
+        sqlSession.update(NAMESPACE+".setPoster", paramMap);
+    }
 }

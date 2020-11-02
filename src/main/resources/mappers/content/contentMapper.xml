@@ -82,6 +82,12 @@
         WHERE imdb_id = #{contentId}
     </update>
 
+    <update id="setPoster">
+        UPDATE disney_contents
+        SET poster = #{poster}
+        WHERE imdb_id = #{contentId}
+    </update>
+
     <delete id="delete">
         DELETE FROM disney_contents
         WHERE imdb_id = #{contentId}
@@ -131,6 +137,7 @@
                , A.award_major_type
                , A.imdb_rating
                , A.review_cnt
+               , A.poster
            FROM disney_contents A
            ]]>
         <include refid ="filtering"/>

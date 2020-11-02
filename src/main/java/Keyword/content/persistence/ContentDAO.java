@@ -23,4 +23,5 @@ public interface ContentDAO {
     List<ContentVO> getMyLikes(String userId, Criteria criteria) throws Exception;
     int countSearchedContents(SearchCriteria searchCriteria) throws Exception;
     List<ContentVO> listSearch(SearchCriteria searchCriteria) throws Exception;
+    void setPoster(String contentId, String poster) throws Exception;
 }
