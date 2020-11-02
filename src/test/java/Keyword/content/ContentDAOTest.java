@@ -29,7 +29,7 @@ public class ContentDAOTest {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setSearchType("c");
         searchCriteria.setSearchKeyword("Robert");
-        System.out.println(contentDAO.listSearch(searchCriteria));
+        System.out.println(contentDAO.listSearch(searchCriteria, "Latest"));
     }
 
     @Test

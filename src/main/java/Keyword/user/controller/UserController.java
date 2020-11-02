@@ -42,10 +42,14 @@ public class UserController {
 
     // myLikes 페이지
     @RequestMapping(value = "/myLikes", method = RequestMethod.GET)
-    public String myLikes(@RequestParam("userId") String userId, Model model,/* Criteria criteria,*/
+    public String myLikes(@RequestParam("userId") String userId, Model model,
+                          @ModelAttribute("selSort") String selSort,
                           @ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception{
 
-        List<ContentVO> likes = contentService.getMyLikes(userId, searchCriteria);
+        if(selSort.isEmpty())   selSort = "Latest";
+        model.addAttribute("selSort", selSort);
+
+        List<ContentVO> likes = contentService.getMyLikes(userId, searchCriteria, selSort);
         model.addAttribute("likes", likes);
 
         Map<String, List<String>> genres = new HashMap<>();
