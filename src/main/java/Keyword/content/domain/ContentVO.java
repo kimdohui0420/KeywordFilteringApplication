@@ -25,6 +25,7 @@ public class ContentVO {
     private Double rating;
     private Integer reviewCnt;
     private Integer likesCnt;
+    private String poster;
 
     public String getContentId() {
         return contentId;
@@ -192,6 +193,13 @@ public class ContentVO {
 
     public void setLikesCnt(Integer likesCnt) {
         this.likesCnt = likesCnt;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
     @Override

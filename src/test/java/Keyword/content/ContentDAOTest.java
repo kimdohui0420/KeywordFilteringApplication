@@ -3,6 +3,9 @@ package Keyword.content;
 import Keyword.commons.paging.Criteria;
 import Keyword.content.domain.ContentVO;
 import Keyword.content.persistence.ContentDAO;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -88,6 +91,27 @@ public class ContentDAOTest {
                 .build();
 
         logger.info(uriComponents.toString());
+    }
+
+    //db에 포스터 이미지 넣기
+    @Test
+    public void testCrawling() throws Exception {
+        List<ContentVO> contents = contentDAO.listAll();
+        for (ContentVO s : contents) {
+
+            //System.out.println(s.getContentId());
+            String imdbsrc = "https://www.imdb.com/title/";
+            imdbsrc += s.getContentId() + "/";
+
+            Document doc;
+            doc = Jsoup.connect(imdbsrc).get();
+
+            Element imageElement = doc.select(".poster > a > img").first();
+            String poster = imageElement.attr("src");
+
+            contentDAO.setPoster(s.getContentId(), poster);
+
+        }
     }
 
 

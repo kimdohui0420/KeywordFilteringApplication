@@ -10496,11 +10496,11 @@ html, body {
   }
 
   .info_section {
-    background: linear-gradient(to right, #e5e6e6 50%, transparent 100%);
+    background: linear-gradient(to right, #e5e6e6 60%, transparent 100%);
   }
 
   .blur_back {
-    width: 80%;
+    width: 40%;
     background-position: -100% 10% !important;
   }
 }
@@ -10530,17 +10530,6 @@ html, body {
     background: linear-gradient(to top, #e5e6e6 50%, transparent 100%);
     display: inline-grid;
   }
-}
-.bright_back {
-  background: url("https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg");
-}
-
-.tomb_back {
-  background: url("https://images-na.ssl-images-amazon.com/images/G/02/digital/video/1600x1100/1600x1100_Wolf-of-Wall-Street._V348454428_SX1080_.jpg");
-}
-
-.ave_back {
-  background: url("https://is2-ssl.mzstatic.com/image/thumb/Video5/v4/b2/2e/b6/b22eb627-6191-644f-e83b-9b3f8b41ea6d/pr_source.lsr/268x0w.png");
 }
 
 

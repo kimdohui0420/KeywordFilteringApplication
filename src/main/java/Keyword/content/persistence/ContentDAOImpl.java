@@ -117,4 +117,14 @@ public class ContentDAOImpl implements ContentDAO{
         paramMap.put("criteria", criteria);
         return sqlSession.selectList(NAMESPACE+".getMyLikes", paramMap);
     }
+
+    @Override
+    public void setPoster(String contentId, String poster) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("poster", poster);
+
+        sqlSession.update(NAMESPACE+".setPoster", paramMap);
+    }
 }
