@@ -1,7 +1,8 @@
 // 좋아요 클릭 처리
-$("#like-checkbox").change(function(){
+$(".like-checkbox").change(function(){
     var cid = $(this).parent().parent().attr('id');
-    if($("#like-checkbox").is(":checked")){
+    var lid = "#like-"+cid;
+    if($(lid).is(":checked")){
         $.ajax({
             type: "post",
             url: "/likes",
@@ -18,8 +19,9 @@ $("#like-checkbox").change(function(){
                 if(msg==="regSuccess"){
                     $("#totalLikesCnt").html();
                 }
-                else
-                    $("input:checkbox[id='like-checkbox']").prop("checked", false);
+                else {
+                    $("input:checkbox[id='like-${content.contentId}']").prop("checked", false);
+                }
             }
         });
     }else{
@@ -37,7 +39,7 @@ $("#like-checkbox").change(function(){
             }),
             success: function (msg) {
                 if(msg!=="delSuccess")
-                    $("input:checkbox[id='like-checkbox']").prop("checked", true);
+                    $("input:checkbox[id='like-${content.contentId}']").prop("checked", true);
             }
         });
     }

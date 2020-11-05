@@ -72,6 +72,7 @@
             , rating
             , review_cnt
             , likes_cnt
+            , poster
         FROM    disney_contents
         WHERE   imdb_id = #{contentId}
     </select>
@@ -271,6 +272,7 @@
             , A.rating
             , A.review_cnt
             , A.likes_cnt
+            , A.poster
         FROM disney_contents as A
         WHERE imdb_id IN (
             SELECT content_id
@@ -309,6 +311,7 @@
             , A.rating
             , A.review_cnt
             , A.likes_cnt
+            , A.poster
         FROM disney_contents as A
         ]]>
             <include refid="search"/>
@@ -350,6 +353,7 @@
         <result property="rating" column="rating"/>
         <result property="reviewCnt" column="review_cnt"/>
         <result property="likesCnt" column="likes_cnt"/>
+        <result property="poster" column="poster"/>
     </resultMap>
 
 </mapper>

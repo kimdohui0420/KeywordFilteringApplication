@@ -49,8 +49,8 @@
                         <c:forEach items="${likes}" var="like">
                         <div class="movie_card" id="${like.contentId}">
                             <div class="action-likes">
-                                <input type="checkbox" id="like-checkbox" checked/>
-                                <label for="like-checkbox">
+                                <input type="checkbox" class="like-checkbox" id="like-${like.contentId}" checked/>
+                                <label for="like-${like.contentId}">
                                     <svg id="heart-svg" class="likes-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                                         <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
                                             <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="info_section">
                                 <div class="movie_header">
-                                    <img class="locandina" src="https://occ-0-2568-2567.1.nflxso.net/art/5f5cb/3d5923c65399954d27493f553900df9daea5f5cb.jpg"/>
+                                    <img class="locandina" src="${like.poster}"/>
                                     <h1>${like.title}</h1>
                                     <h4 style="display: inline-block">${like.year}, ${like.director}</h4>
                                     <div style="display: block">
@@ -127,7 +127,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="blur_back bright_back"></div>
+                            <div class="blur_back bright_back" style="background-image: url('${like.poster}');"></div>
                         </div>
                         </c:forEach>
                     </div>
