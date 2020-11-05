@@ -16,13 +16,13 @@
 
                 <div class="containerMC">
 
-                    <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_cover.jpg" alt="cover" class="cover" /></a>
+                    <a href="#"><img src="${content.poster}" alt="cover" class="cover" /></a>
 
-                    <div class="hero" id="${content.contentId}">
+                    <div class="hero" id="${content.contentId}"><%-- style="background-image: url('${content.poster}');"--%>
                         <c:if test="${not empty login}">
                         <div class="action-likes">
-                            <input type="checkbox" id="like-checkbox" />
-                            <label for="like-checkbox">
+                            <input type="checkbox" class="like-checkbox" id="like-${content.contentId}" />
+                            <label for="like-${content.contentId}">
                                 <svg id="heart-svg" class="likes-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                                     <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
                                         <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
@@ -147,10 +147,12 @@
                 userId: "${login.userId}"
             },
             success: function (result) {
-                if(!result)
-                    $("input:checkbox[id='like-checkbox']").prop("checked", false);
-                else
-                    $("input:checkbox[id='like-checkbox']").prop("checked", true);
+                if(!result){
+                    $("input:checkbox[id='like-${content.contentId}']").attr("checked", false);
+                }
+                else {
+                    $("input:checkbox[id='like-${content.contentId}']").attr("checked", true);
+                }
             }
         });
     }
@@ -424,6 +426,27 @@
         myLikes();
         myComment();
         commentList("/reviews/allPaging", reviewPageNum);
+
+        // 배경 이미지 적용
+        var cssStr = "<style>.hero:before {\n" +
+            "    content: '';\n" +
+            "    width: 100%;\n" +
+            "    height: 100%;\n" +
+            "    position: absolute;\n" +
+            "    overflow: hidden;\n" +
+            "    top: 0;\n" +
+            "    left: 0;\n" +
+            "    background: red;\n" +
+            "    background: url('${content.poster}');\n" +
+            "    background-size: cover;\n"+
+            "    z-index: -1;\n" +
+            "    -webkit-transform: skewY(-2.2deg);\n" +
+            "    transform: skewY(-2.2deg);\n" +
+            "    -webkit-transform-origin: 0 0;\n" +
+            "    transform-origin: 0 0;\n" +
+            "    -webkit-backface-visibility: hidden;\n" +
+            "}</style>";
+        $('head').append(cssStr);
     });
 
 </script>
