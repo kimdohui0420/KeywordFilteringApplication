@@ -145,4 +145,14 @@ public class ContentDAOImpl implements ContentDAO{
 
         sqlSession.update(NAMESPACE+".setPoster", paramMap);
     }
+
+    @Override
+    public void insertGenre(String contentId, List<String> genre) throws Exception {
+        for(String g : genre) {
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("contentId", contentId);
+            paramMap.put("genre", g);
+            sqlSession.insert(NAMESPACE + ".insertGenre", paramMap);
+        }
+    }
 }
