@@ -12,7 +12,6 @@
 <div id="layoutSidenav">
 
     <%@include file="include/left_column.jsp"%>
-
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
@@ -120,11 +119,15 @@
         </main>
         <%@include file="include/main_footer.jsp"%>
     </div>
+    <%@include file="include/right_column.jsp"%>
+
 </div>
 <%@ include file="include/plugin_js.jsp"%>
 <!-- 키워드 선택 제어-->
 <script>
     $(window).ready(function() {
+
+        var userId = "${login.userId}";
 
         //초기상태 세팅
         $(".EmptyResult").show();
@@ -498,7 +501,8 @@
                     selRtime_start: selRtime_start,
                     selRtime_end : selRtime_end,
                     selSort : selSort,
-                    page: resultPageNum
+                    page: resultPageNum,
+                    userId: userId
                 },
                 success: function(result){
                     //결과 헤더 :갯수 + 정렬탭
@@ -544,8 +548,54 @@
 
                     var eachContent = '';
                     $.each(result.contents, function(key, value){
-                        eachContent += '<div class="movie_card" id="' + value.contentId + '">' +
-                                        '<div class="info_section">' +
+                        eachContent += '<div class="movie_card" id="' + value.contentId + '">';
+                            if (${not empty login}){
+                                eachContent +=
+                                '<div class="action-likes">' +
+                                    '<input type="checkbox" class="like-checkbox" id="like-' + value.contentId + '"';
+                                        if(${not empty result.likes.get(value.contentId)}) {
+                                            eachContent += 'checked';
+                                        }
+                                eachContent += '/>' +
+                                    '<label for="like-' + value.contentId + '">'+
+                                        '<svg id="heart-svg" class="likes-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">' +
+                                            '<g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">' +
+                                                '<path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>' +
+                                                '<circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>' +
+                                                '<g id="grp7" opacity="0" transform="translate(7 6)">' +
+                                                    '<circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2"/>' +
+                                                    '<circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2"/>' +
+                                                '</g>' +
+                                                '<g id="grp6" opacity="0" transform="translate(0 28)">' +
+                                                    '<circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2"/>' +
+                                                    '<circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2"/>' +
+                                                '</g>' +
+                                                '<g id="grp3" opacity="0" transform="translate(52 28)">' +
+                                                    '<circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2"/>' +
+                                                    '<circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2"/>' +
+                                                '</g>' +
+                                                '<g id="grp2" opacity="0" transform="translate(44 6)">' +
+                                                    '<circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2"/>' +
+                                                    '<circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2"/>' +
+                                                '</g>' +
+                                                '<g id="grp5" opacity="0" transform="translate(14 50)">' +
+                                                    '<circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2"/>' +
+                                                    '<circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2"/>' +
+                                                '</g>' +
+                                                '<g id="grp4" opacity="0" transform="translate(35 50)">' +
+                                                    '<circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2"/>' +
+                                                    '<circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2"/>' +
+                                               '</g>' +
+                                                '<g id="grp1" opacity="0" transform="translate(24)">' +
+                                                    '<circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2"/>' +
+                                                    '<circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2"/>' +
+                                                '</g>' +
+                                            '</g>' +
+                                        '</svg>' +
+                                    '</label>' +
+                                '</div>';
+                            }
+                            eachContent += '<div class="info_section">' +
                                             '<div class="movie_header">' +
                                                 '<img class="locandina"';
                                                 eachContent += 'src="'+  value.poster +'"/>';
@@ -642,8 +692,8 @@
                     $('html, body').animate({scrollTop: 0}, 0);
 
                     //read 페이지 이동
-                    $(document).on("click",".movie_card",function(){
-                        var id = $(this).attr('id');
+                    $(document).on("click",".info_section",function(){
+                        var id = $(this).parent().attr('id');
                         var link =  '/read?contentId=' + id;
                         $(location).attr('href',link);
                     })
@@ -705,6 +755,56 @@
                 resultPageNum = resultPageNum.slice( 1 );
             get_movie_list();
         })
+
+        // 좋아요 클릭 처리
+        $('.like-checkbox').on("click", "a", function (event){
+            alert('hi');
+        });
+        $(".like-checkbox").change(function(){
+            var cid = $(this).parent().parent().attr('id');
+            var lid = "#like-"+cid;
+            if($(lid).is(":checked")){
+                $.ajax({
+                    type: "post",
+                    url: "/likes",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    dataType: "text",
+                    data: JSON.stringify({
+                        contentId: cid,
+                        userId: userId
+                    }),
+                    success: function (msg) {
+                        if(msg==="regSuccess"){
+                            $("#totalLikesCnt").html();
+                        }
+                        else {
+                            $("input:checkbox[id='like-${content.contentId}']").prop("checked", false);
+                        }
+                    }
+                });
+            }else{
+                $.ajax({
+                    type: "delete",
+                    url: "/likes",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    dataType: "text",
+                    data: JSON.stringify({
+                        contentId: cid,
+                        userId: userId
+                    }),
+                    success: function (msg) {
+                        if(msg!=="delSuccess")
+                            $("input:checkbox[id='like-${content.contentId}']").prop("checked", true);
+                    }
+                });
+            }
+        });
 
     });
 </script>

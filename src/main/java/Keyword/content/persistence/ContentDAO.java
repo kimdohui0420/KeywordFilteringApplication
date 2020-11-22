@@ -24,4 +24,5 @@ public interface ContentDAO {
     int countSearchedContents(SearchCriteria searchCriteria) throws Exception;
     List<ContentVO> listSearch(SearchCriteria searchCriteria, String selSort) throws Exception;
     void setPoster(String contentId, String poster) throws Exception;
+    List<ContentVO> getRanking(String selType) throws Exception;
 }

@@ -145,4 +145,9 @@ public class ContentDAOImpl implements ContentDAO{
 
         sqlSession.update(NAMESPACE+".setPoster", paramMap);
     }
+
+    @Override
+    public List<ContentVO> getRanking(String selType) throws Exception {
+        return sqlSession.selectList(NAMESPACE+".getRanking", selType);
+    }
 }

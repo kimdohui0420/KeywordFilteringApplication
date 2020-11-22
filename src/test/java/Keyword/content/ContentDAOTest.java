@@ -123,5 +123,18 @@ public class ContentDAOTest {
         }
     }
 
+    //랭킹 테스트
+    @Test
+    public void getRanking() throws Exception{
+
+        String selType = "movie";
+
+        List<ContentVO> contents = contentDAO.getRanking(selType);
+
+        for(ContentVO content : contents) {
+            logger.info(content.getTitle());
+        }
+    }
+
 
 }

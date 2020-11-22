@@ -88,5 +88,10 @@ public class ContentServiceImpl implements ContentService{
         return contentDAO.listSearch(searchCriteria, selSort);
     }
 
+    @Override
+    public List<ContentVO> getRanking(String selType) throws Exception {
+        return contentDAO.getRanking(selType);
+    }
+
 
 }
