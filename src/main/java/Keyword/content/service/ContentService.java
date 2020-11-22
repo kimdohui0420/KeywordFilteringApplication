@@ -21,4 +21,5 @@ public interface ContentService {
     List<ContentVO> getMyLikes(String userId, Criteria criteria, String selSort) throws Exception;
     int countSearchedContents(SearchCriteria searchCriteria) throws Exception;   // 검색 결과 카운트
     List<ContentVO> listSearch(SearchCriteria searchCriteria, String selSort) throws Exception;  // 검색 결과
+    List<ContentVO> getRanking(String selType) throws Exception;
 }

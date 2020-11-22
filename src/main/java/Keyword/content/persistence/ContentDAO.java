@@ -25,4 +25,5 @@ public interface ContentDAO {
     List<ContentVO> listSearch(SearchCriteria searchCriteria, String selSort) throws Exception;
     void setPoster(String contentId, String poster) throws Exception;
     void insertGenre(String contentId, List<String> genre) throws Exception;    // 데이터 추가용
+    List<ContentVO> getRanking(String selType) throws Exception;
 }

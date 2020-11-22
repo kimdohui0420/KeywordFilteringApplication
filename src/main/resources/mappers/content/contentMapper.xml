@@ -244,6 +244,19 @@
         ]]>
     </select>
 
+
+    <select id="getRanking" resultMap="ContentResultMap">
+        <![CDATA[
+            SELECT
+                imdb_id
+                , title
+            FROM disney_contents
+            WHERE type = #{selType}
+            ORDER BY imdb_rating DESC, title DESC
+            LIMIT 10;
+        ]]>
+    </select>
+
     <update id="updateReview">
         UPDATE disney_contents
         SET review_cnt = review_cnt + #{amount},

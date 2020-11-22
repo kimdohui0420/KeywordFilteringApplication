@@ -81,7 +81,8 @@ public class ContentController {
                                                 @RequestParam("selRtime_start") int selRtime_start,
                                                 @RequestParam("selRtime_end") int selRtime_end,
                                                 @RequestParam("selSort") String selSort,
-                                                @RequestParam("page") Integer page){
+                                                @RequestParam("page") Integer page,
+                                                @RequestParam("userId") String userId){
 
         ResponseEntity<Map<String, Object>> entity = null;
         try {
@@ -98,6 +99,18 @@ public class ContentController {
             Map<String, Object> mapp = new HashMap<>();
             mapp.put("contents", contents);
             mapp.put("pageMaker", pageMaker);
+
+
+            Map<String, LikesVO> likes = new HashMap<>();
+            if(!userId.isEmpty()){
+                for(int i=0; i<contents.size(); i++){
+                    String contentId = contents.get(i).getContentId();
+                    LikesVO likesVO = likesService.isLiked(contentId, userId);
+                    if(likesVO != null)
+                        likes.put(contentId, likesVO);
+                }
+            }
+            mapp.put("likes", likes);
 
             entity = new ResponseEntity<>(mapp, HttpStatus.OK);
         } catch (Exception e) {
@@ -212,4 +225,25 @@ public class ContentController {
 
         return "content/search";
     }
+
+
+    // 랭킹 불러오기
+    @RequestMapping(value = "/ranking", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getRanking(@RequestParam("selType") String selType){
+        ResponseEntity<Map<String, Object>> entity = null;
+        try {
+            List<ContentVO> contents = contentService.getRanking(selType);
+            Map<String, Object> mapp = new HashMap<>();
+            mapp.put("contents", contents);
+
+            entity = new ResponseEntity<>(mapp, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+
+
 }

@@ -193,6 +193,19 @@ public class ContentDAOTest {
         while((line = br.readLine()) != null){
             ttid.add(line);
         }
+    //랭킹 테스트
+    @Test
+    public void getRanking() throws Exception{
+
+        String selType = "movie";
+
+        List<ContentVO> contents = contentDAO.getRanking(selType);
+
+        for(ContentVO content : contents) {
+            logger.info(content.getTitle());
+        }
+    }
+
 
         for(String id:ttid){
             System.out.print(id+"\t");
