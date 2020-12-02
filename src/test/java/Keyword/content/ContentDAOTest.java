@@ -193,19 +193,6 @@ public class ContentDAOTest {
         while((line = br.readLine()) != null){
             ttid.add(line);
         }
-    //랭킹 테스트
-    @Test
-    public void getRanking() throws Exception{
-
-        String selType = "movie";
-
-        List<ContentVO> contents = contentDAO.getRanking(selType);
-
-        for(ContentVO content : contents) {
-            logger.info(content.getTitle());
-        }
-    }
-
 
         for(String id:ttid){
             System.out.print(id+"\t");
@@ -283,7 +270,6 @@ public class ContentDAOTest {
                     contentVO.setAwardMajor(am);
                 String amj = dic.get("major_type");
                 if(amj != null && !amj.isEmpty())
-                if(amj != null && !amj.isEmpty())
                     contentVO.setAwardMajorType(amj);
             }
 
@@ -306,6 +292,19 @@ public class ContentDAOTest {
             genres.remove(genres.size()-1);
             contentDAO.insertGenre(id, genres);
             System.out.println("\t"+contentVO.getRated()+" : "+genres);
+        }
+    }
+
+    //랭킹 테스트
+    @Test
+    public void getRanking() throws Exception{
+
+        String selType = "movie";
+
+        List<ContentVO> contents = contentDAO.getRanking(selType);
+
+        for(ContentVO content : contents) {
+            logger.info(content.getTitle());
         }
     }
 }

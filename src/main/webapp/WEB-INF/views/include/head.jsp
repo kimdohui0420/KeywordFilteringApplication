@@ -25,4 +25,7 @@
     <link href="/dist/css/pagination.css?a" rel="stylesheet" />
     <link href="/dist/css/likes.css?a" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <link href="/dist/css/slick-extra.css?a" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/slick/slick-theme.css"/>
 </head>

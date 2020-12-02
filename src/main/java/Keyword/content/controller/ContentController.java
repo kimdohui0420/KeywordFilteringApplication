@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,31 @@ public class ContentController {
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(searchCriteria);
         model.addAttribute("pageMaker", pageMaker);
+
+        // 상단 배너
+        List<String> banner_bg = new ArrayList<>();
+        banner_bg.add("https://pbs.twimg.com/media/El6Ej77U0AEtlS8?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/EmEXwKJVgAAhO2T?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/EmJhVIDVoAADkiR?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/EmOq6VAU4AEbq-N?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/El069cqU8AAH575?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/ElvxaGyU0AIxbra?format=jpg&name=large");
+        banner_bg.add("https://pbs.twimg.com/media/El_OJKTVoAMi2om?format=jpg&name=large");
+
+        Map<String, Object> banner = new HashMap<>();
+        //for(int i=0; i<banner_bg.size(); i++){
+            banner.put("url", banner_bg.get(0));
+            banner.put("text", "비 오는 날 오싹하게 할 스릴러");
+            List<List<String>> banner_content = new ArrayList<>();
+            for(int j=0; j<10; j++) {
+                List<String> tmp = new ArrayList<>();
+                tmp.add("tt7678620");
+                tmp.add("https://m.media-amazon.com/images/M/MV5BMDBiNDI3YjQtNDdkNS00ZDliLTlmMmQtMDE4ZWM1ZGIyNjljXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg");
+                banner_content.add(tmp);
+            }
+            banner.put("bannerContents", banner_content);
+        //}
+        model.addAttribute("banner", banner);
 
         return "home";
     }

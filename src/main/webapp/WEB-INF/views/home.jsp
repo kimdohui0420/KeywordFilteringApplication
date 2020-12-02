@@ -16,6 +16,25 @@
         <main>
             <div class="container-fluid">
                 <h1 class="mt-4">디즈니 컨텐츠</h1>
+                <!-- 추천 슬라이더 -->
+                <div class="rcmd-slick">
+                    <div class="rcmd-bg" style="background-image: url(${banner.get("url")});">
+                        <h4>${banner.get("text")}</h4>
+                        <div class="rcmd-list">
+                            <c:forEach items="${banner.get('bannerContents')}" var="bcs">
+                                <div class="rcmd-wrap"><a href="/read?contentId=${bcs.get(0)}"><img class="rcmd-poster" src=${bcs.get(1)}/></a></div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/EmEXwKJVgAAhO2T?format=jpg&name=large');">JIN</div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/EmJhVIDVoAADkiR?format=jpg&name=large');">SUGA</div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/EmOq6VAU4AEbq-N?format=jpg&name=large');">J-HOPE</div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/El069cqU8AAH575?format=jpg&name=large');">JIMIN</div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/ElvxaGyU0AIxbra?format=jpg&name=large');">V</div>
+                    <div class="rcmd-bg" style="background-image: url('https://pbs.twimg.com/media/El_OJKTVoAMi2om?format=jpg&name=large');">JK</div>
+                </div>
+
+                <!-- 키워드 검색 -->
                 <div class="mt-4">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -126,6 +145,14 @@
 <!-- 키워드 선택 제어-->
 <script>
     $(window).ready(function() {
+
+        $('.rcmd-slick').slick({
+            dots: true,
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 10000,
+            arrows: false
+        });
 
         var userId = "${login.userId}";
 
